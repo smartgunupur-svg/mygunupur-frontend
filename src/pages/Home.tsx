@@ -59,19 +59,6 @@ const quickServices = [
   { id: 6, title: "Contact", icon: MessageSquare, color: "from-teal-500 to-teal-600", bg: "bg-teal-50", path: "/contact" }
 ];
 
-const emergencyContacts = [
-  { id: 1, name: "Police", number: "100", icon: AlertTriangle, color: "from-red-500 to-rose-600" },
-  { id: 2, name: "Ambulance", number: "108", icon: HeartPulse, color: "from-pink-500 to-rose-600" },
-  { id: 3, name: "Fire Service", number: "101", icon: AlertTriangle, color: "from-orange-500 to-orange-600" },
-  { id: 4, name: "Women Helpline", number: "1091", icon: MessageSquare, color: "from-purple-500 to-purple-600" }
-];
-
-const touristPlaces = [
-  { id: 1, name: "Jagannath Temple", image: "https://images.unsplash.com/photo-1561361513-2d000a50f0dc?w=600&h=400&fit=crop", rating: 4.8, distance: "2 km", desc: "Ancient temple with beautiful architecture" },
-  { id: 2, name: "Tumma Waterfall", image: "https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?w=600&h=400&fit=crop", rating: 4.9, distance: "15 km", desc: "Serene waterfall surrounded by nature" },
-  { id: 3, name: "Aska Road View", image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=600&h=400&fit=crop", rating: 4.6, distance: "5 km", desc: "Scenic road with beautiful views" }
-];
-
 const whatsappLogo = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" class="w-7 h-7">
   <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.488-.492-.67-.5h-.572c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .162 5.332.162 11.885c0 2.102.553 4.136 1.56 5.943L0 24l6.324-1.659a11.858 11.858 0 005.726 1.467c.003 0 0 0 .004 0 6.557 0 11.886-5.333 11.886-11.885 0-3.173-1.234-6.151-3.475-8.388"/>
 </svg>`;

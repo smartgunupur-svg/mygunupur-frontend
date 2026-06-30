@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import {
-  ArrowLeft,
-  Briefcase,
-  Phone,
-  MapPin,
-  ChevronRight
+import { 
+  ArrowLeft, 
+  Briefcase, 
+  Phone, 
+  MapPin
 } from 'lucide-react';
 import axios from 'axios';
 
