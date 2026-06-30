@@ -7,15 +7,8 @@ import {
   Mail, 
   MapPin, 
   Send,
-  MessageSquare,
-  Globe
+  MessageSquare
 } from 'lucide-react';
-import { clsx } from 'clsx';
-import { twMerge } from 'tailwind-merge';
-
-function cn(...inputs: any[]) {
-  return twMerge(clsx(inputs));
-}
 
 const Contact: React.FC = () => {
   const navigate = useNavigate();

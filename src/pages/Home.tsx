@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { 
   Search, 
   Mic, 
-  Home, 
+  Home as HomeIcon, 
   Building2, 
   AlertTriangle, 
   HeartPulse, 
@@ -17,11 +17,7 @@ import {
   Menu, 
   Bell,
   Briefcase,
-  BookOpen,
-  Image as ImageIcon,
-  CheckCircle2,
-  Calendar,
-  Percent
+  BookOpen
 } from 'lucide-react';
 import { clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
@@ -55,7 +51,7 @@ const heroSlides = [
 ];
 
 const quickServices = [
-  { id: 1, title: "Home Loan", icon: Home, color: "from-blue-500 to-blue-600", bg: "bg-blue-50", path: "/home-loan" },
+  { id: 1, title: "Home Loan", icon: HomeIcon, color: "from-blue-500 to-blue-600", bg: "bg-blue-50", path: "/home-loan" },
   { id: 2, title: "Building Plan", icon: Building2, color: "from-green-500 to-emerald-600", bg: "bg-green-50", path: "/building-enquiry" },
   { id: 3, title: "Emergency", icon: AlertTriangle, color: "from-red-500 to-rose-600", bg: "bg-red-50", path: "/emergency" },
   { id: 4, title: "Hospitals", icon: HeartPulse, color: "from-blue-400 to-indigo-600", bg: "bg-blue-50", path: "/" },
@@ -73,30 +69,9 @@ const emergencyContacts = [
 ];
 
 const popularServices = [
-  { id: 1, title: "Home Loan EMI Calculator", desc: "Calculate EMI, check eligibility & apply", color: "from-green-50 to-green-100", icon: Home, path: "/home-loan" },
+  { id: 1, title: "Home Loan EMI Calculator", desc: "Calculate EMI, check eligibility & apply", color: "from-green-50 to-green-100", icon: HomeIcon, path: "/home-loan" },
   { id: 2, title: "Building Plan Assistance", desc: "Architects, Engineers & Approval Help", color: "from-blue-50 to-blue-100", icon: Building2, path: "/" },
   { id: 3, title: "Government Schemes", desc: "Check eligibility & apply for schemes", color: "from-amber-50 to-amber-100", icon: BookOpen, path: "/" }
-];
-
-const banks = [
-  {
-    id: 1,
-    name: 'Indian Bank',
-    logo: '🏦',
-    color: 'from-blue-600 to-blue-700',
-    interestRate: '8.50%',
-    processingFee: '0.50%',
-    maxTenure: '30 Years'
-  },
-  {
-    id: 2,
-    name: 'UCO Bank',
-    logo: '🏛️',
-    color: 'from-orange-500 to-red-600',
-    interestRate: '8.75%',
-    processingFee: '0.35%',
-    maxTenure: '30 Years'
-  }
 ];
 
 const touristPlaces = [
@@ -107,7 +82,7 @@ const touristPlaces = [
 ];
 
 const bottomNavItems = [
-  { id: 1, icon: Home, label: "Home", active: true, path: "/" },
+  { id: 1, icon: HomeIcon, label: "Home", active: true, path: "/" },
   { id: 2, icon: Building2, label: "Services", active: false, path: "/home-loan" },
   { id: 3, icon: Search, label: "Search", active: false, path: "/" },
   { id: 4, icon: BookOpen, label: "Notices", active: false, path: "/" },

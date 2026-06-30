@@ -2,24 +2,15 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import {
-  Building2,
   ArrowLeft,
   Phone,
   Mail,
-  MapPin,
   Send,
   CheckCircle2,
-  Home,
   FileText,
   Map
 } from 'lucide-react';
-import { clsx } from 'clsx';
-import { twMerge } from 'tailwind-merge';
 import axios from 'axios';
-
-function cn(...inputs: any[]) {
-  return twMerge(clsx(inputs));
-}
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 

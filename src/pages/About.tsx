@@ -7,8 +7,7 @@ import {
   Phone, 
   Mail, 
   Users, 
-  Building2, 
-  Globe
+  Building2
 } from 'lucide-react';
 
 const About: React.FC = () => {

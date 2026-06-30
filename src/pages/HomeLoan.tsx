@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import {
-  Home,
   ArrowLeft,
   Calculator,
   Phone,
@@ -15,8 +14,6 @@ import {
   FileText,
   CheckCircle2,
   Banknote,
-  Building2,
-  ShieldCheck,
   Star
 } from 'lucide-react';
 import { clsx } from 'clsx';

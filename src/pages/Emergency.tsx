@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import { 
   ArrowLeft, 
   AlertTriangle, 
-  HeartPulse, 
   Phone, 
   Mail, 
   MapPin
