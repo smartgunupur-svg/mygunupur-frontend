@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import { 
   ArrowLeft, 
   FileText, 
-  Phone, 
   Plus, 
   Edit, 
   Trash2, 
