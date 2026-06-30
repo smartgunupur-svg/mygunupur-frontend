@@ -64,16 +64,16 @@ const AdminConstructionMaterial: React.FC = () => {
     if (!file) return;
 
     setUploading(true);
-    const formData = new FormData();
-    formData.append('image', file);
+    const uploadFormData = new FormData();
+    uploadFormData.append('image', file);
 
     try {
-      const response = await axios.post(`${API_URL}/upload`, formData, {
+      const response = await axios.post(`${API_URL}/upload`, uploadFormData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
-      setFormData({ ...formData, image: response.data.url });
+      setFormData(prev => ({ ...prev, image: response.data.url }));
     } catch (error) {
       console.error('Error uploading image:', error);
       alert('Error uploading image');
