@@ -10,7 +10,6 @@ import {
   MessageSquare,
   Phone,
   ChevronRight,
-  Star,
   MapPin,
 } from 'lucide-react';
 import { clsx } from 'clsx';
