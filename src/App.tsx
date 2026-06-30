@@ -1,10 +1,12 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Home from './pages/Home';
 import About from './pages/About';
 import HomeLoan from './pages/HomeLoan';
 import Emergency from './pages/Emergency';
 import Contact from './pages/Contact';
 import BuildingEnquiry from './pages/BuildingEnquiry';
+import ConstructionMaterial from './pages/ConstructionMaterial';
+import Hospitals from './pages/Hospitals';
 import AdminLogin from './pages/AdminLogin';
 import AdminDashboard from './pages/AdminDashboard';
 import AdminLoanEnquiries from './pages/AdminLoanEnquiries';
@@ -20,6 +22,9 @@ function App() {
         <Route path="/building-enquiry" element={<BuildingEnquiry />} />
         <Route path="/emergency" element={<Emergency />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/construction-material" element={<ConstructionMaterial />} />
+        <Route path="/hospitals" element={<Hospitals />} />
+        <Route path="/admin" element={<Navigate to="/admin/login" replace />} />
         <Route path="/admin/login" element={<AdminLogin />} />
         <Route path="/admin/dashboard" element={<AdminDashboard />} />
         <Route path="/admin/loan-enquiries" element={<AdminLoanEnquiries />} />

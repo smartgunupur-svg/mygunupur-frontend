@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { 
@@ -10,22 +10,38 @@ import {
 } from 'lucide-react';
 import { clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
+import axios from 'axios';
+
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
 function cn(...inputs: any[]) {
   return twMerge(clsx(inputs));
 }
 
-const emergencyContacts = [
-  { id: 1, category: "Police", name: "Police Station Gunupur", number: "100", color: "from-red-500 to-rose-600", bg: "bg-red-50" },
-  { id: 2, category: "Fire", name: "Fire Station Gunupur", number: "101", color: "from-orange-500 to-red-600", bg: "bg-orange-50" },
-  { id: 3, category: "Ambulance", name: "Ambulance Service", number: "108", color: "from-blue-500 to-indigo-600", bg: "bg-blue-50" },
-  { id: 4, category: "Hospital", name: "District HQ Hospital", number: "9437578310", color: "from-green-500 to-emerald-600", bg: "bg-green-50" },
-  { id: 5, category: "Women Helpline", name: "Women Helpline", number: "1091", color: "from-pink-500 to-purple-600", bg: "bg-pink-50" },
-  { id: 6, category: "Child Helpline", name: "Child Helpline", number: "1098", color: "from-yellow-500 to-orange-600", bg: "bg-yellow-50" },
-];
-
 const Emergency: React.FC = () => {
   const navigate = useNavigate();
+  const [emergencyContacts, setEmergencyContacts] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchContacts = async () => {
+      try {
+        const res = await axios.get(`${API_URL}/emergency-contacts`);
+        setEmergencyContacts(res.data);
+      } catch (error) {
+        console.error('Error fetching emergency contacts:', error);
+        setEmergencyContacts([
+          { _id: '1', category: "Police", name: "Police Station Gunupur", phone: "100", color: "from-red-500 to-rose-600", bg: "bg-red-50" },
+          { _id: '2', category: "Fire", name: "Fire Station Gunupur", phone: "101", color: "from-orange-500 to-red-600", bg: "bg-orange-50" },
+          { _id: '3', category: "Ambulance", name: "Ambulance Service", phone: "108", color: "from-blue-500 to-indigo-600", bg: "bg-blue-50" },
+          { _id: '4', category: "Hospital", name: "District HQ Hospital", phone: "9437578310", color: "from-green-500 to-emerald-600", bg: "bg-green-50" },
+        ]);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchContacts();
+  }, []);
 
   return (
     <div className="min-h-screen bg-slate-50 pb-24">
@@ -87,34 +103,46 @@ const Emergency: React.FC = () => {
         >
           <h3 className="text-xl font-bold text-slate-800 mb-6">Quick Call Services</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {emergencyContacts.map((contact, index) => (
-              <motion.div
-                key={contact.id}
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.2 + index * 0.05 }}
-                whileHover={{ y: -4 }}
-                className={cn("bg-white rounded-3xl p-6 shadow-xl border border-slate-100", contact.bg)}
-              >
-                <div className="flex flex-col gap-4">
-                  <div className={cn("w-16 h-16 bg-gradient-to-br rounded-3xl flex items-center justify-center shadow-lg", contact.color)}>
-                    <AlertTriangle className="w-8 h-8 text-white" />
-                  </div>
-                  <div>
-                    <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">{contact.category}</span>
-                    <h4 className="font-bold text-slate-800 text-lg">{contact.name}</h4>
-                    <p className="text-3xl font-black text-slate-900 mt-1">{contact.number}</p>
-                  </div>
-                  <a
-                    href={`tel:${contact.number}`}
-                    className={cn("w-full py-4 bg-gradient-to-r text-white font-bold rounded-2xl shadow-lg hover:shadow-xl transition-all flex items-center justify-center gap-2", contact.color)}
-                  >
-                    <Phone className="w-5 h-5" />
-                    Call Now
-                  </a>
+            {loading ? (
+              [1,2,3,4,5,6].map((i) => (
+                <div key={i} className="bg-white rounded-3xl p-6 shadow-xl border border-slate-100 animate-pulse">
+                  <div className="w-16 h-16 bg-slate-200 rounded-3xl mb-4"></div>
+                  <div className="h-4 bg-slate-200 rounded w-1/3 mb-2"></div>
+                  <div className="h-6 bg-slate-200 rounded w-2/3 mb-2"></div>
+                  <div className="h-8 bg-slate-200 rounded w-1/2 mb-4"></div>
+                  <div className="h-12 bg-slate-200 rounded-2xl"></div>
                 </div>
-              </motion.div>
-            ))}
+              ))
+            ) : (
+              emergencyContacts.map((contact, index) => (
+                <motion.div
+                  key={contact._id}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.2 + index * 0.05 }}
+                  whileHover={{ y: -4 }}
+                  className={cn("bg-white rounded-3xl p-6 shadow-xl border border-slate-100", contact.bg || "bg-slate-50")}
+                >
+                  <div className="flex flex-col gap-4">
+                    <div className={cn("w-16 h-16 bg-gradient-to-br rounded-3xl flex items-center justify-center shadow-lg", contact.color || "from-red-500 to-rose-600")}>
+                      <AlertTriangle className="w-8 h-8 text-white" />
+                    </div>
+                    <div>
+                      <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">{contact.category}</span>
+                      <h4 className="font-bold text-slate-800 text-lg">{contact.name}</h4>
+                      <p className="text-3xl font-black text-slate-900 mt-1">{contact.phone}</p>
+                    </div>
+                    <a
+                      href={`tel:${contact.phone}`}
+                      className={cn("w-full py-4 bg-gradient-to-r text-white font-bold rounded-2xl shadow-lg hover:shadow-xl transition-all flex items-center justify-center gap-2", contact.color || "from-red-500 to-rose-600")}
+                    >
+                      <Phone className="w-5 h-5" />
+                      Call Now
+                    </a>
+                  </div>
+                </motion.div>
+              ))
+            )}
           </div>
         </motion.div>
 
