@@ -21,6 +21,7 @@ const AdminBanks: React.FC = () => {
   const [showForm, setShowForm] = useState(false);
   const [editingBank, setEditingBank] = useState<any | null>(null);
   const [formData, setFormData] = useState({ name: '', logo: '' });
+  const [uploading, setUploading] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem('adminToken');
@@ -47,6 +48,29 @@ const AdminBanks: React.FC = () => {
     localStorage.removeItem('adminToken');
     localStorage.removeItem('adminEmail');
     navigate('/admin/login');
+  };
+
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setUploading(true);
+    const formData = new FormData();
+    formData.append('image', file);
+
+    try {
+      const response = await axios.post(`${API_URL}/upload`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      setFormData({ ...formData, logo: response.data.url });
+    } catch (error) {
+      console.error('Error uploading image:', error);
+      alert('Error uploading image');
+    } finally {
+      setUploading(false);
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -165,13 +189,36 @@ const AdminBanks: React.FC = () => {
                 <label className="block text-sm font-bold text-slate-700 mb-2">
                   Logo (optional)
                 </label>
-                <input
-                  type="text"
-                  value={formData.logo}
-                  onChange={(e) => setFormData({ ...formData, logo: e.target.value })}
-                  className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500"
-                  placeholder="Emoji or image URL"
-                />
+                <div className="space-y-2">
+                  {formData.logo && (
+                    <div className="flex items-center gap-2">
+                      <img src={formData.logo} alt="Logo preview" className="w-16 h-16 rounded-lg object-cover" />
+                      <button
+                        type="button"
+                        onClick={() => setFormData({ ...formData, logo: '' })}
+                        className="text-red-600 hover:text-red-800"
+                      >
+                        Remove
+                      </button>
+                    </div>
+                  )}
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageUpload}
+                    disabled={uploading}
+                    className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500"
+                  />
+                  {uploading && <div className="text-sm text-slate-500">Uploading...</div>}
+                  <div className="text-sm text-slate-500 mt-1">Or paste image URL:</div>
+                  <input
+                    type="text"
+                    value={formData.logo}
+                    onChange={(e) => setFormData({ ...formData, logo: e.target.value })}
+                    className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500"
+                    placeholder="Image URL"
+                  />
+                </div>
               </div>
               <button
                 type="submit"

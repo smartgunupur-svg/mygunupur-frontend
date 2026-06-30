@@ -26,6 +26,7 @@ const AdminTouristPlaces: React.FC = () => {
     image: '',
     googleMap: ''
   });
+  const [uploading, setUploading] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem('adminToken');
@@ -52,6 +53,29 @@ const AdminTouristPlaces: React.FC = () => {
     localStorage.removeItem('adminToken');
     localStorage.removeItem('adminEmail');
     navigate('/admin/login');
+  };
+
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setUploading(true);
+    const formData = new FormData();
+    formData.append('image', file);
+
+    try {
+      const response = await axios.post(`${API_URL}/upload`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      setFormData({ ...formData, image: response.data.url });
+    } catch (error) {
+      console.error('Error uploading image:', error);
+      alert('Error uploading image');
+    } finally {
+      setUploading(false);
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -170,14 +194,37 @@ const AdminTouristPlaces: React.FC = () => {
                 />
               </div>
               <div>
-                <label className="block text-sm font-bold text-slate-700 mb-2">Image URL (optional)</label>
-                <input
-                  type="text"
-                  value={formData.image}
-                  onChange={(e) => setFormData({ ...formData, image: e.target.value })}
-                  className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:border-teal-500"
-                  placeholder="Image URL"
-                />
+                <label className="block text-sm font-bold text-slate-700 mb-2">Image (optional)</label>
+                <div className="space-y-2">
+                  {formData.image && (
+                    <div className="flex items-center gap-2">
+                      <img src={formData.image} alt="Preview" className="w-16 h-16 rounded-lg object-cover" />
+                      <button
+                        type="button"
+                        onClick={() => setFormData({ ...formData, image: '' })}
+                        className="text-red-600 hover:text-red-800"
+                      >
+                        Remove
+                      </button>
+                    </div>
+                  )}
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageUpload}
+                    disabled={uploading}
+                    className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:border-teal-500"
+                  />
+                  {uploading && <div className="text-sm text-slate-500">Uploading...</div>}
+                  <div className="text-sm text-slate-500 mt-1">Or paste image URL:</div>
+                  <input
+                    type="text"
+                    value={formData.image}
+                    onChange={(e) => setFormData({ ...formData, image: e.target.value })}
+                    className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:border-teal-500"
+                    placeholder="Image URL"
+                  />
+                </div>
               </div>
               <div>
                 <label className="block text-sm font-bold text-slate-700 mb-2">Description (optional)</label>
