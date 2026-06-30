@@ -7,8 +7,7 @@ import {
   Building2, 
   LogOut, 
   Users, 
-  TrendingUp, 
-  Calendar,
+  TrendingUp,
   ArrowRight
 } from 'lucide-react';
 import axios from 'axios';

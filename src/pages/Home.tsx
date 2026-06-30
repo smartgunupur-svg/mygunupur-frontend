@@ -19,7 +19,8 @@ import {
   Briefcase,
   BookOpen,
   MoreHorizontal,
-  FileText
+  FileText,
+  MessageCircle
 } from 'lucide-react';
 import { clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
@@ -34,21 +35,24 @@ const heroSlides = [
     title: "Welcome to My Gunupur",
     subtitle: "One Platform for Every Citizen Service",
     image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&h=800&fit=crop",
-    cta: "Explore Services"
+    cta: "Explore Services",
+    path: null
   },
   {
     id: 2,
     title: "Apply for Home Loan",
     subtitle: "Calculate EMI & Get Instant Approval",
     image: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1200&h=800&fit=crop",
-    cta: "Check EMI"
+    cta: "Check EMI",
+    path: "/home-loan"
   },
   {
     id: 3,
     title: "Explore Gunupur",
     subtitle: "Discover Tourist Places & Local Gems",
     image: "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=1200&h=800&fit=crop",
-    cta: "Visit Now"
+    cta: "Visit Now",
+    path: null
   }
 ];
 
@@ -414,9 +418,9 @@ const Home: React.FC = () => {
           transition={{ delay: 1.3 }}
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
-          className="w-14 h-14 bg-green-500 rounded-2xl shadow-xl flex items-center justify-center"
+          className="w-14 h-14 bg-[#25D366] rounded-2xl shadow-xl flex items-center justify-center"
         >
-          <span className="text-white text-2xl">💬</span>
+          <MessageCircle className="w-7 h-7 text-white" />
         </motion.a>
         <motion.a
           href="tel:9437578310"

@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import {
-  ArrowLeft,
-  Phone,
-  Mail,
-  Send,
-  CheckCircle2,
+import { 
+  ArrowLeft, 
+  Phone, 
+  Send, 
+  CheckCircle2, 
   FileText,
-  Map
+  MessageCircle
 } from 'lucide-react';
 import axios from 'axios';
 
@@ -281,9 +280,9 @@ const BuildingEnquiry: React.FC = () => {
           transition={{ delay: 0.5 }}
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
-          className="w-14 h-14 bg-green-500 rounded-2xl shadow-xl flex items-center justify-center"
+          className="w-14 h-14 bg-[#25D366] rounded-2xl shadow-xl flex items-center justify-center"
         >
-          <span className="text-white text-2xl">💬</span>
+          <MessageCircle className="w-7 h-7 text-white" />
         </motion.a>
         <motion.a
           href="tel:9437578310"
@@ -292,7 +291,7 @@ const BuildingEnquiry: React.FC = () => {
           transition={{ delay: 0.6 }}
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
-          className="w-14 h-14 bg-green-600 rounded-2xl shadow-xl flex items-center justify-center"
+          className="w-14 h-14 bg-blue-600 rounded-2xl shadow-xl flex items-center justify-center"
         >
           <Phone className="w-7 h-7 text-white" />
         </motion.a>

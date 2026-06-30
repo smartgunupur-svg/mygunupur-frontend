@@ -1,21 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import {
-  ArrowLeft,
-  Calculator,
-  Phone,
-  Mail,
-  MapPin,
-  Send,
-  IndianRupee,
-  Percent,
-  Calendar,
-  FileText,
-  CheckCircle2,
-  Banknote,
+import { 
+  ArrowLeft, 
+  Calculator, 
+  Phone, 
+  Send, 
+  IndianRupee, 
+  Percent, 
+  Calendar, 
+  FileText, 
+  CheckCircle2, 
+  Banknote, 
   Star,
-  ChevronRight
+  MessageCircle
 } from 'lucide-react';
 import { clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
@@ -497,9 +495,9 @@ const HomeLoan: React.FC = () => {
           transition={{ delay: 0.7 }}
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
-          className="w-14 h-14 bg-green-500 rounded-2xl shadow-xl flex items-center justify-center"
+          className="w-14 h-14 bg-[#25D366] rounded-2xl shadow-xl flex items-center justify-center"
         >
-          <span className="text-white text-2xl">💬</span>
+          <MessageCircle className="w-7 h-7 text-white" />
         </motion.a>
         <motion.a
           href="tel:9437578310"
