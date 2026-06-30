@@ -11,6 +11,11 @@ import AdminLogin from './pages/AdminLogin';
 import AdminDashboard from './pages/AdminDashboard';
 import AdminLoanEnquiries from './pages/AdminLoanEnquiries';
 import AdminBuildingEnquiries from './pages/AdminBuildingEnquiries';
+import AdminBanks from './pages/AdminBanks';
+import AdminConstructionMaterial from './pages/AdminConstructionMaterial';
+import AdminHospitals from './pages/AdminHospitals';
+import AdminTouristPlaces from './pages/AdminTouristPlaces';
+import AdminEmergencyContacts from './pages/AdminEmergencyContacts';
 
 function App() {
   return (
@@ -29,6 +34,11 @@ function App() {
         <Route path="/admin/dashboard" element={<AdminDashboard />} />
         <Route path="/admin/loan-enquiries" element={<AdminLoanEnquiries />} />
         <Route path="/admin/building-enquiries" element={<AdminBuildingEnquiries />} />
+        <Route path="/admin/banks" element={<AdminBanks />} />
+        <Route path="/admin/construction-material" element={<AdminConstructionMaterial />} />
+        <Route path="/admin/hospitals" element={<AdminHospitals />} />
+        <Route path="/admin/tourist-places" element={<AdminTouristPlaces />} />
+        <Route path="/admin/emergency-contacts" element={<AdminEmergencyContacts />} />
       </Routes>
     </Router>
   );

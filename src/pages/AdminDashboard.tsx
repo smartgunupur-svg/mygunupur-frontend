@@ -92,7 +92,12 @@ const AdminDashboard: React.FC = () => {
 
   const quickLinks = [
     { title: 'Loan Enquiries', icon: FileText, color: 'from-blue-500 to-blue-600', path: '/admin/loan-enquiries' },
-    { title: 'Building Enquiries', icon: Building2, color: 'from-green-500 to-emerald-600', path: '/admin/building-enquiries' }
+    { title: 'Building Enquiries', icon: Building2, color: 'from-green-500 to-emerald-600', path: '/admin/building-enquiries' },
+    { title: 'Banks', icon: FileText, color: 'from-indigo-500 to-purple-600', path: '/admin/banks' },
+    { title: 'Construction Materials', icon: Building2, color: 'from-orange-500 to-red-600', path: '/admin/construction-material' },
+    { title: 'Hospitals', icon: FileText, color: 'from-pink-500 to-rose-600', path: '/admin/hospitals' },
+    { title: 'Tourist Places', icon: FileText, color: 'from-teal-500 to-cyan-600', path: '/admin/tourist-places' },
+    { title: 'Emergency Contacts', icon: FileText, color: 'from-red-500 to-orange-600', path: '/admin/emergency-contacts' }
   ];
 
   return (
