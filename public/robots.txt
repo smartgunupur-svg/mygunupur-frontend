@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://mygunupur.in/sitemap.xml

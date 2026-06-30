@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import { 
   ArrowLeft, 
   HeartPulse, 
@@ -36,6 +37,13 @@ const Hospitals: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-pink-50 to-rose-50 pb-24">
+      <Helmet>
+        <title>Hospitals - My Gunupur</title>
+        <meta name="description" content="Find all hospitals and medical facilities in Gunupur. Get contact details and call directly for appointments!" />
+        <meta property="og:title" content="Hospitals - My Gunupur" />
+        <meta property="og:description" content="Find all hospitals and medical facilities in Gunupur. Get contact details and call directly for appointments!" />
+        <meta property="og:url" content="https://mygunupur.in/hospitals" />
+      </Helmet>
       {/* Header */}
       <motion.header
         initial={{ y: -80 }}

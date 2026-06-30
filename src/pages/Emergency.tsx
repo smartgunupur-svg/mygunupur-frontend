@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import { 
   ArrowLeft, 
   AlertTriangle, 
@@ -45,6 +46,13 @@ const Emergency: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-slate-50 pb-24">
+      <Helmet>
+        <title>Emergency Contacts - My Gunupur</title>
+        <meta name="description" content="Find all emergency contact numbers in Gunupur including police, fire, ambulance, and hospitals. Get help quickly!" />
+        <meta property="og:title" content="Emergency Contacts - My Gunupur" />
+        <meta property="og:description" content="Find all emergency contact numbers in Gunupur including police, fire, ambulance, and hospitals. Get help quickly!" />
+        <meta property="og:url" content="https://mygunupur.in/emergency" />
+      </Helmet>
       {/* Header */}
       <motion.header 
         initial={{ y: -100 }}

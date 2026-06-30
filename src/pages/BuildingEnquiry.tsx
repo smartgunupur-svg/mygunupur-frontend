@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import { 
   ArrowLeft, 
   Phone, 
@@ -73,6 +74,13 @@ const BuildingEnquiry: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-green-50 to-emerald-50 pb-28">
+      <Helmet>
+        <title>Building Approval - My Gunupur</title>
+        <meta name="description" content="Get expert guidance and fast approval for your building plans in Gunupur with our streamlined process. Submit your enquiry today!" />
+        <meta property="og:title" content="Building Approval - My Gunupur" />
+        <meta property="og:description" content="Get expert guidance and fast approval for your building plans in Gunupur with our streamlined process. Submit your enquiry today!" />
+        <meta property="og:url" content="https://mygunupur.in/building-enquiry" />
+      </Helmet>
       <motion.header
         initial={{ y: -80 }}
         animate={{ y: 0 }}

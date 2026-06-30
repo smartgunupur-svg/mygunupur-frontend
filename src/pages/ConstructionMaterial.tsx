@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import { 
   ArrowLeft, 
   Briefcase, 
@@ -36,6 +37,13 @@ const ConstructionMaterial: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-amber-50 to-orange-50 pb-24">
+      <Helmet>
+        <title>Construction Material - My Gunupur</title>
+        <meta name="description" content="Find all construction material shops in Gunupur. Get contact details and call directly for building supplies!" />
+        <meta property="og:title" content="Construction Material - My Gunupur" />
+        <meta property="og:description" content="Find all construction material shops in Gunupur. Get contact details and call directly for building supplies!" />
+        <meta property="og:url" content="https://mygunupur.in/construction-material" />
+      </Helmet>
       {/* Header */}
       <motion.header
         initial={{ y: -80 }}

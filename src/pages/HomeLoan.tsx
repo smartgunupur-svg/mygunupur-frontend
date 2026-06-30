@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import { 
   ArrowLeft, Calculator, Phone, Send, IndianRupee, Percent, Calendar, FileText, CheckCircle2, Home as HomeIcon
 } from 'lucide-react';
@@ -108,6 +109,13 @@ const HomeLoan: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-emerald-50 pb-28">
+      <Helmet>
+        <title>Home Loan - My Gunupur</title>
+        <meta name="description" content="Get easy home loans in Gunupur with competitive interest rates, quick approval, and flexible repayment options. Use our EMI calculator to plan your payments!" />
+        <meta property="og:title" content="Home Loan - My Gunupur" />
+        <meta property="og:description" content="Get easy home loans in Gunupur with competitive interest rates, quick approval, and flexible repayment options. Use our EMI calculator to plan your payments!" />
+        <meta property="og:url" content="https://mygunupur.in/home-loan" />
+      </Helmet>
       {/* Header */}
       <motion.header
         initial={{ y: -80 }}
