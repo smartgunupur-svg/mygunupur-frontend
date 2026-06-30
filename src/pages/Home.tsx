@@ -2,25 +2,16 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import {
-  Search,
-  Mic,
   Home as HomeIcon,
   Building2,
   AlertTriangle,
   HeartPulse,
-  Banknote,
+  Briefcase,
   MessageSquare,
-  MapPin,
   Phone,
   ChevronRight,
   Star,
-  Menu,
-  Bell,
-  Briefcase,
-  BookOpen,
-  MoreHorizontal,
-  FileText,
-  MessageCircle
+  MapPin,
 } from 'lucide-react';
 import { clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
@@ -33,25 +24,25 @@ const heroSlides = [
   {
     id: 1,
     title: "Welcome to My Gunupur",
-    subtitle: "One Platform for Every Citizen Service",
-    image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&h=800&fit=crop",
+    subtitle: "Your Gateway to Every Citizen Service",
+    image: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1200&h=800&fit=crop",
     cta: "Explore Services",
     path: null
   },
   {
     id: 2,
-    title: "Apply for Home Loan",
-    subtitle: "Calculate EMI & Get Instant Approval",
-    image: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1200&h=800&fit=crop",
-    cta: "Check EMI",
+    title: "Home Loan Made Easy",
+    subtitle: "Calculate EMI & Apply in Minutes",
+    image: "https://images.unsplash.com/photo-1470770841072-f978cf4d019e?w=1200&h=800&fit=crop",
+    cta: "Calculate Now",
     path: "/home-loan"
   },
   {
     id: 3,
-    title: "Explore Gunupur",
-    subtitle: "Discover Tourist Places & Local Gems",
-    image: "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=1200&h=800&fit=crop",
-    cta: "Visit Now",
+    title: "Discover Gunupur",
+    subtitle: "Explore the Beauty of Our Town",
+    image: "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=1200&h=800&fit=crop",
+    cta: "Explore Places",
     path: null
   }
 ];
@@ -59,13 +50,10 @@ const heroSlides = [
 const quickServices = [
   { id: 1, title: "Home Loan", icon: HomeIcon, color: "from-blue-500 to-blue-600", bg: "bg-blue-50", path: "/home-loan" },
   { id: 2, title: "Building Approval", icon: Building2, color: "from-green-500 to-emerald-600", bg: "bg-green-50", path: "/building-enquiry" },
-  { id: 3, title: "Construction Material", icon: Briefcase, color: "from-yellow-500 to-orange-500", bg: "bg-yellow-50", path: "/" },
+  { id: 3, title: "Construction Material", icon: Briefcase, color: "from-amber-500 to-orange-600", bg: "bg-amber-50", path: "/" },
   { id: 4, title: "Emergency", icon: AlertTriangle, color: "from-red-500 to-red-600", bg: "bg-red-50", path: "/emergency" },
   { id: 5, title: "Hospitals", icon: HeartPulse, color: "from-pink-500 to-rose-600", bg: "bg-pink-50", path: "/" },
-  { id: 6, title: "Banks", icon: Banknote, color: "from-indigo-500 to-indigo-600", bg: "bg-indigo-50", path: "/" },
-  { id: 7, title: "Notices", icon: BookOpen, color: "from-purple-500 to-purple-600", bg: "bg-purple-50", path: "/" },
-  { id: 8, title: "Explore", icon: MapPin, color: "from-teal-500 to-teal-600", bg: "bg-teal-50", path: "/" },
-  { id: 9, title: "Contact", icon: MessageSquare, color: "from-orange-500 to-orange-600", bg: "bg-orange-50", path: "/contact" }
+  { id: 6, title: "Contact", icon: MessageSquare, color: "from-teal-500 to-teal-600", bg: "bg-teal-50", path: "/contact" }
 ];
 
 const emergencyContacts = [
@@ -75,38 +63,19 @@ const emergencyContacts = [
   { id: 4, name: "Women Helpline", number: "1091", icon: MessageSquare, color: "from-purple-500 to-purple-600" }
 ];
 
-const popularServices = [
-  { id: 1, title: "Home Loan EMI Calculator", desc: "Calculate EMI, check eligibility & apply", color: "from-green-50 to-green-100", icon: HomeIcon, path: "/home-loan" },
-  { id: 2, title: "Building Plan Assistance", desc: "Architects, Engineers & Approval Help", color: "from-blue-50 to-blue-100", icon: Building2, path: "/building-enquiry" },
-  { id: 3, title: "Government Schemes", desc: "Check eligibility & apply for schemes", color: "from-amber-50 to-amber-100", icon: BookOpen, path: "/" }
-];
-
-const banks = [
-  { id: 1, name: "Indian Bank", logo: "🏦" },
-  { id: 2, name: "UCO Bank", logo: "🏛️" },
-  { id: 3, name: "SBI", logo: "🏦" },
-  { id: 4, name: "Axis Bank", logo: "🏦" }
-];
-
 const touristPlaces = [
   { id: 1, name: "Jagannath Temple", image: "https://images.unsplash.com/photo-1561361513-2d000a50f0dc?w=600&h=400&fit=crop", rating: 4.8, distance: "2 km", desc: "Ancient temple with beautiful architecture" },
   { id: 2, name: "Tumma Waterfall", image: "https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?w=600&h=400&fit=crop", rating: 4.9, distance: "15 km", desc: "Serene waterfall surrounded by nature" },
-  { id: 3, name: "Aska Road View", image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=600&h=400&fit=crop", rating: 4.6, distance: "5 km", desc: "Scenic road with beautiful views" },
-  { id: 4, name: "Duduma Waterfall", image: "https://images.unsplash.com/photo-1519681393784-d120267933ba?w=600&h=400&fit=crop", rating: 4.9, distance: "30 km", desc: "Majestic waterfall in the hills" }
+  { id: 3, name: "Aska Road View", image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=600&h=400&fit=crop", rating: 4.6, distance: "5 km", desc: "Scenic road with beautiful views" }
 ];
 
-const bottomNavItems = [
-  { id: 1, icon: HomeIcon, label: "Home", active: true, path: "/" },
-  { id: 2, icon: FileText, label: "Services", active: false, path: "/home-loan" },
-  { id: 3, icon: Search, label: "Search", active: false, path: "/" },
-  { id: 4, icon: Bell, label: "Notices", active: false, path: "/" },
-  { id: 5, icon: MoreHorizontal, label: "More", active: false, path: "/" }
-];
+const whatsappLogo = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" class="w-7 h-7">
+  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.488-.492-.67-.5h-.572c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .162 5.332.162 11.885c0 2.102.553 4.136 1.56 5.943L0 24l6.324-1.659a11.858 11.858 0 005.726 1.467c.003 0 0 0 .004 0 6.557 0 11.886-5.333 11.886-11.885 0-3.173-1.234-6.151-3.475-8.388"/>
+</svg>`;
 
 const Home: React.FC = () => {
   const navigate = useNavigate();
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [activeBottomNav, setActiveBottomNav] = useState(1);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -116,66 +85,40 @@ const Home: React.FC = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 via-blue-50 to-emerald-50 pb-32">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-emerald-50 to-green-50 pb-20">
+      {/* Header */}
       <motion.header
         initial={{ y: -80 }}
         animate={{ y: 0 }}
-        className="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-slate-200/50"
+        className="sticky top-0 z-50 bg-white/85 backdrop-blur-2xl border-b border-white/30 shadow-sm"
         style={{ height: '72px' }}
       >
         <div className="max-w-6xl mx-auto px-4 h-full flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-12 h-12 bg-gradient-to-br from-blue-600 to-green-600 rounded-2xl flex items-center justify-center shadow-lg">
+            <div className="w-12 h-12 bg-gradient-to-br from-emerald-500 via-blue-500 to-teal-600 rounded-2xl flex items-center justify-center shadow-xl shadow-emerald-500/20">
               <span className="text-white text-2xl font-bold">⛰️</span>
             </div>
             <div>
-              <h1 className="text-xl font-bold bg-gradient-to-r from-blue-700 to-green-600 bg-clip-text text-transparent leading-tight">My Gunupur</h1>
-              <p className="text-xs text-slate-500 font-medium leading-tight">Everything You Need, All in One Place</p>
+              <h1 className="text-xl font-black bg-gradient-to-r from-emerald-700 via-blue-700 to-teal-700 bg-clip-text text-transparent leading-tight">My Gunupur</h1>
+              <p className="text-xs font-semibold text-slate-500">Your Local Service Hub</p>
             </div>
-          </div>
-          <div className="flex items-center gap-2">
-            <button className="p-2.5 hover:bg-slate-100 rounded-2xl transition-all">
-              <Bell className="w-6 h-6 text-slate-600" />
-            </button>
-            <button className="p-2.5 hover:bg-slate-100 rounded-2xl transition-all">
-              <Menu className="w-6 h-6 text-slate-600" />
-            </button>
           </div>
         </div>
       </motion.header>
 
-      <div className="max-w-6xl mx-auto px-4 space-y-6 pt-4">
+      <div className="max-w-6xl mx-auto px-4 space-y-7 pt-6">
+        {/* Hero Slider */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
-          className="relative"
-        >
-          <div className="relative">
-            <Search className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
-            <input
-              type="text"
-              placeholder="Search services, hospitals, banks..."
-              className="w-full pl-14 pr-14 py-4 rounded-3xl bg-white/70 backdrop-blur-xl shadow-xl shadow-slate-200/50 border border-white/50 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all text-slate-700 placeholder:text-slate-400 text-base"
-            />
-            <button className="absolute right-4 top-1/2 -translate-y-1/2 p-2.5 bg-gradient-to-r from-blue-600 to-green-600 rounded-2xl hover:shadow-xl hover:shadow-blue-500/30 transition-all">
-              <Mic className="w-5 h-5 text-white" />
-            </button>
-          </div>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-          className="relative rounded-3xl overflow-hidden shadow-2xl aspect-video"
+          className="relative rounded-3xl overflow-hidden shadow-2xl shadow-emerald-500/10 aspect-[4/3] md:aspect-[16/9]"
         >
           {heroSlides.map((slide, index) => (
             <motion.div
               key={slide.id}
               initial={{ opacity: 0 }}
               animate={{ opacity: index === currentSlide ? 1 : 0 }}
-              transition={{ duration: 0.8 }}
+              transition={{ duration: 1, ease: "easeInOut" }}
               className={cn("absolute inset-0", index === currentSlide ? "z-10" : "z-0")}
             >
               <img
@@ -183,223 +126,180 @@ const Home: React.FC = () => {
                 alt={slide.title}
                 className="w-full h-full object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/60 to-transparent" />
               <div className="absolute bottom-0 left-0 right-0 p-8">
                 <motion.div
-                  initial={{ y: 20, opacity: 0 }}
+                  initial={{ y: 30, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
-                  transition={{ delay: 0.3 + index * 0.1 }}
+                  transition={{ delay: 0.4 + index * 0.1, duration: 0.8 }}
                 >
-                  <h2 className="text-3xl md:text-4xl font-bold text-white mb-2 leading-tight">{slide.title}</h2>
-                  <p className="text-slate-200 text-lg mb-6">{slide.subtitle}</p>
+                  <span className="inline-block px-4 py-1.5 bg-white/20 backdrop-blur-sm rounded-full text-sm font-bold text-white mb-4 border border-white/20">
+                    ✨ Welcome
+                  </span>
+                  <h2 className="text-3xl md:text-5xl font-black text-white mb-3 leading-tight">{slide.title}</h2>
+                  <p className="text-slate-200 text-lg md:text-xl mb-8 max-w-xl">{slide.subtitle}</p>
                   <button
                     onClick={() => slide.path && navigate(slide.path)}
-                    className="px-8 py-3.5 bg-white text-slate-800 font-bold rounded-2xl shadow-xl hover:shadow-2xl hover:scale-105 transition-all flex items-center gap-2"
+                    className="px-8 py-4 bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-black rounded-2xl shadow-2xl shadow-emerald-500/40 hover:shadow-3xl hover:shadow-emerald-500/50 hover:scale-105 transition-all duration-300 flex items-center gap-2 text-lg"
                   >
                     {slide.cta}
-                    <ChevronRight className="w-5 h-5" />
+                    <ChevronRight className="w-6 h-6" />
                   </button>
                 </motion.div>
               </div>
             </motion.div>
           ))}
 
-          <div className="absolute bottom-5 right-8 z-20 flex gap-2">
+          {/* Slide Indicators */}
+          <div className="absolute bottom-6 left-8 z-20 flex gap-2">
             {heroSlides.map((_, index) => (
               <button
                 key={index}
                 onClick={() => setCurrentSlide(index)}
                 className={cn(
-                  "h-2 rounded-full transition-all duration-300",
-                  index === currentSlide ? "w-10 bg-white" : "w-3 bg-white/40 hover:bg-white/60"
+                  "h-2.5 rounded-full transition-all duration-300",
+                  index === currentSlide 
+                    ? "w-12 bg-white shadow-lg" 
+                    : "w-5 bg-white/40 hover:bg-white/70"
                 )}
               />
             ))}
           </div>
         </motion.div>
 
+        {/* Quick Access */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
         >
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-xl font-bold text-slate-800">Quick Access</h3>
+          <div className="flex items-center justify-between mb-5">
+            <div className="flex items-center gap-2">
+              <div className="w-1 h-8 bg-gradient-to-b from-emerald-500 to-teal-600 rounded-full" />
+              <h3 className="text-xl font-black text-slate-800">Quick Access</h3>
+            </div>
           </div>
-          <div className="grid grid-cols-3 gap-3">
+          <div className="grid grid-cols-3 gap-4">
             {quickServices.map((service, index) => (
               <motion.button
                 key={service.id}
-                initial={{ opacity: 0, scale: 0.8 }}
+                initial={{ opacity: 0, scale: 0.7 }}
                 animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.4 + index * 0.05 }}
-                whileHover={{ scale: 1.05, y: -2 }}
+                transition={{ delay: 0.4 + index * 0.08, type: "spring" }}
+                whileHover={{ scale: 1.08, y: -4 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => service.path && navigate(service.path)}
                 className={cn(
-                  "flex flex-col items-center gap-2.5 p-3.5 rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 cursor-pointer",
+                  "flex flex-col items-center gap-3 p-4 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer group",
                   service.bg,
-                  "border border-white/50"
+                  "border border-white/60"
                 )}
               >
-                <div className={cn("w-10 h-10 bg-gradient-to-br rounded-xl flex items-center justify-center shadow-md", service.color)}>
-                  <service.icon className="w-5 h-5 text-white" />
+                <div className={cn(
+                  "w-12 h-12 bg-gradient-to-br rounded-2xl flex items-center justify-center shadow-xl group-hover:shadow-2xl transition-all duration-300 group-hover:scale-110",
+                  service.color
+                )}>
+                  <service.icon className="w-6 h-6 text-white" />
                 </div>
-                <span className="text-xs font-semibold text-slate-700 text-center leading-tight">{service.title}</span>
+                <span className="text-sm font-black text-slate-700 text-center leading-tight">{service.title}</span>
               </motion.button>
             ))}
           </div>
         </motion.div>
 
+        {/* Emergency Contacts */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5 }}
+          transition={{ delay: 0.6 }}
         >
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-xl font-bold text-slate-800">Emergency Contacts</h3>
+          <div className="flex items-center justify-between mb-5">
+            <div className="flex items-center gap-2">
+              <div className="w-1 h-8 bg-gradient-to-b from-red-500 to-rose-600 rounded-full" />
+              <h3 className="text-xl font-black text-slate-800">Emergency Contacts</h3>
+            </div>
           </div>
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-2 gap-4">
             {emergencyContacts.map((contact, index) => (
-              <motion.div
+              <motion.a
                 key={contact.id}
-                initial={{ opacity: 0, x: -20 }}
+                href={`tel:${contact.number}`}
+                initial={{ opacity: 0, x: -30 }}
                 animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.6 + index * 0.1 }}
-                whileHover={{ y: -2 }}
-                className="bg-white rounded-2xl p-4 shadow-lg border border-slate-100"
+                transition={{ delay: 0.7 + index * 0.1 }}
+                whileHover={{ y: -4, scale: 1.02 }}
+                className="bg-gradient-to-br from-white to-slate-50 rounded-2xl p-5 shadow-xl hover:shadow-2xl border border-slate-100 transition-all duration-300"
               >
-                <div className="flex items-start gap-3">
-                  <div className={cn("w-12 h-12 bg-gradient-to-br rounded-xl flex items-center justify-center flex-shrink-0 shadow-sm", contact.color)}>
-                    <contact.icon className="w-6 h-6 text-white" />
+                <div className="flex items-start gap-4">
+                  <div className={cn("w-14 h-14 bg-gradient-to-br rounded-2xl flex items-center justify-center flex-shrink-0 shadow-lg", contact.color)}>
+                    <contact.icon className="w-7 h-7 text-white" />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <h4 className="font-bold text-slate-800 text-sm">{contact.name}</h4>
-                    <p className="text-xl font-black text-slate-900 mt-0.5">{contact.number}</p>
-                    <p className="text-xs text-green-600 font-semibold mt-1 flex items-center gap-1">
-                      <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-                      Available 24×7
-                    </p>
+                    <h4 className="font-black text-slate-800 text-base">{contact.name}</h4>
+                    <p className="text-2xl font-black text-slate-900 mt-1">{contact.number}</p>
+                    <div className="flex items-center gap-1.5 mt-2">
+                      <div className="w-2.5 h-2.5 bg-green-500 rounded-full animate-pulse shadow-lg shadow-green-500/50" />
+                      <p className="text-xs font-bold text-green-600">Available 24×7</p>
+                    </div>
                   </div>
                 </div>
-                <a
-                  href={`tel:${contact.number}`}
-                  className={cn("mt-3 w-full py-2.5 bg-gradient-to-r text-white font-bold rounded-xl shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 text-sm", contact.color)}
-                >
-                  <Phone className="w-4 h-4" />
-                  Call Now
-                </a>
-              </motion.div>
+              </motion.a>
             ))}
           </div>
         </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.7 }}
-        >
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-xl font-bold text-slate-800">Available Banks</h3>
-            <button className="text-blue-600 font-semibold text-sm hover:text-blue-700">View All</button>
-          </div>
-          <div className="grid grid-cols-2 gap-3">
-            {banks.map((bank, index) => (
-              <motion.button
-                key={bank.id}
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.8 + index * 0.1 }}
-                whileHover={{ y: -2, scale: 1.02 }}
-                onClick={() => navigate('/home-loan')}
-                className="bg-white rounded-2xl p-5 shadow-lg border border-slate-100 text-center"
-              >
-                <span className="text-4xl mb-2 block">{bank.logo}</span>
-                <h4 className="font-bold text-slate-800 text-sm">{bank.name}</h4>
-              </motion.button>
-            ))}
-          </div>
-        </motion.div>
-
+        {/* Explore Gunupur */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.9 }}
         >
-          <h3 className="text-xl font-bold text-slate-800 mb-4">Popular Services</h3>
-          <div className="space-y-3">
-            {popularServices.map((service, index) => (
-              <motion.button
-                key={service.id}
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 1 + index * 0.1 }}
-                whileHover={{ x: 4 }}
-                onClick={() => service.path && navigate(service.path)}
-                className={cn(
-                  "w-full flex items-center gap-4 p-4 bg-gradient-to-r rounded-2xl shadow-sm hover:shadow-xl transition-all border border-white/50 cursor-pointer",
-                  service.color
-                )}
-              >
-                <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center shadow-sm">
-                  <service.icon className="w-6 h-6 text-slate-700" />
-                </div>
-                <div className="flex-1 text-left">
-                  <h4 className="font-bold text-slate-800">{service.title}</h4>
-                  <p className="text-sm text-slate-600">{service.desc}</p>
-                </div>
-                <div className="w-9 h-9 bg-white rounded-xl flex items-center justify-center shadow-sm">
-                  <ChevronRight className="w-4 h-4 text-slate-500" />
-                </div>
-              </motion.button>
-            ))}
+          <div className="flex items-center justify-between mb-5">
+            <div className="flex items-center gap-2">
+              <div className="w-1 h-8 bg-gradient-to-b from-blue-500 to-purple-600 rounded-full" />
+              <h3 className="text-xl font-black text-slate-800">Explore Gunupur</h3>
+            </div>
           </div>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.1 }}
-        >
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-xl font-bold text-slate-800">Explore Gunupur</h3>
-            <button className="text-blue-600 font-semibold text-sm hover:text-blue-700">View All</button>
-          </div>
-          <div className="flex gap-3 overflow-x-auto pb-3 -mx-4 px-4 snap-x snap-mandatory">
+          <div className="flex gap-4 overflow-x-auto pb-4 -mx-4 px-4 snap-x snap-mandatory">
             {touristPlaces.map((place, index) => (
               <motion.div
                 key={place.id}
-                initial={{ opacity: 0, scale: 0.9 }}
+                initial={{ opacity: 0, scale: 0.85 }}
                 animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 1.2 + index * 0.1 }}
-                whileHover={{ y: -2 }}
-                className="flex-shrink-0 w-72 snap-start"
+                transition={{ delay: 1 + index * 0.12, type: "spring" }}
+                whileHover={{ y: -6 }}
+                className="flex-shrink-0 w-80 snap-start"
               >
-                <div className="bg-white rounded-3xl overflow-hidden shadow-xl border border-slate-100">
+                <div className="bg-gradient-to-br from-white to-slate-50 rounded-3xl overflow-hidden shadow-2xl border border-slate-100">
                   <div className="relative aspect-[4/3]">
                     <img
                       src={place.image}
                       alt={place.name}
                       className="w-full h-full object-cover"
                     />
-                    <div className="absolute top-3 right-3 bg-white/90 backdrop-blur px-3 py-1.5 rounded-full flex items-center gap-1">
-                      <Star className="w-4 h-4 fill-amber-400 text-amber-400" />
-                      <span className="text-sm font-bold text-slate-800">{place.rating}</span>
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                    <div className="absolute top-4 right-4 bg-white/95 backdrop-blur-xl px-4 py-2 rounded-2xl flex items-center gap-2 shadow-xl">
+                      <Star className="w-5 h-5 fill-amber-400 text-amber-400" />
+                      <span className="text-base font-black text-slate-800">{place.rating}</span>
+                    </div>
+                    <div className="absolute bottom-4 left-4 right-4">
+                      <h4 className="text-2xl font-black text-white drop-shadow-lg">{place.name}</h4>
                     </div>
                   </div>
-                  <div className="p-4">
-                    <h4 className="font-bold text-lg text-slate-800 mb-1">{place.name}</h4>
-                    <p className="text-xs text-slate-500 mb-2">{place.desc}</p>
-                    <p className="text-sm text-slate-500 flex items-center gap-1 mb-3">
-                      <MapPin className="w-3.5 h-3.5" />
-                      {place.distance} from center
-                    </p>
+                  <div className="p-5">
+                    <p className="text-sm text-slate-600 mb-3">{place.desc}</p>
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="flex items-center gap-1.5 text-slate-500 font-bold text-sm">
+                        <MapPin className="w-4 h-4" />
+                        {place.distance} from center
+                      </div>
+                    </div>
                     <div className="flex gap-2">
-                      <button className="flex-1 py-2.5 bg-gradient-to-r from-blue-600 to-green-600 text-white font-bold rounded-xl hover:shadow-md transition-all text-sm">
+                      <button className="flex-1 py-3 bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-black rounded-2xl hover:shadow-xl hover:shadow-emerald-500/40 transition-all text-sm">
                         Open Map
                       </button>
-                      <button className="px-4 py-2.5 bg-slate-100 text-slate-700 font-bold rounded-xl hover:bg-slate-200 transition-all text-sm">
-                        Read More
+                      <button className="px-5 py-3 bg-slate-100 text-slate-700 font-black rounded-2xl hover:bg-slate-200 transition-all text-sm">
+                        View
                       </button>
                     </div>
                   </div>
@@ -410,58 +310,62 @@ const Home: React.FC = () => {
         </motion.div>
       </div>
 
-      <div className="fixed bottom-28 right-4 flex flex-col gap-3 z-40" style={{ bottom: '120px' }}>
+      {/* Floating Action Buttons */}
+      <div className="fixed bottom-24 right-5 flex flex-col gap-4 z-40">
         <motion.a
           href="https://wa.me/919437578310"
           initial={{ opacity: 0, scale: 0 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 1.3 }}
-          whileHover={{ scale: 1.1 }}
+          transition={{ delay: 1.2, type: "spring" }}
+          whileHover={{ scale: 1.15, rotate: 5 }}
           whileTap={{ scale: 0.9 }}
-          className="w-14 h-14 bg-[#25D366] rounded-2xl shadow-xl flex items-center justify-center"
-        >
-          <MessageCircle className="w-7 h-7 text-white" />
-        </motion.a>
+          className="w-16 h-16 bg-[#25D366] rounded-3xl shadow-2xl shadow-[#25D366]/40 flex items-center justify-center hover:shadow-[#25D366]/60 transition-all duration-300"
+          dangerouslySetInnerHTML={{ __html: whatsappLogo }}
+        />
         <motion.a
           href="tel:9437578310"
           initial={{ opacity: 0, scale: 0 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 1.4 }}
-          whileHover={{ scale: 1.1 }}
+          transition={{ delay: 1.3, type: "spring" }}
+          whileHover={{ scale: 1.15, rotate: -5 }}
           whileTap={{ scale: 0.9 }}
-          className="w-14 h-14 bg-blue-600 rounded-2xl shadow-xl flex items-center justify-center"
+          className="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-3xl shadow-2xl shadow-blue-500/40 flex items-center justify-center hover:shadow-blue-500/60 transition-all duration-300"
         >
-          <Phone className="w-7 h-7 text-white" />
+          <Phone className="w-8 h-8 text-white" />
         </motion.a>
       </div>
 
+      {/* Simplified Bottom Nav */}
       <motion.div
         initial={{ y: 100 }}
         animate={{ y: 0 }}
-        transition={{ delay: 1.2 }}
+        transition={{ delay: 1.1, type: "spring" }}
         className="fixed bottom-0 left-0 right-0 z-50"
       >
         <div className="max-w-6xl mx-auto px-4">
-          <div className="bg-white/90 backdrop-blur-xl rounded-t-3xl shadow-2xl border-t border-l border-r border-slate-200/50 px-4 py-3">
-            <div className="flex items-center justify-around">
-              {bottomNavItems.map((item) => (
-                <button
-                  key={item.id}
-                  onClick={() => {
-                    setActiveBottomNav(item.id);
-                    if (item.path) navigate(item.path);
-                  }}
-                  className={cn(
-                    "flex flex-col items-center gap-1.5 p-2.5 rounded-2xl transition-all min-w-[64px]",
-                    activeBottomNav === item.id
-                      ? "bg-gradient-to-br from-blue-50 to-green-50 text-blue-600"
-                      : "text-slate-500 hover:bg-slate-100"
-                  )}
-                >
-                  <item.icon className={cn("w-6 h-6", activeBottomNav === item.id ? "text-blue-600" : "")} />
-                  <span className={cn("text-xs font-semibold", activeBottomNav === item.id ? "text-blue-600" : "")}>{item.label}</span>
-                </button>
-              ))}
+          <div className="bg-white/95 backdrop-blur-2xl rounded-t-3xl shadow-2xl border-t border-l border-r border-white/50 px-6 py-4">
+            <div className="flex items-center justify-around gap-4">
+              <button
+                onClick={() => navigate('/')}
+                className="flex flex-col items-center gap-2 px-4 py-2 bg-gradient-to-br from-emerald-50 to-teal-50 text-emerald-700 rounded-2xl transition-all"
+              >
+                <HomeIcon className="w-7 h-7" />
+                <span className="text-xs font-black">Home</span>
+              </button>
+              <button
+                onClick={() => navigate('/home-loan')}
+                className="flex flex-col items-center gap-2 px-4 py-2 text-slate-500 hover:bg-slate-100 rounded-2xl transition-all"
+              >
+                <HomeIcon className="w-7 h-7" />
+                <span className="text-xs font-semibold">Loan</span>
+              </button>
+              <button
+                onClick={() => navigate('/building-enquiry')}
+                className="flex flex-col items-center gap-2 px-4 py-2 text-slate-500 hover:bg-slate-100 rounded-2xl transition-all"
+              >
+                <Building2 className="w-7 h-7" />
+                <span className="text-xs font-semibold">Building</span>
+              </button>
             </div>
           </div>
         </div>
