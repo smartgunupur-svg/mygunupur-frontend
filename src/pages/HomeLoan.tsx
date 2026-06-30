@@ -14,7 +14,8 @@ import {
   FileText,
   CheckCircle2,
   Banknote,
-  Star
+  Star,
+  ChevronRight
 } from 'lucide-react';
 import { clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
@@ -32,20 +33,14 @@ const banks = [
     name: 'Indian Bank',
     logo: '🏦',
     color: 'from-blue-600 to-blue-700',
-    bg: 'bg-blue-50',
-    interestRate: '8.50',
-    processingFee: '0.50',
-    maxTenure: '30 Years'
+    bg: 'bg-blue-50'
   },
   {
     id: 2,
     name: 'UCO Bank',
     logo: '🏛️',
     color: 'from-orange-500 to-red-600',
-    bg: 'bg-orange-50',
-    interestRate: '8.75',
-    processingFee: '0.35',
-    maxTenure: '30 Years'
+    bg: 'bg-orange-50'
   }
 ];
 
@@ -62,8 +57,8 @@ const HomeLoan: React.FC = () => {
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
-    mobile: '9437578310',
-    email: 'smartgunupur@gmail.com',
+    mobile: '',
+    email: '',
     address: '',
     loanPurpose: '',
     remarks: '',
@@ -100,8 +95,8 @@ const HomeLoan: React.FC = () => {
         setSubmitSuccess(false);
         setFormData({
           name: '',
-          mobile: '9437578310',
-          email: 'smartgunupur@gmail.com',
+          mobile: '',
+          email: '',
           address: '',
           loanPurpose: '',
           remarks: '',
@@ -118,42 +113,35 @@ const HomeLoan: React.FC = () => {
 
   const selectBank = (bankId: number) => {
     setSelectedBank(bankId);
-    const bank = banks.find(b => b.id === bankId);
-    if (bank) {
-      setInterestRate(parseFloat(bank.interestRate));
-    }
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 pb-28">
-      {/* Header */}
+    <div className="min-h-screen bg-gradient-to-br from-green-50 via-blue-50 to-emerald-50 pb-32">
       <motion.header
-        initial={{ y: -100 }}
+        initial={{ y: -80 }}
         animate={{ y: 0 }}
-        className="sticky top-0 z-50 glass bg-white/90 shadow-sm"
+        className="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-slate-200/50"
+        style={{ height: '72px' }}
       >
-        <div className="max-w-6xl mx-auto px-4 py-4">
-          <div className="flex items-center gap-4">
-            <button
-              onClick={() => navigate('/')}
-              className="p-3 hover:bg-slate-100 rounded-2xl transition-all"
-            >
-              <ArrowLeft className="w-6 h-6 text-slate-600" />
-            </button>
-            <div>
-              <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-green-600 bg-clip-text text-transparent">Home Loan</h1>
-              <p className="text-sm text-slate-500 font-medium">Calculate & Apply Now</p>
-            </div>
+        <div className="max-w-6xl mx-auto px-4 h-full flex items-center gap-4">
+          <button
+            onClick={() => navigate('/')}
+            className="p-2.5 hover:bg-slate-100 rounded-2xl transition-all"
+          >
+            <ArrowLeft className="w-6 h-6 text-slate-600" />
+          </button>
+          <div>
+            <h1 className="text-xl font-bold bg-gradient-to-r from-blue-700 to-green-600 bg-clip-text text-transparent leading-tight">Home Loan</h1>
+            <p className="text-xs text-slate-500 font-medium leading-tight">Calculate & Apply Now</p>
           </div>
         </div>
       </motion.header>
 
-      <div className="max-w-6xl mx-auto px-4 space-y-6 pt-6">
-        {/* Hero Banner */}
+      <div className="max-w-6xl mx-auto px-4 space-y-5 pt-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-gradient-to-br from-blue-600 via-indigo-600 to-purple-600 rounded-3xl p-8 text-white shadow-2xl overflow-hidden relative"
+          className="bg-gradient-to-br from-blue-600 via-indigo-600 to-purple-600 rounded-3xl p-6 text-white shadow-2xl overflow-hidden relative"
         >
           <div className="absolute inset-0 opacity-20">
             <div className="absolute top-0 right-0 w-64 h-64 bg-white rounded-full blur-3xl translate-x-1/2 -translate-y-1/2"></div>
@@ -161,7 +149,7 @@ const HomeLoan: React.FC = () => {
           </div>
           <div className="relative z-10 flex items-center justify-between">
             <div className="max-w-lg">
-              <div className="flex items-center gap-2 mb-3">
+              <div className="flex items-center gap-2 mb-2">
                 <div className="px-3 py-1 bg-white/20 backdrop-blur rounded-full text-sm font-semibold">
                   Best Interest Rates
                 </div>
@@ -170,122 +158,86 @@ const HomeLoan: React.FC = () => {
                   4.9 Rating
                 </div>
               </div>
-              <h2 className="text-4xl font-bold mb-3">Your Dream Home<br />Awaits You</h2>
-              <p className="text-blue-100 text-lg mb-6">Calculate your EMI and get instant home loan approval with the best banks in India</p>
-              <div className="flex flex-wrap gap-3">
-                <a href="tel:9437578310" className="flex items-center gap-2 px-6 py-3 bg-white text-indigo-700 font-bold rounded-2xl hover:shadow-xl transition-all">
-                  <Phone className="w-5 h-5" />
+              <h2 className="text-2xl font-bold mb-2">Your Dream Home<br />Awaits You</h2>
+              <p className="text-blue-100 text-base mb-4">Calculate your EMI and get instant home loan approval</p>
+              <div className="flex flex-wrap gap-2">
+                <a href="tel:9437578310" className="flex items-center gap-2 px-6 py-2.5 bg-white text-indigo-700 font-bold rounded-2xl hover:shadow-xl transition-all">
+                  <Phone className="w-4 h-4" />
                   Call: 9437578310
-                </a>
-                <a href="mailto:smartgunupur@gmail.com" className="flex items-center gap-2 px-6 py-3 bg-white/20 backdrop-blur border border-white/30 font-bold rounded-2xl hover:bg-white/30 transition-all">
-                  <Mail className="w-5 h-5" />
-                  Email Us
                 </a>
               </div>
             </div>
             <div className="hidden lg:block">
-              <div className="text-9xl animate-bounce">🏠</div>
+              <div className="text-7xl animate-bounce">🏠</div>
             </div>
           </div>
         </motion.div>
 
-        {/* Bank Options */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
         >
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-xl font-bold text-slate-800">Available Banks</h3>
-            <p className="text-sm text-slate-500 font-medium">Select to auto-fill interest rate</p>
+          <div className="flex items-center justify-between mb-3">
+            <h3 className="text-lg font-bold text-slate-800">Available Banks</h3>
+            <p className="text-xs text-slate-500 font-medium">Select to auto-fill interest rate</p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             {banks.map((bank, index) => (
               <motion.button
                 key={bank.id}
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.2 + index * 0.1 }}
-                whileHover={{ y: -4 }}
+                whileHover={{ y: -2 }}
                 onClick={() => selectBank(bank.id)}
                 className={cn(
-                  "text-left p-6 rounded-3xl border-2 transition-all",
+                  "text-center p-6 rounded-2xl border-2 transition-all",
                   selectedBank === bank.id
                     ? "border-blue-500 shadow-xl"
                     : "border-slate-100 hover:border-slate-200 shadow-lg",
                   "bg-white"
                 )}
               >
-                <div className="flex items-start justify-between mb-4">
-                  <div className="flex items-center gap-4">
-                    <div className={cn("w-16 h-16 bg-gradient-to-br rounded-2xl flex items-center justify-center shadow-lg", bank.color)}>
-                      <span className="text-3xl">{bank.logo}</span>
-                    </div>
-                    <div>
-                      <h4 className="font-bold text-slate-800 text-xl">{bank.name}</h4>
-                      <div className="flex items-center gap-2 mt-1">
-                        <div className="flex">
-                          {[1, 2, 3, 4, 5].map(star => (
-                            <Star key={star} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                          ))}
-                        </div>
-                        <span className="text-sm text-slate-500 font-medium">4.9 (2.5k+)</span>
-                      </div>
-                    </div>
+                <span className="text-4xl mb-2 block">{bank.logo}</span>
+                <h4 className="font-bold text-slate-800">{bank.name}</h4>
+                {selectedBank === bank.id && (
+                  <div className="mt-2 inline-flex items-center gap-1 px-3 py-1 bg-blue-100 rounded-full text-blue-700 text-xs font-semibold">
+                    <CheckCircle2 className="w-3.5 h-3.5" />
+                    Selected
                   </div>
-                  {selectedBank === bank.id && (
-                    <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
-                      <CheckCircle2 className="w-5 h-5 text-white" />
-                    </div>
-                  )}
-                </div>
-                <div className="grid grid-cols-3 gap-4 pt-4 border-t border-slate-100">
-                  <div>
-                    <p className="text-xs text-slate-500 font-semibold uppercase tracking-wider">Interest</p>
-                    <p className="text-2xl font-black text-slate-800">{bank.interestRate}%</p>
-                  </div>
-                  <div>
-                    <p className="text-xs text-slate-500 font-semibold uppercase tracking-wider">Processing Fee</p>
-                    <p className="text-2xl font-black text-slate-800">{bank.processingFee}%</p>
-                  </div>
-                  <div>
-                    <p className="text-xs text-slate-500 font-semibold uppercase tracking-wider">Max Tenure</p>
-                    <p className="text-2xl font-black text-slate-800">{bank.maxTenure}</p>
-                  </div>
-                </div>
+                )}
               </motion.button>
             ))}
           </div>
         </motion.div>
 
-        {/* EMI Calculator */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
-          className="bg-white rounded-3xl p-6 md:p-8 shadow-xl border border-slate-100"
+          className="bg-white rounded-3xl p-5 shadow-xl border border-slate-100"
         >
-          <div className="flex items-center gap-3 mb-8">
-            <div className="w-14 h-14 bg-gradient-to-br from-blue-600 to-green-600 rounded-2xl flex items-center justify-center shadow-lg">
-              <Calculator className="w-7 h-7 text-white" />
+          <div className="flex items-center gap-3 mb-5">
+            <div className="w-12 h-12 bg-gradient-to-br from-blue-600 to-green-600 rounded-xl flex items-center justify-center shadow-md">
+              <Calculator className="w-6 h-6 text-white" />
             </div>
             <div>
-              <h3 className="text-2xl font-bold text-slate-800">EMI Calculator</h3>
-              <p className="text-sm text-slate-500 font-medium">Calculate your monthly EMI instantly</p>
+              <h3 className="text-lg font-bold text-slate-800">EMI Calculator</h3>
+              <p className="text-xs text-slate-500 font-medium">Calculate your monthly EMI instantly</p>
             </div>
           </div>
 
-          <div className="space-y-8">
-            {/* Loan Amount */}
-            <div className="bg-slate-50 p-6 rounded-2xl border border-slate-100">
-              <div className="flex items-center justify-between mb-4">
-                <label className="font-bold text-slate-700 flex items-center gap-2 text-lg">
-                  <IndianRupee className="w-5 h-5 text-blue-600" />
+          <div className="space-y-5">
+            <div className="bg-slate-50 p-4 rounded-2xl border border-slate-100">
+              <div className="flex items-center justify-between mb-3">
+                <label className="font-bold text-slate-700 flex items-center gap-2 text-sm">
+                  <IndianRupee className="w-4 h-4 text-blue-600" />
                   Loan Amount
                 </label>
-                <div className="flex items-center gap-2 bg-white px-4 py-2 rounded-xl border border-slate-200 shadow-sm">
-                  <span className="text-slate-500 font-medium">₹</span>
-                  <span className="text-xl font-black bg-gradient-to-r from-blue-600 to-green-600 bg-clip-text text-transparent">
+                <div className="flex items-center gap-2 bg-white px-3 py-1.5 rounded-xl border border-slate-200 shadow-sm">
+                  <span className="text-slate-500 font-medium text-sm">₹</span>
+                  <span className="text-lg font-black bg-gradient-to-r from-blue-600 to-green-600 bg-clip-text text-transparent">
                     {loanAmount.toLocaleString()}
                   </span>
                 </div>
@@ -297,24 +249,23 @@ const HomeLoan: React.FC = () => {
                 step="100000"
                 value={loanAmount}
                 onChange={(e) => setLoanAmount(Number(e.target.value))}
-                className="w-full h-3 bg-slate-200 rounded-full appearance-none cursor-pointer accent-gradient-to-r from-blue-600 to-green-600"
+                className="w-full h-2 bg-slate-200 rounded-full appearance-none cursor-pointer accent-gradient-to-r from-blue-600 to-green-600"
               />
-              <div className="flex justify-between mt-3 text-sm font-semibold text-slate-400">
+              <div className="flex justify-between mt-2 text-[11px] font-semibold text-slate-400">
                 <span>₹1L</span>
                 <span>₹50L</span>
                 <span>₹1Cr</span>
               </div>
             </div>
 
-            {/* Interest Rate */}
-            <div className="bg-slate-50 p-6 rounded-2xl border border-slate-100">
-              <div className="flex items-center justify-between mb-4">
-                <label className="font-bold text-slate-700 flex items-center gap-2 text-lg">
-                  <Percent className="w-5 h-5 text-blue-600" />
+            <div className="bg-slate-50 p-4 rounded-2xl border border-slate-100">
+              <div className="flex items-center justify-between mb-3">
+                <label className="font-bold text-slate-700 flex items-center gap-2 text-sm">
+                  <Percent className="w-4 h-4 text-blue-600" />
                   Interest Rate (p.a)
                 </label>
-                <div className="flex items-center gap-2 bg-white px-4 py-2 rounded-xl border border-slate-200 shadow-sm">
-                  <span className="text-xl font-black bg-gradient-to-r from-blue-600 to-green-600 bg-clip-text text-transparent">
+                <div className="flex items-center gap-2 bg-white px-3 py-1.5 rounded-xl border border-slate-200 shadow-sm">
+                  <span className="text-lg font-black bg-gradient-to-r from-blue-600 to-green-600 bg-clip-text text-transparent">
                     {interestRate}%
                   </span>
                 </div>
@@ -326,24 +277,23 @@ const HomeLoan: React.FC = () => {
                 step="0.1"
                 value={interestRate}
                 onChange={(e) => setInterestRate(Number(e.target.value))}
-                className="w-full h-3 bg-slate-200 rounded-full appearance-none cursor-pointer accent-gradient-to-r from-blue-600 to-green-600"
+                className="w-full h-2 bg-slate-200 rounded-full appearance-none cursor-pointer accent-gradient-to-r from-blue-600 to-green-600"
               />
-              <div className="flex justify-between mt-3 text-sm font-semibold text-slate-400">
+              <div className="flex justify-between mt-2 text-[11px] font-semibold text-slate-400">
                 <span>5%</span>
                 <span>10%</span>
                 <span>15%</span>
               </div>
             </div>
 
-            {/* Loan Tenure */}
-            <div className="bg-slate-50 p-6 rounded-2xl border border-slate-100">
-              <div className="flex items-center justify-between mb-4">
-                <label className="font-bold text-slate-700 flex items-center gap-2 text-lg">
-                  <Calendar className="w-5 h-5 text-blue-600" />
+            <div className="bg-slate-50 p-4 rounded-2xl border border-slate-100">
+              <div className="flex items-center justify-between mb-3">
+                <label className="font-bold text-slate-700 flex items-center gap-2 text-sm">
+                  <Calendar className="w-4 h-4 text-blue-600" />
                   Loan Tenure
                 </label>
-                <div className="flex items-center gap-2 bg-white px-4 py-2 rounded-xl border border-slate-200 shadow-sm">
-                  <span className="text-xl font-black bg-gradient-to-r from-blue-600 to-green-600 bg-clip-text text-transparent">
+                <div className="flex items-center gap-2 bg-white px-3 py-1.5 rounded-xl border border-slate-200 shadow-sm">
+                  <span className="text-lg font-black bg-gradient-to-r from-blue-600 to-green-600 bg-clip-text text-transparent">
                     {loanTenure} Years
                   </span>
                 </div>
@@ -355,9 +305,9 @@ const HomeLoan: React.FC = () => {
                 step="1"
                 value={loanTenure}
                 onChange={(e) => setLoanTenure(Number(e.target.value))}
-                className="w-full h-3 bg-slate-200 rounded-full appearance-none cursor-pointer accent-gradient-to-r from-blue-600 to-green-600"
+                className="w-full h-2 bg-slate-200 rounded-full appearance-none cursor-pointer accent-gradient-to-r from-blue-600 to-green-600"
               />
-              <div className="flex justify-between mt-3 text-sm font-semibold text-slate-400">
+              <div className="flex justify-between mt-2 text-[11px] font-semibold text-slate-400">
                 <span>1 Year</span>
                 <span>15 Years</span>
                 <span>30 Years</span>
@@ -366,50 +316,48 @@ const HomeLoan: React.FC = () => {
           </div>
         </motion.div>
 
-        {/* Results Cards */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
-          className="grid grid-cols-1 md:grid-cols-3 gap-4"
+          className="grid grid-cols-1 md:grid-cols-3 gap-3"
         >
-          <div className="bg-gradient-to-br from-blue-600 to-indigo-700 rounded-3xl p-6 text-white shadow-xl border border-blue-500/20">
-            <div className="flex items-center gap-2 mb-2 text-blue-100">
-              <Calendar className="w-5 h-5" />
-              <p className="font-semibold">Monthly EMI</p>
+          <div className="bg-gradient-to-br from-blue-600 to-indigo-700 rounded-2xl p-4 text-white shadow-xl border border-blue-500/20">
+            <div className="flex items-center gap-1.5 mb-1.5 text-blue-100">
+              <Calendar className="w-4 h-4" />
+              <p className="font-semibold text-xs">Monthly EMI</p>
             </div>
-            <p className="text-4xl font-black">₹{emi.toLocaleString()}</p>
+            <p className="text-2xl font-black">₹{emi.toLocaleString()}</p>
           </div>
-          <div className="bg-gradient-to-br from-orange-500 to-orange-600 rounded-3xl p-6 text-white shadow-xl border border-orange-500/20">
-            <div className="flex items-center gap-2 mb-2 text-orange-100">
-              <Percent className="w-5 h-5" />
-              <p className="font-semibold">Total Interest</p>
+          <div className="bg-gradient-to-br from-orange-500 to-orange-600 rounded-2xl p-4 text-white shadow-xl border border-orange-500/20">
+            <div className="flex items-center gap-1.5 mb-1.5 text-orange-100">
+              <Percent className="w-4 h-4" />
+              <p className="font-semibold text-xs">Total Interest</p>
             </div>
-            <p className="text-4xl font-black">₹{totalInterest.toLocaleString()}</p>
+            <p className="text-2xl font-black">₹{totalInterest.toLocaleString()}</p>
           </div>
-          <div className="bg-gradient-to-br from-green-600 to-emerald-700 rounded-3xl p-6 text-white shadow-xl border border-green-500/20">
-            <div className="flex items-center gap-2 mb-2 text-green-100">
-              <Banknote className="w-5 h-5" />
-              <p className="font-semibold">Total Payment</p>
+          <div className="bg-gradient-to-br from-green-600 to-emerald-700 rounded-2xl p-4 text-white shadow-xl border border-green-500/20">
+            <div className="flex items-center gap-1.5 mb-1.5 text-green-100">
+              <Banknote className="w-4 h-4" />
+              <p className="font-semibold text-xs">Total Payment</p>
             </div>
-            <p className="text-4xl font-black">₹{totalPayment.toLocaleString()}</p>
+            <p className="text-2xl font-black">₹{totalPayment.toLocaleString()}</p>
           </div>
         </motion.div>
 
-        {/* Enquiry Form */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5 }}
-          className="bg-white rounded-3xl p-6 md:p-8 shadow-xl border border-slate-100"
+          className="bg-white rounded-3xl p-5 shadow-xl border border-slate-100"
         >
-          <div className="flex items-center gap-3 mb-8">
-            <div className="w-14 h-14 bg-gradient-to-br from-blue-600 to-green-600 rounded-2xl flex items-center justify-center shadow-lg">
-              <FileText className="w-7 h-7 text-white" />
+          <div className="flex items-center gap-3 mb-5">
+            <div className="w-12 h-12 bg-gradient-to-br from-blue-600 to-green-600 rounded-xl flex items-center justify-center shadow-md">
+              <FileText className="w-6 h-6 text-white" />
             </div>
             <div>
-              <h3 className="text-2xl font-bold text-slate-800">Apply for Home Loan</h3>
-              <p className="text-sm text-slate-500 font-medium">Our team will contact you within 24 hours</p>
+              <h3 className="text-lg font-bold text-slate-800">Apply for Home Loan</h3>
+              <p className="text-xs text-slate-500 font-medium">Our team will contact you within 24 hours</p>
             </div>
           </div>
 
@@ -417,19 +365,19 @@ const HomeLoan: React.FC = () => {
             <motion.div
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              className="flex flex-col items-center justify-center py-12 text-center"
+              className="flex flex-col items-center justify-center py-10 text-center"
             >
-              <div className="w-24 h-24 bg-green-100 rounded-full flex items-center justify-center mb-6">
-                <CheckCircle2 className="w-12 h-12 text-green-600" />
+              <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mb-4">
+                <CheckCircle2 className="w-10 h-10 text-green-600" />
               </div>
-              <h3 className="text-2xl font-bold text-slate-800 mb-2">Enquiry Submitted Successfully!</h3>
-              <p className="text-slate-500">Our team will contact you shortly</p>
+              <h3 className="text-xl font-bold text-slate-800 mb-1">Enquiry Submitted Successfully!</h3>
+              <p className="text-sm text-slate-500">Our team will contact you shortly</p>
             </motion.div>
           ) : (
-            <form onSubmit={handleSubmit} className="space-y-5">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-bold text-slate-700 mb-2">Full Name *</label>
+                  <label className="block text-xs font-bold text-slate-700 mb-1.5">Full Name *</label>
                   <input
                     type="text"
                     name="name"
@@ -437,43 +385,43 @@ const HomeLoan: React.FC = () => {
                     placeholder="Enter your full name"
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    className="w-full px-5 py-4 bg-slate-50 border-2 border-slate-100 rounded-2xl focus:outline-none focus:border-blue-500 focus:bg-white transition-all text-slate-800 font-medium"
+                    className="w-full px-4 py-3 bg-slate-50 border-2 border-slate-100 rounded-xl focus:outline-none focus:border-blue-500 focus:bg-white transition-all text-slate-800 font-medium text-sm"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-bold text-slate-700 mb-2">Mobile Number *</label>
+                  <label className="block text-xs font-bold text-slate-700 mb-1.5">Mobile Number *</label>
                   <input
                     type="tel"
                     name="mobile"
                     required
-                    placeholder="9437578310"
+                    placeholder="Enter your mobile number"
                     value={formData.mobile}
                     onChange={(e) => setFormData({ ...formData, mobile: e.target.value })}
-                    className="w-full px-5 py-4 bg-slate-50 border-2 border-slate-100 rounded-2xl focus:outline-none focus:border-blue-500 focus:bg-white transition-all text-slate-800 font-medium"
+                    className="w-full px-4 py-3 bg-slate-50 border-2 border-slate-100 rounded-xl focus:outline-none focus:border-blue-500 focus:bg-white transition-all text-slate-800 font-medium text-sm"
                   />
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-bold text-slate-700 mb-2">Email Address</label>
+                  <label className="block text-xs font-bold text-slate-700 mb-1.5">Email Address</label>
                   <input
                     type="email"
                     name="email"
-                    placeholder="smartgunupur@gmail.com"
+                    placeholder="Enter your email"
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    className="w-full px-5 py-4 bg-slate-50 border-2 border-slate-100 rounded-2xl focus:outline-none focus:border-blue-500 focus:bg-white transition-all text-slate-800 font-medium"
+                    className="w-full px-4 py-3 bg-slate-50 border-2 border-slate-100 rounded-xl focus:outline-none focus:border-blue-500 focus:bg-white transition-all text-slate-800 font-medium text-sm"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-bold text-slate-700 mb-2">Loan Purpose *</label>
+                  <label className="block text-xs font-bold text-slate-700 mb-1.5">Loan Purpose *</label>
                   <select
                     name="loanPurpose"
                     required
                     value={formData.loanPurpose}
                     onChange={(e) => setFormData({ ...formData, loanPurpose: e.target.value })}
-                    className="w-full px-5 py-4 bg-slate-50 border-2 border-slate-100 rounded-2xl focus:outline-none focus:border-blue-500 focus:bg-white transition-all text-slate-800 font-medium"
+                    className="w-full px-4 py-3 bg-slate-50 border-2 border-slate-100 rounded-xl focus:outline-none focus:border-blue-500 focus:bg-white transition-all text-slate-800 font-medium text-sm"
                   >
                     <option value="">Select Purpose</option>
                     <option value="new">New Home Purchase</option>
@@ -485,39 +433,39 @@ const HomeLoan: React.FC = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-bold text-slate-700 mb-2">Address (Optional)</label>
+                <label className="block text-xs font-bold text-slate-700 mb-1.5">Address (Optional)</label>
                 <textarea
                   name="address"
                   placeholder="Enter your complete address"
                   value={formData.address}
                   onChange={(e) => setFormData({ ...formData, address: e.target.value })}
-                  rows={3}
-                  className="w-full px-5 py-4 bg-slate-50 border-2 border-slate-100 rounded-2xl focus:outline-none focus:border-blue-500 focus:bg-white transition-all text-slate-800 font-medium resize-none"
+                  rows={2}
+                  className="w-full px-4 py-3 bg-slate-50 border-2 border-slate-100 rounded-xl focus:outline-none focus:border-blue-500 focus:bg-white transition-all text-slate-800 font-medium text-sm resize-none"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-bold text-slate-700 mb-2">Additional Remarks</label>
+                <label className="block text-xs font-bold text-slate-700 mb-1.5">Additional Remarks</label>
                 <textarea
                   name="remarks"
                   placeholder="Any additional details..."
                   value={formData.remarks}
                   onChange={(e) => setFormData({ ...formData, remarks: e.target.value })}
-                  rows={3}
-                  className="w-full px-5 py-4 bg-slate-50 border-2 border-slate-100 rounded-2xl focus:outline-none focus:border-blue-500 focus:bg-white transition-all text-slate-800 font-medium resize-none"
+                  rows={2}
+                  className="w-full px-4 py-3 bg-slate-50 border-2 border-slate-100 rounded-xl focus:outline-none focus:border-blue-500 focus:bg-white transition-all text-slate-800 font-medium text-sm resize-none"
                 />
               </div>
 
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-2.5">
                 <input
                   type="checkbox"
                   id="agree"
                   required
                   checked={formData.agreedToContact}
                   onChange={(e) => setFormData({ ...formData, agreedToContact: e.target.checked })}
-                  className="w-5 h-5 accent-blue-600"
+                  className="w-4 h-4 accent-blue-600"
                 />
-                <label htmlFor="agree" className="text-sm text-slate-600 font-medium">
+                <label htmlFor="agree" className="text-xs text-slate-600 font-medium">
                   I agree to be contacted by our team
                 </label>
               </div>
@@ -525,10 +473,10 @@ const HomeLoan: React.FC = () => {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full py-5 bg-gradient-to-r from-blue-600 to-green-600 text-white font-bold text-lg rounded-2xl shadow-xl hover:shadow-2xl hover:scale-[1.01] transition-all flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
+                className="w-full py-3.5 bg-gradient-to-r from-blue-600 to-green-600 text-white font-bold text-base rounded-xl shadow-xl hover:shadow-2xl hover:scale-[1.01] transition-all flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
               >
                 {isSubmitting ? (
-                  <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                  <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
                 ) : (
                   <>
                     <Send className="w-5 h-5" />
@@ -539,42 +487,9 @@ const HomeLoan: React.FC = () => {
             </form>
           )}
         </motion.div>
-
-        {/* Contact Cards */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6 }}
-          className="grid grid-cols-1 md:grid-cols-3 gap-4"
-        >
-          <div className="bg-white rounded-3xl p-6 shadow-xl border border-slate-100 text-center">
-            <div className="w-16 h-16 bg-blue-100 rounded-3xl flex items-center justify-center mx-auto mb-4 shadow-sm">
-              <Phone className="w-8 h-8 text-blue-600" />
-            </div>
-            <h4 className="font-bold text-slate-800 mb-2 text-lg">Call Us</h4>
-            <a href="tel:9437578310" className="text-2xl font-black text-blue-600 block mb-1">9437578310</a>
-            <p className="text-sm text-slate-500 font-medium">Available 24×7</p>
-          </div>
-          <div className="bg-white rounded-3xl p-6 shadow-xl border border-slate-100 text-center">
-            <div className="w-16 h-16 bg-green-100 rounded-3xl flex items-center justify-center mx-auto mb-4 shadow-sm">
-              <Mail className="w-8 h-8 text-green-600" />
-            </div>
-            <h4 className="font-bold text-slate-800 mb-2 text-lg">Email Us</h4>
-            <a href="mailto:smartgunupur@gmail.com" className="text-lg font-bold text-green-600 block mb-1">smartgunupur@gmail.com</a>
-            <p className="text-sm text-slate-500 font-medium">Reply within 2 hours</p>
-          </div>
-          <div className="bg-white rounded-3xl p-6 shadow-xl border border-slate-100 text-center">
-            <div className="w-16 h-16 bg-yellow-100 rounded-3xl flex items-center justify-center mx-auto mb-4 shadow-sm">
-              <MapPin className="w-8 h-8 text-yellow-600" />
-            </div>
-            <h4 className="font-bold text-slate-800 mb-2 text-lg">Visit Us</h4>
-            <p className="text-sm text-slate-500 font-medium">Gunupur, Rayagada, Odisha</p>
-          </div>
-        </motion.div>
       </div>
 
-      {/* Floating Action Buttons */}
-      <div className="fixed bottom-28 right-4 flex flex-col gap-3 z-40">
+      <div className="fixed bottom-28 right-4 flex flex-col gap-3 z-40" style={{ bottom: '120px' }}>
         <motion.a
           href="https://wa.me/919437578310"
           initial={{ opacity: 0, scale: 0 }}
@@ -582,9 +497,9 @@ const HomeLoan: React.FC = () => {
           transition={{ delay: 0.7 }}
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
-          className="w-16 h-16 bg-green-500 rounded-2xl shadow-xl flex items-center justify-center"
+          className="w-14 h-14 bg-green-500 rounded-2xl shadow-xl flex items-center justify-center"
         >
-          <span className="text-white text-3xl">💬</span>
+          <span className="text-white text-2xl">💬</span>
         </motion.a>
         <motion.a
           href="tel:9437578310"
@@ -593,9 +508,9 @@ const HomeLoan: React.FC = () => {
           transition={{ delay: 0.8 }}
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
-          className="w-16 h-16 bg-blue-600 rounded-2xl shadow-xl flex items-center justify-center"
+          className="w-14 h-14 bg-blue-600 rounded-2xl shadow-xl flex items-center justify-center"
         >
-          <Phone className="w-8 h-8 text-white" />
+          <Phone className="w-7 h-7 text-white" />
         </motion.a>
       </div>
     </div>

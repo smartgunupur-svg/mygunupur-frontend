@@ -18,8 +18,8 @@ const BuildingEnquiry: React.FC = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: '',
-    phone: '9437578310',
-    email: 'smartgunupur@gmail.com',
+    phone: '',
+    email: '',
     address: '',
     plotNumber: '',
     ward: '',
@@ -39,8 +39,8 @@ const BuildingEnquiry: React.FC = () => {
         setSubmitSuccess(false);
         setFormData({
           name: '',
-          phone: '9437578310',
-          email: 'smartgunupur@gmail.com',
+          phone: '',
+          email: '',
           address: '',
           plotNumber: '',
           ward: '',
@@ -61,33 +61,32 @@ const BuildingEnquiry: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 pb-28">
+    <div className="min-h-screen bg-gradient-to-br from-green-50 via-blue-50 to-emerald-50 pb-32">
       <motion.header
-        initial={{ y: -100 }}
+        initial={{ y: -80 }}
         animate={{ y: 0 }}
-        className="sticky top-0 z-50 glass bg-white/90 shadow-sm"
+        className="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-slate-200/50"
+        style={{ height: '72px' }}
       >
-        <div className="max-w-6xl mx-auto px-4 py-4">
-          <div className="flex items-center gap-4">
-            <button
-              onClick={() => navigate('/')}
-              className="p-3 hover:bg-slate-100 rounded-2xl transition-all"
-            >
-              <ArrowLeft className="w-6 h-6 text-slate-600" />
-            </button>
-            <div>
-              <h1 className="text-2xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">Building Plan Permission</h1>
-              <p className="text-sm text-slate-500 font-medium">Apply for Building Approval</p>
-            </div>
+        <div className="max-w-6xl mx-auto px-4 h-full flex items-center gap-4">
+          <button
+            onClick={() => navigate('/')}
+            className="p-2.5 hover:bg-slate-100 rounded-2xl transition-all"
+          >
+            <ArrowLeft className="w-6 h-6 text-slate-600" />
+          </button>
+          <div>
+            <h1 className="text-xl font-bold bg-gradient-to-r from-green-700 to-emerald-600 bg-clip-text text-transparent leading-tight">Building Plan Permission</h1>
+            <p className="text-xs text-slate-500 font-medium leading-tight">Apply for Building Approval</p>
           </div>
         </div>
       </motion.header>
 
-      <div className="max-w-6xl mx-auto px-4 space-y-6 pt-6">
+      <div className="max-w-6xl mx-auto px-4 space-y-5 pt-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-gradient-to-br from-green-600 via-emerald-600 to-teal-600 rounded-3xl p-8 text-white shadow-2xl overflow-hidden relative"
+          className="bg-gradient-to-br from-green-600 via-emerald-600 to-teal-600 rounded-3xl p-6 text-white shadow-2xl overflow-hidden relative"
         >
           <div className="absolute inset-0 opacity-20">
             <div className="absolute top-0 right-0 w-64 h-64 bg-white rounded-full blur-3xl translate-x-1/2 -translate-y-1/2"></div>
@@ -95,7 +94,7 @@ const BuildingEnquiry: React.FC = () => {
           </div>
           <div className="relative z-10 flex items-center justify-between">
             <div className="max-w-lg">
-              <div className="flex items-center gap-2 mb-3">
+              <div className="flex items-center gap-2 mb-2">
                 <div className="px-3 py-1 bg-white/20 backdrop-blur rounded-full text-sm font-semibold">
                   Fast Approval
                 </div>
@@ -103,21 +102,17 @@ const BuildingEnquiry: React.FC = () => {
                   Expert Guidance
                 </div>
               </div>
-              <h2 className="text-4xl font-bold mb-3">Get Your Building Plan Approved</h2>
-              <p className="text-green-100 text-lg mb-6">Submit your details and our team will assist you with building plan permission process</p>
-              <div className="flex flex-wrap gap-3">
-                <a href="tel:9437578310" className="flex items-center gap-2 px-6 py-3 bg-white text-emerald-700 font-bold rounded-2xl hover:shadow-xl transition-all">
-                  <Phone className="w-5 h-5" />
+              <h2 className="text-2xl font-bold mb-2">Get Your Building Plan Approved</h2>
+              <p className="text-green-100 text-base mb-4">Submit your details and our team will assist you</p>
+              <div className="flex flex-wrap gap-2">
+                <a href="tel:9437578310" className="flex items-center gap-2 px-6 py-2.5 bg-white text-emerald-700 font-bold rounded-2xl hover:shadow-xl transition-all">
+                  <Phone className="w-4 h-4" />
                   Call: 9437578310
-                </a>
-                <a href="mailto:smartgunupur@gmail.com" className="flex items-center gap-2 px-6 py-3 bg-white/20 backdrop-blur border border-white/30 font-bold rounded-2xl hover:bg-white/30 transition-all">
-                  <Mail className="w-5 h-5" />
-                  Email Us
                 </a>
               </div>
             </div>
             <div className="hidden lg:block">
-              <div className="text-9xl animate-bounce">🏗️</div>
+              <div className="text-7xl animate-bounce">🏗️</div>
             </div>
           </div>
         </motion.div>
@@ -126,15 +121,15 @@ const BuildingEnquiry: React.FC = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="bg-white rounded-3xl p-6 md:p-8 shadow-xl border border-slate-100"
+          className="bg-white rounded-3xl p-5 shadow-xl border border-slate-100"
         >
-          <div className="flex items-center gap-3 mb-8">
-            <div className="w-14 h-14 bg-gradient-to-br from-green-600 to-emerald-600 rounded-2xl flex items-center justify-center shadow-lg">
-              <FileText className="w-7 h-7 text-white" />
+          <div className="flex items-center gap-3 mb-5">
+            <div className="w-12 h-12 bg-gradient-to-br from-green-600 to-emerald-600 rounded-xl flex items-center justify-center shadow-md">
+              <FileText className="w-6 h-6 text-white" />
             </div>
             <div>
-              <h3 className="text-2xl font-bold text-slate-800">Submit Your Enquiry</h3>
-              <p className="text-sm text-slate-500 font-medium">Fill the form below and we'll get back to you soon</p>
+              <h3 className="text-lg font-bold text-slate-800">Submit Your Enquiry</h3>
+              <p className="text-xs text-slate-500 font-medium">Fill the form and we'll get back soon</p>
             </div>
           </div>
 
@@ -142,19 +137,19 @@ const BuildingEnquiry: React.FC = () => {
             <motion.div
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              className="flex flex-col items-center justify-center py-12 text-center"
+              className="flex flex-col items-center justify-center py-10 text-center"
             >
-              <div className="w-24 h-24 bg-green-100 rounded-full flex items-center justify-center mb-6">
-                <CheckCircle2 className="w-12 h-12 text-green-600" />
+              <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mb-4">
+                <CheckCircle2 className="w-10 h-10 text-green-600" />
               </div>
-              <h3 className="text-2xl font-bold text-slate-800 mb-2">Enquiry Submitted Successfully!</h3>
-              <p className="text-slate-500">Our team will contact you shortly</p>
+              <h3 className="text-xl font-bold text-slate-800 mb-1">Enquiry Submitted Successfully!</h3>
+              <p className="text-sm text-slate-500">Our team will contact you shortly</p>
             </motion.div>
           ) : (
-            <form onSubmit={handleSubmit} className="space-y-5">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-bold text-slate-700 mb-2">Full Name *</label>
+                  <label className="block text-xs font-bold text-slate-700 mb-1.5">Full Name *</label>
                   <input
                     type="text"
                     name="name"
@@ -162,68 +157,68 @@ const BuildingEnquiry: React.FC = () => {
                     placeholder="Enter your full name"
                     value={formData.name}
                     onChange={handleChange}
-                    className="w-full px-5 py-4 bg-slate-50 border-2 border-slate-100 rounded-2xl focus:outline-none focus:border-green-500 focus:bg-white transition-all text-slate-800 font-medium"
+                    className="w-full px-4 py-3 bg-slate-50 border-2 border-slate-100 rounded-xl focus:outline-none focus:border-green-500 focus:bg-white transition-all text-slate-800 font-medium text-sm"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-bold text-slate-700 mb-2">Phone Number *</label>
+                  <label className="block text-xs font-bold text-slate-700 mb-1.5">Phone Number *</label>
                   <input
                     type="tel"
                     name="phone"
                     required
-                    placeholder="9437578310"
+                    placeholder="Enter your phone number"
                     value={formData.phone}
                     onChange={handleChange}
-                    className="w-full px-5 py-4 bg-slate-50 border-2 border-slate-100 rounded-2xl focus:outline-none focus:border-green-500 focus:bg-white transition-all text-slate-800 font-medium"
+                    className="w-full px-4 py-3 bg-slate-50 border-2 border-slate-100 rounded-xl focus:outline-none focus:border-green-500 focus:bg-white transition-all text-slate-800 font-medium text-sm"
                   />
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-bold text-slate-700 mb-2">Email Address</label>
+                  <label className="block text-xs font-bold text-slate-700 mb-1.5">Email Address</label>
                   <input
                     type="email"
                     name="email"
-                    placeholder="smartgunupur@gmail.com"
+                    placeholder="Enter your email"
                     value={formData.email}
                     onChange={handleChange}
-                    className="w-full px-5 py-4 bg-slate-50 border-2 border-slate-100 rounded-2xl focus:outline-none focus:border-green-500 focus:bg-white transition-all text-slate-800 font-medium"
+                    className="w-full px-4 py-3 bg-slate-50 border-2 border-slate-100 rounded-xl focus:outline-none focus:border-green-500 focus:bg-white transition-all text-slate-800 font-medium text-sm"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-bold text-slate-700 mb-2">Plot Number</label>
+                  <label className="block text-xs font-bold text-slate-700 mb-1.5">Plot Number</label>
                   <input
                     type="text"
                     name="plotNumber"
                     placeholder="Enter plot number"
                     value={formData.plotNumber}
                     onChange={handleChange}
-                    className="w-full px-5 py-4 bg-slate-50 border-2 border-slate-100 rounded-2xl focus:outline-none focus:border-green-500 focus:bg-white transition-all text-slate-800 font-medium"
+                    className="w-full px-4 py-3 bg-slate-50 border-2 border-slate-100 rounded-xl focus:outline-none focus:border-green-500 focus:bg-white transition-all text-slate-800 font-medium text-sm"
                   />
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-bold text-slate-700 mb-2">Ward</label>
+                  <label className="block text-xs font-bold text-slate-700 mb-1.5">Ward</label>
                   <input
                     type="text"
                     name="ward"
                     placeholder="Enter ward number"
                     value={formData.ward}
                     onChange={handleChange}
-                    className="w-full px-5 py-4 bg-slate-50 border-2 border-slate-100 rounded-2xl focus:outline-none focus:border-green-500 focus:bg-white transition-all text-slate-800 font-medium"
+                    className="w-full px-4 py-3 bg-slate-50 border-2 border-slate-100 rounded-xl focus:outline-none focus:border-green-500 focus:bg-white transition-all text-slate-800 font-medium text-sm"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-bold text-slate-700 mb-2">Requirement Type *</label>
+                  <label className="block text-xs font-bold text-slate-700 mb-1.5">Requirement Type *</label>
                   <select
                     name="requirement"
                     required
                     value={formData.requirement}
                     onChange={handleChange}
-                    className="w-full px-5 py-4 bg-slate-50 border-2 border-slate-100 rounded-2xl focus:outline-none focus:border-green-500 focus:bg-white transition-all text-slate-800 font-medium"
+                    className="w-full px-4 py-3 bg-slate-50 border-2 border-slate-100 rounded-xl focus:outline-none focus:border-green-500 focus:bg-white transition-all text-slate-800 font-medium text-sm"
                   >
                     <option value="">Select Requirement</option>
                     <option value="new-construction">New Construction</option>
@@ -236,39 +231,39 @@ const BuildingEnquiry: React.FC = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-bold text-slate-700 mb-2">Address</label>
+                <label className="block text-xs font-bold text-slate-700 mb-1.5">Address</label>
                 <textarea
                   name="address"
                   placeholder="Enter your complete address"
                   value={formData.address}
                   onChange={handleChange}
-                  rows={3}
-                  className="w-full px-5 py-4 bg-slate-50 border-2 border-slate-100 rounded-2xl focus:outline-none focus:border-green-500 focus:bg-white transition-all text-slate-800 font-medium resize-none"
+                  rows={2}
+                  className="w-full px-4 py-3 bg-slate-50 border-2 border-slate-100 rounded-xl focus:outline-none focus:border-green-500 focus:bg-white transition-all text-slate-800 font-medium text-sm resize-none"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-bold text-slate-700 mb-2">Message / Details</label>
+                <label className="block text-xs font-bold text-slate-700 mb-1.5">Message / Details</label>
                 <textarea
                   name="message"
                   placeholder="Tell us more about your requirement..."
                   value={formData.message}
                   onChange={handleChange}
-                  rows={4}
-                  className="w-full px-5 py-4 bg-slate-50 border-2 border-slate-100 rounded-2xl focus:outline-none focus:border-green-500 focus:bg-white transition-all text-slate-800 font-medium resize-none"
+                  rows={3}
+                  className="w-full px-4 py-3 bg-slate-50 border-2 border-slate-100 rounded-xl focus:outline-none focus:border-green-500 focus:bg-white transition-all text-slate-800 font-medium text-sm resize-none"
                 />
               </div>
 
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full py-5 bg-gradient-to-r from-green-600 to-emerald-600 text-white font-bold text-lg rounded-2xl shadow-xl hover:shadow-2xl hover:scale-[1.01] transition-all flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
+                className="w-full py-3.5 bg-gradient-to-r from-green-600 to-emerald-600 text-white font-bold text-base rounded-xl shadow-xl hover:shadow-2xl hover:scale-[1.01] transition-all flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
               >
                 {isSubmitting ? (
-                  <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                  <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
                 ) : (
                   <>
-                    <Send className="w-6 h-6" />
+                    <Send className="w-5 h-5" />
                     Submit Enquiry
                   </>
                 )}
@@ -276,40 +271,9 @@ const BuildingEnquiry: React.FC = () => {
             </form>
           )}
         </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4 }}
-          className="grid grid-cols-1 md:grid-cols-3 gap-4"
-        >
-          <div className="bg-white rounded-3xl p-6 shadow-xl border border-slate-100 text-center">
-            <div className="w-16 h-16 bg-green-100 rounded-3xl flex items-center justify-center mx-auto mb-4 shadow-sm">
-              <Phone className="w-8 h-8 text-green-600" />
-            </div>
-            <h4 className="font-bold text-slate-800 mb-2 text-lg">Call Us</h4>
-            <a href="tel:9437578310" className="text-2xl font-black text-green-600 block mb-1">9437578310</a>
-            <p className="text-sm text-slate-500 font-medium">Available 24×7</p>
-          </div>
-          <div className="bg-white rounded-3xl p-6 shadow-xl border border-slate-100 text-center">
-            <div className="w-16 h-16 bg-teal-100 rounded-3xl flex items-center justify-center mx-auto mb-4 shadow-sm">
-              <Mail className="w-8 h-8 text-teal-600" />
-            </div>
-            <h4 className="font-bold text-slate-800 mb-2 text-lg">Email Us</h4>
-            <a href="mailto:smartgunupur@gmail.com" className="text-lg font-bold text-teal-600 block mb-1">smartgunupur@gmail.com</a>
-            <p className="text-sm text-slate-500 font-medium">Reply within 2 hours</p>
-          </div>
-          <div className="bg-white rounded-3xl p-6 shadow-xl border border-slate-100 text-center">
-            <div className="w-16 h-16 bg-yellow-100 rounded-3xl flex items-center justify-center mx-auto mb-4 shadow-sm">
-              <Map className="w-8 h-8 text-yellow-600" />
-            </div>
-            <h4 className="font-bold text-slate-800 mb-2 text-lg">Visit Us</h4>
-            <p className="text-sm text-slate-500 font-medium">Gunupur, Rayagada, Odisha</p>
-          </div>
-        </motion.div>
       </div>
 
-      <div className="fixed bottom-28 right-4 flex flex-col gap-3 z-40">
+      <div className="fixed bottom-28 right-4 flex flex-col gap-3 z-40" style={{ bottom: '120px' }}>
         <motion.a
           href="https://wa.me/919437578310"
           initial={{ opacity: 0, scale: 0 }}
@@ -317,9 +281,9 @@ const BuildingEnquiry: React.FC = () => {
           transition={{ delay: 0.5 }}
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
-          className="w-16 h-16 bg-green-500 rounded-2xl shadow-xl flex items-center justify-center"
+          className="w-14 h-14 bg-green-500 rounded-2xl shadow-xl flex items-center justify-center"
         >
-          <span className="text-white text-3xl">💬</span>
+          <span className="text-white text-2xl">💬</span>
         </motion.a>
         <motion.a
           href="tel:9437578310"
@@ -328,9 +292,9 @@ const BuildingEnquiry: React.FC = () => {
           transition={{ delay: 0.6 }}
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
-          className="w-16 h-16 bg-green-600 rounded-2xl shadow-xl flex items-center justify-center"
+          className="w-14 h-14 bg-green-600 rounded-2xl shadow-xl flex items-center justify-center"
         >
-          <Phone className="w-8 h-8 text-white" />
+          <Phone className="w-7 h-7 text-white" />
         </motion.a>
       </div>
     </div>
