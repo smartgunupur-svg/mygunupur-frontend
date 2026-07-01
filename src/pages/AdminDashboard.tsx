@@ -36,7 +36,7 @@ const AdminDashboard: React.FC = () => {
   const [touristPlaces, setTouristPlaces] = useState<any[]>([]);
   const [emergencyContacts, setEmergencyContacts] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
@@ -119,10 +119,10 @@ const AdminDashboard: React.FC = () => {
   return (
     <div className="min-h-screen bg-slate-50 flex">
       {/* Mobile sidebar overlay */}
-      {!sidebarOpen && (
+      {sidebarOpen && (
         <div 
           className="fixed inset-0 bg-black/50 z-40 lg:hidden"
-          onClick={() => setSidebarOpen(true)}
+          onClick={() => setSidebarOpen(false)}
         />
       )}
 

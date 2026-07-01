@@ -175,7 +175,7 @@ const Home: React.FC = () => {
           animate={{ opacity: 1, y: 0 }}
           className="relative rounded-3xl overflow-hidden shadow-2xl"
         >
-          <div className="relative h-[450px] md:h-[550px]">
+          <div className="relative h-[350px] md:h-[450px] lg:h-[550px]">
             <AnimatePresence mode="wait">
               <motion.div
                 key={heroSlides[currentSlide].id}
@@ -199,11 +199,11 @@ const Home: React.FC = () => {
                         animate={{ y: 0, opacity: 1 }}
                         transition={{ delay: 0.3 }}
                       >
-                        <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full mb-6 border border-white/20">
-                          <HeartPulse className="w-4 h-4 text-green-400" />
-                          <span className="text-white text-sm font-semibold">Welcome to My Gunupur</span>
+                        <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm px-3 py-1.5 rounded-full mb-4 border border-white/20">
+                          <HeartPulse className="w-3.5 h-3.5 text-green-400" />
+                          <span className="text-white text-xs font-semibold">Welcome to My Gunupur</span>
                         </div>
-                        <h2 className="text-4xl md:text-5xl font-extrabold text-white leading-tight mb-4">
+                        <h2 className="text-2xl md:text-4xl lg:text-5xl font-extrabold text-white leading-tight mb-3">
                           {heroSlides[currentSlide].title.split(' ').map((word, index) => (
                             <span key={index} className="mr-2">
                               {word === 'Every' || word === 'Citizen' || word === 'Service' ? (
@@ -214,19 +214,19 @@ const Home: React.FC = () => {
                             </span>
                           ))}
                         </h2>
-                        <p className="text-gray-200 text-lg md:text-xl mb-8">
+                        <p className="text-gray-200 text-sm md:text-lg mb-6">
                           {heroSlides[currentSlide].subtitle}
                         </p>
-                        <div className="flex flex-wrap gap-4">
+                        <div className="flex flex-wrap gap-3">
                           <button
                             onClick={() => navigate('/')}
-                            className="px-8 py-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-blue-500/40 hover:scale-105 transition-all flex items-center gap-2"
+                            className="px-5 py-2.5 bg-gradient-to-r from-blue-500 to-blue-600 text-white font-semibold rounded-lg shadow-md hover:shadow-blue-500/40 hover:scale-105 transition-all flex items-center gap-2 text-sm"
                           >
-                            Explore Services <ArrowUpRight className="w-5 h-5" />
+                            Explore Services <ArrowUpRight className="w-4 h-4" />
                           </button>
                           <button
                             onClick={() => navigate('/contact')}
-                            className="px-8 py-3 bg-white/10 backdrop-blur-sm border border-white/30 text-white font-semibold rounded-xl hover:bg-white/20 transition-all flex items-center gap-2"
+                            className="px-5 py-2.5 bg-white/10 backdrop-blur-sm border border-white/30 text-white font-semibold rounded-lg hover:bg-white/20 transition-all flex items-center gap-2 text-sm"
                           >
                             Contact Us <Phone className="w-4 h-4" />
                           </button>
@@ -332,25 +332,24 @@ const Home: React.FC = () => {
               </button>
             </div>
           </div>
-          <div className="p-6 md:p-8">
-            <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-4">
+          <div className="p-4 md:p-8">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-8 gap-3">
               {quickServices.map((service, index) => (
                 <motion.button
                   key={service.id}
-                  whileHover={{ y: -5, scale: 1.02 }}
+                  whileHover={{ y: -3, scale: 1.02 }}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.05 }}
                   onClick={() => service.path && navigate(service.path)}
-                  className="flex flex-col items-center gap-3 p-4 rounded-2xl border border-gray-100 hover:border-blue-200 hover:shadow-lg hover:shadow-blue-500/10 transition-all"
+                  className="flex flex-col items-center gap-2 p-3 rounded-xl border border-gray-100 hover:border-blue-200 hover:shadow-md transition-all"
                 >
-                  <div className={`w-14 h-14 bg-gradient-to-br ${service.color} rounded-2xl flex items-center justify-center shadow-md`}>
-                    <service.icon className="w-7 h-7 text-white" />
+                  <div className={`w-10 h-10 bg-gradient-to-br ${service.color} rounded-xl flex items-center justify-center shadow-sm`}>
+                    <service.icon className="w-5 h-5 text-white" />
                   </div>
                   <div className="text-center">
-                    <h4 className="text-sm font-bold text-gray-800">{service.title}</h4>
-                    <p className="text-xs text-gray-500 mt-1">{service.description}</p>
+                    <h4 className="text-xs font-bold text-gray-800">{service.title}</h4>
                   </div>
                 </motion.button>
               ))}
@@ -500,7 +499,7 @@ const Home: React.FC = () => {
       {/* Footer */}
       <div className="bg-gradient-to-r from-slate-900 to-blue-900 pt-12 pb-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-10">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 mb-10">
             <div>
               <div className="mb-4">
                 <img src="/layoutlogo.png" alt="My Gunupur" className="h-16 w-auto" />
@@ -542,8 +541,19 @@ const Home: React.FC = () => {
             </div>
 
             <div>
-              <h4 className="text-white font-bold text-lg mb-4">Contact Info</h4>
-              <ul className="space-y-2 mb-6">
+              <div className="flex items-center justify-between mb-4">
+                <h4 className="text-white font-bold text-lg">Contact Info</h4>
+                <button
+                  onClick={() => navigate('/admin/login')}
+                  className="p-2 bg-white/10 rounded-lg hover:bg-white/20 transition-all"
+                  title="Admin Login"
+                >
+                  <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                  </svg>
+                </button>
+              </div>
+              <ul className="space-y-2">
                 <li className="flex items-center gap-2 text-slate-300 text-sm">
                   <Phone className="w-4 h-4 text-blue-400" />
                   <span>+91 94375 78310</span>
@@ -557,12 +567,6 @@ const Home: React.FC = () => {
                   <span>Gunupur, Odisha</span>
                 </li>
               </ul>
-              <button
-                onClick={() => navigate('/admin/login')}
-                className="w-full py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold rounded-xl hover:shadow-lg hover:shadow-blue-500/30 transition-all"
-              >
-                Admin Login
-              </button>
             </div>
           </div>
 
