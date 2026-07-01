@@ -49,7 +49,7 @@ const AdminLogin: React.FC = () => {
         
         <div className="bg-white rounded-3xl shadow-2xl border border-slate-100 p-8">
           <div className="text-center mb-8">
-            <img src="/logo.png" alt="My Gunupur" className="h-16 w-16 mx-auto mb-4" />
+            <img src="/layoutlogo.png" alt="My Gunupur" className="h-16 w-16 mx-auto mb-4" />
             <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-700 to-green-600 bg-clip-text text-transparent">
               Admin Login
             </h1>

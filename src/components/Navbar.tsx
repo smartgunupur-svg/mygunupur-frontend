@@ -7,7 +7,7 @@ const Navbar: React.FC = () => {
       <div className="max-w-6xl mx-auto px-4">
         <div className="flex justify-between items-center h-16">
           <Link to="/" className="flex items-center gap-2 text-2xl font-bold text-blue-600">
-            <img src="/logo.png" alt="My Gunupur" className="h-10 w-10" />
+            <img src="/layoutlogo.png" alt="My Gunupur" className="h-10 w-10" />
             My Gunupur
           </Link>
           <div className="hidden md:flex space-x-8">

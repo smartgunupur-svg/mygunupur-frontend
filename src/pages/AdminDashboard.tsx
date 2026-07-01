@@ -109,7 +109,7 @@ const AdminDashboard: React.FC = () => {
       >
         <div className="max-w-6xl mx-auto px-4 h-full flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <img src="/logo.png" alt="My Gunupur" className="h-10 w-10" />
+            <img src="/layoutlogo.png" alt="My Gunupur" className="h-10 w-10" />
             <div>
               <h1 className="text-lg font-bold bg-gradient-to-r from-blue-700 to-green-600 bg-clip-text text-transparent">
                 Admin Dashboard
