@@ -79,14 +79,20 @@ const HomeLoan: React.FC = () => {
     const fetchBanks = async () => {
       try {
         const res = await axios.get(`${API_URL}/banks`);
-        setBanks(res.data);
+        setBanks(res.data.slice(0, 2));
       } catch (error) {
         console.error('Error fetching banks:', error);
         setBanks([
-          { _id: '1', name: 'Indian Bank', logo: '🏦' },
-          { _id: '2', name: 'UCO Bank', logo: '🏛️' },
-          { _id: '3', name: 'State Bank of India', logo: '🏦' },
-          { _id: '4', name: 'Axis Bank', logo: '🏦' },
+          { 
+            _id: '1', 
+            name: 'Indian Bank', 
+            logo: 'https://upload.wikimedia.org/wikipedia/en/thumb/6/6c/Indian_Bank_Logo.svg/1200px-Indian_Bank_Logo.svg.png' 
+          },
+          { 
+            _id: '2', 
+            name: 'UCO Bank', 
+            logo: 'https://upload.wikimedia.org/wikipedia/en/thumb/0/0c/UCO_Bank_Logo.svg/1200px-UCO_Bank_Logo.svg.png' 
+          },
         ]);
       } finally {
         setLoadingBanks(false);
@@ -150,14 +156,10 @@ const HomeLoan: React.FC = () => {
           >
             <ArrowLeft className="w-5 h-5 text-slate-600" />
           </button>
-          <div className="flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-lg flex items-center justify-center" style={{ background: NAVY }}>
-              <HomeIcon className="w-4.5 h-4.5 text-white" />
-            </div>
-            <div className="leading-tight">
-              <h1 className="text-[1.05rem] font-bold text-slate-900">Home Loan</h1>
-              <p className="text-[0.72rem] font-medium text-slate-500">My Gunupur Financing Desk</p>
-            </div>
+          <img src="/layoutlogo.png" alt="My Gunupur" className="h-12 w-auto" />
+          <div className="leading-tight ml-2">
+            <h1 className="text-[1.05rem] font-bold text-slate-900">Home Loan</h1>
+            <p className="text-[0.72rem] font-medium text-slate-500">My Gunupur Financing Desk</p>
           </div>
         </div>
       </motion.header>
@@ -224,19 +226,21 @@ const HomeLoan: React.FC = () => {
                   className="relative"
                 >
                   {index < steps.length - 1 && (
-                    <div className="hidden lg:block absolute top-5 left-[calc(100%-0.5rem)] w-full h-px bg-slate-200" />
+                    <div className="hidden lg:block absolute top-10 left-[calc(100%-0.75rem)] w-full h-0.5 bg-gradient-to-r from-blue-200 to-blue-100" />
                   )}
-                  <div className="flex items-center gap-3 mb-3">
+                  <div className="flex flex-col items-center text-center">
                     <div
-                      className="w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm flex-shrink-0 relative z-10"
-                      style={{ background: '#EFF6FF', color: BLUE, border: `1.5px solid #DBEAFE` }}
+                      className="w-12 h-12 rounded-full flex items-center justify-center font-bold text-lg flex-shrink-0 relative z-10 mb-4"
+                      style={{ background: `linear-gradient(135deg, ${BLUE}, #1D4ED8)`, color: 'white', boxShadow: '0 4px 12px rgba(37, 99, 235, 0.3)' }}
                     >
+                      <step.icon className="w-6 h-6" />
+                    </div>
+                    <div className="mb-2 inline-flex items-center justify-center w-6 h-6 rounded-full bg-blue-50 text-blue-600 font-bold text-sm">
                       {index + 1}
                     </div>
-                    <step.icon className="w-5 h-5 text-slate-400" />
+                    <h4 className="font-bold text-base text-slate-900 mb-2">{step.title}</h4>
+                    <p className="text-sm text-slate-500 leading-relaxed">{step.desc}</p>
                   </div>
-                  <h4 className="font-semibold text-sm text-slate-900 mb-1">{step.title}</h4>
-                  <p className="text-xs text-slate-500 leading-relaxed">{step.desc}</p>
                 </motion.div>
               ))}
             </div>
@@ -349,33 +353,43 @@ const HomeLoan: React.FC = () => {
             <h3 className="text-lg font-bold text-slate-900">Select bank partner</h3>
             <span className="text-xs font-medium text-slate-400">Optional</span>
           </div>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+          <div className="grid grid-cols-2 gap-6">
             {loadingBanks
-              ? [1, 2, 3, 4].map((i) => (
-                  <div key={i} className="p-5 rounded-xl border border-slate-200 bg-white animate-pulse text-center">
-                    <div className="w-10 h-10 bg-slate-100 rounded-lg mx-auto mb-3" />
-                    <div className="h-3.5 bg-slate-100 rounded w-3/4 mx-auto" />
+              ? [1, 2].map((i) => (
+                  <div key={i} className="p-6 rounded-2xl border border-slate-200 bg-white animate-pulse text-center">
+                    <div className="w-24 h-16 bg-slate-100 rounded-xl mx-auto mb-4" />
+                    <div className="h-4 bg-slate-100 rounded w-1/2 mx-auto" />
                   </div>
                 ))
               : banks.map((bank, index) => (
                   <motion.button
                     key={bank._id}
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
+                    initial={{ opacity: 0, y: 10 }}
+                    whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    transition={{ delay: index * 0.05 }}
+                    transition={{ delay: index * 0.1 }}
                     onClick={() => setSelectedBank(bank._id)}
+                    whileHover={{ y: -3, scale: 1.02 }}
                     className={cn(
-                      'p-5 rounded-xl border-2 bg-white text-center transition-all duration-200',
-                      selectedBank === bank._id ? 'border-blue-500 ring-4 ring-blue-50' : 'border-slate-200 hover:border-slate-300'
+                      'p-6 rounded-2xl border-2 bg-white text-center transition-all duration-300 shadow-sm',
+                      selectedBank === bank._id 
+                        ? 'border-blue-500 ring-4 ring-blue-50 shadow-md' 
+                        : 'border-slate-200 hover:border-slate-300 hover:shadow-md'
                     )}
                   >
-                    <span className="text-2xl mb-2 block">{bank.logo || '🏦'}</span>
-                    <h4 className="text-sm font-semibold text-slate-800">{bank.name}</h4>
+                    <div className="flex items-center justify-center mb-4">
+                      <img 
+                        src={bank.logo} 
+                        alt={bank.name} 
+                        className="h-14 w-auto object-contain"
+                      />
+                    </div>
+                    <h4 className="text-base font-bold text-slate-800">{bank.name}</h4>
                     {selectedBank === bank._id && (
-                      <span className="inline-flex items-center gap-1 text-[0.7rem] font-semibold text-blue-600 mt-2">
-                        <CheckCircle2 className="w-3 h-3" /> Selected
-                      </span>
+                      <div className="mt-4 flex items-center justify-center gap-2">
+                        <CheckCircle2 className="w-4 h-4 text-blue-600" />
+                        <span className="text-sm font-semibold text-blue-600">Selected</span>
+                      </div>
                     )}
                   </motion.button>
                 ))}

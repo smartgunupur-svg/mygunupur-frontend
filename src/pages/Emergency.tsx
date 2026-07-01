@@ -81,14 +81,8 @@ const Emergency: React.FC = () => {
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-3">
-            <div className="flex items-center gap-3">
-              <img src="/layoutlogo.png" alt="My Gunupur" className="h-12 w-12" />
-              <div className="leading-tight">
-                <h1 className="text-2xl font-extrabold bg-gradient-to-r from-blue-700 via-cyan-600 to-emerald-600 bg-clip-text text-transparent">
-                  My <span className="font-serif italic">Gunupur</span>
-                </h1>
-                <p className="text-xs text-gray-600 font-medium">Everything You Need, All in One Place</p>
-              </div>
+            <div className="flex items-center gap-3 cursor-pointer" onClick={() => window.location.href = '/'}>
+              <img src="/layoutlogo.png" alt="My Gunupur" className="h-16 w-auto" />
             </div>
           </div>
         </div>
