@@ -183,19 +183,21 @@ const BuildingEnquiry: React.FC = () => {
                   className="relative"
                 >
                   {index < steps.length - 1 && (
-                    <div className="hidden lg:block absolute top-5 left-[calc(100%-0.5rem)] w-full h-px bg-slate-200" />
+                    <div className="hidden lg:block absolute top-10 left-[calc(100%-0.75rem)] w-full h-0.5 bg-gradient-to-r from-blue-200 to-blue-100" />
                   )}
-                  <div className="flex items-center gap-3 mb-3">
+                  <div className="flex flex-col items-center text-center">
                     <div
-                      className="w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm flex-shrink-0 relative z-10"
-                      style={{ background: '#EFF6FF', color: BLUE, border: '1.5px solid #DBEAFE' }}
+                      className="w-12 h-12 rounded-full flex items-center justify-center font-bold text-lg flex-shrink-0 relative z-10 mb-4"
+                      style={{ background: `linear-gradient(135deg, ${BLUE}, #1D4ED8)`, color: 'white', boxShadow: '0 4px 12px rgba(37, 99, 235, 0.3)' }}
                     >
+                      <step.icon className="w-6 h-6" />
+                    </div>
+                    <div className="mb-2 inline-flex items-center justify-center w-6 h-6 rounded-full bg-blue-50 text-blue-600 font-bold text-sm">
                       {index + 1}
                     </div>
-                    <step.icon className="w-5 h-5 text-slate-400" />
+                    <h4 className="font-bold text-base text-slate-900 mb-2">{step.title}</h4>
+                    <p className="text-sm text-slate-500 leading-relaxed">{step.desc}</p>
                   </div>
-                  <h4 className="font-semibold text-sm text-slate-900 mb-1">{step.title}</h4>
-                  <p className="text-xs text-slate-500 leading-relaxed">{step.desc}</p>
                 </motion.div>
               ))}
             </div>

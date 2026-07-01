@@ -543,7 +543,7 @@ const Home: React.FC = () => {
 
             <div>
               <h4 className="text-white font-bold text-lg mb-4">Contact Info</h4>
-              <ul className="space-y-2">
+              <ul className="space-y-2 mb-6">
                 <li className="flex items-center gap-2 text-slate-300 text-sm">
                   <Phone className="w-4 h-4 text-blue-400" />
                   <span>+91 94375 78310</span>
@@ -557,6 +557,12 @@ const Home: React.FC = () => {
                   <span>Gunupur, Odisha</span>
                 </li>
               </ul>
+              <button
+                onClick={() => navigate('/admin/login')}
+                className="w-full py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold rounded-xl hover:shadow-lg hover:shadow-blue-500/30 transition-all"
+              >
+                Admin Login
+              </button>
             </div>
           </div>
 

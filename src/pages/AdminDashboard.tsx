@@ -117,7 +117,7 @@ const AdminDashboard: React.FC = () => {
     .slice(0, 8);
 
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="min-h-screen bg-slate-50 flex">
       {/* Mobile sidebar overlay */}
       {!sidebarOpen && (
         <div 
@@ -130,7 +130,7 @@ const AdminDashboard: React.FC = () => {
       <motion.aside
         initial={false}
         animate={{ x: sidebarOpen ? 0 : -300 }}
-        className={`fixed left-0 top-0 h-full w-72 bg-white border-r border-slate-200 z-50 shadow-xl lg:static lg:translate-x-0 transition-transform duration-300`}
+        className={`fixed left-0 top-0 h-full w-72 bg-white border-r border-slate-200 z-50 shadow-xl lg:static lg:translate-x-0 transition-transform duration-300 flex-shrink-0`}
       >
         <div className="p-6 border-b border-slate-100">
           <div className="flex items-center gap-3">
@@ -142,7 +142,7 @@ const AdminDashboard: React.FC = () => {
           </div>
         </div>
 
-        <div className="p-4 space-y-1">
+        <div className="p-4 space-y-1 overflow-y-auto flex-1" style={{ maxHeight: 'calc(100vh - 180px)' }}>
           {navItems.map((item, index) => {
             const isActive = location.pathname === item.path;
             return (
@@ -166,7 +166,7 @@ const AdminDashboard: React.FC = () => {
           })}
         </div>
 
-        <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-slate-100">
+        <div className="p-4 border-t border-slate-100">
           <button
             onClick={handleLogout}
             className="w-full flex items-center gap-3 px-4 py-3 rounded-xl bg-red-50 text-red-600 hover:bg-red-100 transition-all font-semibold text-sm"
@@ -178,9 +178,9 @@ const AdminDashboard: React.FC = () => {
       </motion.aside>
 
       {/* Main Content */}
-      <div className={`flex-1 transition-all duration-300 ${sidebarOpen ? 'lg:ml-72' : 'lg:ml-0'}`}>
+      <div className="flex-1 flex flex-col min-w-0">
         {/* Header */}
-        <header className="sticky top-0 z-30 bg-white/80 backdrop-blur-xl border-b border-slate-200">
+        <header className="sticky top-0 z-30 bg-white/80 backdrop-blur-xl border-b border-slate-200 flex-shrink-0">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
             <div className="flex items-center gap-4">
               <button
@@ -221,180 +221,182 @@ const AdminDashboard: React.FC = () => {
         </header>
 
         {/* Dashboard Content */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
-          {/* Stats Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6">
-            {stats.map((stat, index) => (
-              <motion.div
-                key={stat.title}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 }}
-                whileHover={{ y: -4 }}
-                className="bg-white rounded-2xl p-6 shadow-lg border border-slate-100"
-              >
-                <div className="flex items-center justify-between mb-4">
-                  <div className={`w-12 h-12 bg-gradient-to-br ${stat.color} rounded-xl flex items-center justify-center shadow-md`}>
-                    <stat.icon className="w-6 h-6 text-white" />
-                  </div>
-                  <div className={`flex items-center gap-1 px-2 py-1 rounded-full text-xs font-semibold ${stat.trend === 'up' ? 'bg-green-50 text-green-600' : 'bg-red-50 text-red-600'}`}>
-                    {stat.change}
-                  </div>
-                </div>
-                <p className="text-3xl font-black text-slate-800 mb-1">{loading ? '...' : stat.value}</p>
-                <p className="text-sm text-slate-500 font-semibold">{stat.title}</p>
-              </motion.div>
-            ))}
-          </div>
-
-          {/* Main Grid */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {/* Recent Enquiries */}
-            <div className="lg:col-span-2">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-xl font-bold text-slate-800">Recent Enquiries</h3>
-                <button
-                  onClick={() => navigate('/admin/loan-enquiries')}
-                  className="text-blue-600 font-semibold text-sm hover:text-blue-700 flex items-center gap-1"
+        <div className="flex-1 overflow-y-auto">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+            {/* Stats Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6">
+              {stats.map((stat, index) => (
+                <motion.div
+                  key={stat.title}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                  whileHover={{ y: -4 }}
+                  className="bg-white rounded-2xl p-6 shadow-lg border border-slate-100"
                 >
-                  View All <ArrowRight className="w-4 h-4" />
-                </button>
-              </div>
-              <div className="bg-white rounded-2xl shadow-lg border border-slate-100 overflow-hidden">
-                <div className="overflow-x-auto">
-                  <table className="w-full">
-                    <thead className="bg-slate-50 border-b border-slate-200">
-                      <tr>
-                        <th className="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">Name</th>
-                        <th className="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">Type</th>
-                        <th className="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">Date</th>
-                        <th className="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">Status</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-slate-100">
-                      {loading ? (
-                        <tr>
-                          <td colSpan={4} className="px-6 py-12 text-center text-slate-500">Loading...</td>
-                        </tr>
-                      ) : recentEnquiries.length === 0 ? (
-                        <tr>
-                          <td colSpan={4} className="px-6 py-12 text-center text-slate-500">No enquiries yet</td>
-                        </tr>
-                      ) : (
-                        recentEnquiries.map((enquiry, index) => (
-                          <motion.tr
-                            key={index}
-                            initial={{ opacity: 0, x: -20 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ delay: index * 0.05 }}
-                            className="hover:bg-slate-50 transition-colors"
-                          >
-                            <td className="px-6 py-4">
-                              <div className="flex items-center gap-3">
-                                <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-green-500 rounded-full flex items-center justify-center">
-                                  <Users className="w-5 h-5 text-white" />
-                                </div>
-                                <span className="font-semibold text-slate-800">{enquiry.name}</span>
-                              </div>
-                            </td>
-                            <td className="px-6 py-4">
-                              <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                                enquiry.loanAmount ? 'bg-blue-50 text-blue-600' : 'bg-green-50 text-green-600'
-                              }`}>
-                                {enquiry.loanAmount ? 'Loan' : 'Building'}
-                              </span>
-                            </td>
-                            <td className="px-6 py-4">
-                              <div className="text-sm text-slate-600">
-                                {new Date(enquiry.createdAt).toLocaleDateString()}
-                              </div>
-                              <div className="text-xs text-slate-400">
-                                {new Date(enquiry.createdAt).toLocaleTimeString()}
-                              </div>
-                            </td>
-                            <td className="px-6 py-4">
-                              <span className="flex items-center gap-1 text-yellow-600 bg-yellow-50 px-3 py-1 rounded-full text-xs font-semibold">
-                                <Clock className="w-3.5 h-3.5" />
-                                Pending
-                              </span>
-                            </td>
-                          </motion.tr>
-                        ))
-                      )}
-                    </tbody>
-                  </table>
-                </div>
-              </div>
+                  <div className="flex items-center justify-between mb-4">
+                    <div className={`w-12 h-12 bg-gradient-to-br ${stat.color} rounded-xl flex items-center justify-center shadow-md`}>
+                      <stat.icon className="w-6 h-6 text-white" />
+                    </div>
+                    <div className={`flex items-center gap-1 px-2 py-1 rounded-full text-xs font-semibold ${stat.trend === 'up' ? 'bg-green-50 text-green-600' : 'bg-red-50 text-red-600'}`}>
+                      {stat.change}
+                    </div>
+                  </div>
+                  <p className="text-3xl font-black text-slate-800 mb-1">{loading ? '...' : stat.value}</p>
+                  <p className="text-sm text-slate-500 font-semibold">{stat.title}</p>
+                </motion.div>
+              ))}
             </div>
 
-            {/* Quick Actions & Stats */}
-            <div className="space-y-6">
-              {/* Quick Actions */}
-              <div>
-                <h3 className="text-xl font-bold text-slate-800 mb-4">Quick Actions</h3>
-                <div className="bg-white rounded-2xl shadow-lg border border-slate-100 p-6">
-                  <div className="space-y-3">
-                    <button
-                      onClick={() => navigate('/admin/banks')}
-                      className="w-full flex items-center justify-between p-4 bg-gradient-to-r from-blue-50 to-indigo-50 hover:from-blue-100 hover:to-indigo-100 rounded-xl transition-all border border-blue-100"
-                    >
-                      <div className="flex items-center gap-3">
-                        <Banknote className="w-5 h-5 text-blue-600" />
-                        <span className="font-semibold text-slate-800">Add New Bank</span>
-                      </div>
-                      <ArrowRight className="w-5 h-5 text-blue-600" />
-                    </button>
-                    <button
-                      onClick={() => navigate('/admin/construction-material')}
-                      className="w-full flex items-center justify-between p-4 bg-gradient-to-r from-orange-50 to-red-50 hover:from-orange-100 hover:to-red-100 rounded-xl transition-all border border-orange-100"
-                    >
-                      <div className="flex items-center gap-3">
-                        <ShoppingCart className="w-5 h-5 text-orange-600" />
-                        <span className="font-semibold text-slate-800">Add Shop</span>
-                      </div>
-                      <ArrowRight className="w-5 h-5 text-orange-600" />
-                    </button>
-                    <button
-                      onClick={() => navigate('/admin/emergency-contacts')}
-                      className="w-full flex items-center justify-between p-4 bg-gradient-to-r from-red-50 to-orange-50 hover:from-red-100 hover:to-orange-100 rounded-xl transition-all border border-red-100"
-                    >
-                      <div className="flex items-center gap-3">
-                        <AlertTriangle className="w-5 h-5 text-red-600" />
-                        <span className="font-semibold text-slate-800">Add Emergency Contact</span>
-                      </div>
-                      <ArrowRight className="w-5 h-5 text-red-600" />
-                    </button>
+            {/* Main Grid */}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+              {/* Recent Enquiries */}
+              <div className="lg:col-span-2">
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className="text-xl font-bold text-slate-800">Recent Enquiries</h3>
+                  <button
+                    onClick={() => navigate('/admin/loan-enquiries')}
+                    className="text-blue-600 font-semibold text-sm hover:text-blue-700 flex items-center gap-1"
+                  >
+                    View All <ArrowRight className="w-4 h-4" />
+                  </button>
+                </div>
+                <div className="bg-white rounded-2xl shadow-lg border border-slate-100 overflow-hidden">
+                  <div className="overflow-x-auto">
+                    <table className="w-full">
+                      <thead className="bg-slate-50 border-b border-slate-200">
+                        <tr>
+                          <th className="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">Name</th>
+                          <th className="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">Type</th>
+                          <th className="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">Date</th>
+                          <th className="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">Status</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-slate-100">
+                        {loading ? (
+                          <tr>
+                            <td colSpan={4} className="px-6 py-12 text-center text-slate-500">Loading...</td>
+                          </tr>
+                        ) : recentEnquiries.length === 0 ? (
+                          <tr>
+                            <td colSpan={4} className="px-6 py-12 text-center text-slate-500">No enquiries yet</td>
+                          </tr>
+                        ) : (
+                          recentEnquiries.map((enquiry, index) => (
+                            <motion.tr
+                              key={index}
+                              initial={{ opacity: 0, x: -20 }}
+                              animate={{ opacity: 1, x: 0 }}
+                              transition={{ delay: index * 0.05 }}
+                              className="hover:bg-slate-50 transition-colors"
+                            >
+                              <td className="px-6 py-4">
+                                <div className="flex items-center gap-3">
+                                  <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-green-500 rounded-full flex items-center justify-center">
+                                    <Users className="w-5 h-5 text-white" />
+                                  </div>
+                                  <span className="font-semibold text-slate-800">{enquiry.name}</span>
+                                </div>
+                              </td>
+                              <td className="px-6 py-4">
+                                <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
+                                  enquiry.loanAmount ? 'bg-blue-50 text-blue-600' : 'bg-green-50 text-green-600'
+                                }`}>
+                                  {enquiry.loanAmount ? 'Loan' : 'Building'}
+                                </span>
+                              </td>
+                              <td className="px-6 py-4">
+                                <div className="text-sm text-slate-600">
+                                  {new Date(enquiry.createdAt).toLocaleDateString()}
+                                </div>
+                                <div className="text-xs text-slate-400">
+                                  {new Date(enquiry.createdAt).toLocaleTimeString()}
+                                </div>
+                              </td>
+                              <td className="px-6 py-4">
+                                <span className="flex items-center gap-1 text-yellow-600 bg-yellow-50 px-3 py-1 rounded-full text-xs font-semibold">
+                                  <Clock className="w-3.5 h-3.5" />
+                                  Pending
+                                </span>
+                              </td>
+                            </motion.tr>
+                          ))
+                        )}
+                      </tbody>
+                    </table>
                   </div>
                 </div>
               </div>
 
-              {/* Recent Activity */}
-              <div>
-                <h3 className="text-xl font-bold text-slate-800 mb-4">System Stats</h3>
-                <div className="bg-white rounded-2xl shadow-lg border border-slate-100 p-6">
-                  <div className="space-y-4">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-3">
-                        <CheckCircle className="w-5 h-5 text-green-600" />
-                        <span className="font-medium text-slate-700">Emergency Contacts</span>
-                      </div>
-                      <span className="font-bold text-slate-800">{emergencyContacts.length}</span>
+              {/* Quick Actions & Stats */}
+              <div className="space-y-6">
+                {/* Quick Actions */}
+                <div>
+                  <h3 className="text-xl font-bold text-slate-800 mb-4">Quick Actions</h3>
+                  <div className="bg-white rounded-2xl shadow-lg border border-slate-100 p-6">
+                    <div className="space-y-3">
+                      <button
+                        onClick={() => navigate('/admin/banks')}
+                        className="w-full flex items-center justify-between p-4 bg-gradient-to-r from-blue-50 to-indigo-50 hover:from-blue-100 hover:to-indigo-100 rounded-xl transition-all border border-blue-100"
+                      >
+                        <div className="flex items-center gap-3">
+                          <Banknote className="w-5 h-5 text-blue-600" />
+                          <span className="font-semibold text-slate-800">Add New Bank</span>
+                        </div>
+                        <ArrowRight className="w-5 h-5 text-blue-600" />
+                      </button>
+                      <button
+                        onClick={() => navigate('/admin/construction-material')}
+                        className="w-full flex items-center justify-between p-4 bg-gradient-to-r from-orange-50 to-red-50 hover:from-orange-100 hover:to-red-100 rounded-xl transition-all border border-orange-100"
+                      >
+                        <div className="flex items-center gap-3">
+                          <ShoppingCart className="w-5 h-5 text-orange-600" />
+                          <span className="font-semibold text-slate-800">Add Shop</span>
+                        </div>
+                        <ArrowRight className="w-5 h-5 text-orange-600" />
+                      </button>
+                      <button
+                        onClick={() => navigate('/admin/emergency-contacts')}
+                        className="w-full flex items-center justify-between p-4 bg-gradient-to-r from-red-50 to-orange-50 hover:from-red-100 hover:to-orange-100 rounded-xl transition-all border border-red-100"
+                      >
+                        <div className="flex items-center gap-3">
+                          <AlertTriangle className="w-5 h-5 text-red-600" />
+                          <span className="font-semibold text-slate-800">Add Emergency Contact</span>
+                        </div>
+                        <ArrowRight className="w-5 h-5 text-red-600" />
+                      </button>
                     </div>
-                    <div className="h-px bg-slate-100" />
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-3">
-                        <MapPin className="w-5 h-5 text-teal-600" />
-                        <span className="font-medium text-slate-700">Tourist Places</span>
+                  </div>
+                </div>
+
+                {/* System Stats */}
+                <div>
+                  <h3 className="text-xl font-bold text-slate-800 mb-4">System Stats</h3>
+                  <div className="bg-white rounded-2xl shadow-lg border border-slate-100 p-6">
+                    <div className="space-y-4">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-3">
+                          <CheckCircle className="w-5 h-5 text-green-600" />
+                          <span className="font-medium text-slate-700">Emergency Contacts</span>
+                        </div>
+                        <span className="font-bold text-slate-800">{emergencyContacts.length}</span>
                       </div>
-                      <span className="font-bold text-slate-800">{touristPlaces.length}</span>
-                    </div>
-                    <div className="h-px bg-slate-100" />
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-3">
-                        <HeartPulse className="w-5 h-5 text-pink-600" />
-                        <span className="font-medium text-slate-700">Hospitals</span>
+                      <div className="h-px bg-slate-100" />
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-3">
+                          <MapPin className="w-5 h-5 text-teal-600" />
+                          <span className="font-medium text-slate-700">Tourist Places</span>
+                        </div>
+                        <span className="font-bold text-slate-800">{touristPlaces.length}</span>
                       </div>
-                      <span className="font-bold text-slate-800">{hospitals.length}</span>
+                      <div className="h-px bg-slate-100" />
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-3">
+                          <HeartPulse className="w-5 h-5 text-pink-600" />
+                          <span className="font-medium text-slate-700">Hospitals</span>
+                        </div>
+                        <span className="font-bold text-slate-800">{hospitals.length}</span>
+                      </div>
                     </div>
                   </div>
                 </div>
