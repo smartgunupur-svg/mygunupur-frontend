@@ -7,8 +7,6 @@ import {
   Building2,
   AlertTriangle,
   HeartPulse,
-  Briefcase,
-  MessageSquare,
   Phone,
   ArrowUpRight,
   MapPin,
@@ -18,12 +16,10 @@ import {
   ChevronRight,
   ChevronLeft,
   Banknote,
-  Map,
   FileText,
   PhoneCall,
   Sparkles,
-  Landmark,
-  ShoppingCart
+  Landmark
 } from 'lucide-react';
 import axios from 'axios';
 
@@ -73,7 +69,6 @@ const whatsappLogo = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24
 const Home: React.FC = () => {
   const navigate = useNavigate();
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [emergencyContacts, setEmergencyContacts] = useState<any[]>([]);
   const [touristPlaces, setTouristPlaces] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -87,20 +82,10 @@ const Home: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [contactsRes, placesRes] = await Promise.all([
-          axios.get(`${API_URL}/emergency-contacts`),
-          axios.get(`${API_URL}/tourist-places`)
-        ]);
-        setEmergencyContacts(contactsRes.data);
+        const placesRes = await axios.get(`${API_URL}/tourist-places`);
         setTouristPlaces(placesRes.data);
       } catch (error) {
         console.error('Error fetching data:', error);
-        setEmergencyContacts([
-          { id: 1, category: 'Police', name: 'Police Station Gunupur', phone: '100' },
-          { id: 2, category: 'Ambulance', name: 'Ambulance Service', phone: '108' },
-          { id: 3, category: 'Fire', name: 'Fire Service', phone: '101' },
-          { id: 4, category: 'Women', name: 'Women Helpline', phone: '1091' }
-        ]);
         setTouristPlaces([
           { _id: 1, title: 'Jagannath Temple', description: 'Ancient temple with beautiful architecture', image: 'https://images.unsplash.com/photo-1561361513-2d000a50f0dc?w=600&h=400&fit=crop', googleMap: '#' },
           { _id: 2, title: 'Tumma Waterfall', description: 'Serene waterfall surrounded by nature', image: 'https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?w=600&h=400&fit=crop', googleMap: '#' }
