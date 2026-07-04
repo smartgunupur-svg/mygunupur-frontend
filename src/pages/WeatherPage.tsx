@@ -12,7 +12,7 @@ const WeatherPage: React.FC = () => {
   useEffect(() => {
     const fetchWeather = async () => {
       try {
-        const response = await axios.get(`${API_URL}/forecast.json?key=${API_KEY}&q=19.08,83.82&days=7');
+        const response = await axios.get(`${API_URL}/forecast.json?key=${API_KEY}&q=19.08,83.82&days=7`);
         setWeather(response.data);
       } catch (error) {
         console.error('Error fetching weather:', error);
@@ -38,9 +38,7 @@ const WeatherPage: React.FC = () => {
 
   return (
     <div className="p-4 space-y-6 max-w-4xl mx-auto">
-      {/* Current Weather Card */}
       <div className="bg-gradient-to-br from-blue-600 to-indigo-700 text-white rounded-3xl p-8 shadow-xl relative overflow-hidden">
-        {/* Background sun glow */}
         <div className="absolute right-0 top-0 w-36 h-36 bg-amber-400/20 rounded-full filter blur-2xl" />
         
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center">
@@ -58,7 +56,6 @@ const WeatherPage: React.FC = () => {
           )}
         </div>
 
-        {/* Details Grid */}
         <div className="grid grid-cols-3 gap-2 pt-8 mt-8 border-t border-white/10 text-center">
           <div className="space-y-1">
             <p className="text-[10px] text-blue-200 font-bold uppercase">Humidity</p>
@@ -81,7 +78,6 @@ const WeatherPage: React.FC = () => {
         </div>
       </div>
 
-      {/* 7-Day Forecast */}
       <div className="space-y-3">
         <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider px-1">7-Day Forecast</h3>
         <div className="bg-white border border-slate-100 rounded-3xl p-4 shadow-sm divide-y divide-slate-100">

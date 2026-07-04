@@ -12,16 +12,10 @@ import {
   FileText,
   Droplets,
   Search,
-  CloudSun,
-  Grid,
-  Clock,
-  Phone,
-  Map,
   Calendar,
   Utensils,
   Briefcase,
-  Home,
-  Hospital,
+  Home as HomeIcon,
   Building
 } from 'lucide-react';
 import axios from 'axios';
@@ -62,7 +56,7 @@ const quickServices = [
 
 const featuredServices = [
   { id: 9, title: 'Government Schemes', icon: Building, color: 'from-cyan-600 to-blue-600', path: '/government-schemes', description: 'PMAY, Pension, Scholarships' },
-  { id: 10, title: 'Hotels', icon: Home, color: 'from-orange-500 to-red-500', path: '/hotels', description: 'Stay & Accommodation' },
+  { id: 10, title: 'Hotels', icon: HomeIcon, color: 'from-orange-500 to-red-500', path: '/hotels', description: 'Stay & Accommodation' },
   { id: 11, title: 'Restaurants', icon: Utensils, color: 'from-pink-500 to-rose-500', path: '/restaurants', description: 'Food & Dining' },
   { id: 12, title: 'Events', icon: Calendar, color: 'from-yellow-500 to-orange-500', path: '/events', description: 'Festivals & Events' }
 ];
@@ -74,7 +68,6 @@ const Home: React.FC = () => {
   const [weather, setWeather] = useState<any>(null);
   const [loadingWeather, setLoadingWeather] = useState(true);
 
-  // Auto slide hero
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
@@ -82,7 +75,6 @@ const Home: React.FC = () => {
     return () => clearInterval(timer);
   }, []);
 
-  // Fetch tourist places
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -110,15 +102,12 @@ const Home: React.FC = () => {
     fetchData();
   }, []);
 
-  // Fetch weather (using free weatherapi.com for Gunupur, Odisha)
   useEffect(() => {
     const fetchWeather = async () => {
       try {
-        // Gunupur coordinates: approx 19.08° N, 83.82° E
         const response = await axios.get('https://api.weatherapi.com/v1/current.json?key=e1b301203ef34fd39d8110550252901&q=19.08,83.82');
         setWeather(response.data);
       } catch (error) {
-        // Fallback to static weather data
         setWeather({
           location: { name: 'Gunupur', region: 'Odisha' },
           current: { temp_c: 28, condition: { text: 'Sunny', icon: 'https://cdn.weatherapi.com/weather/64x64/day/113.png' }, humidity: 65, wind_kph: 12 }
@@ -137,9 +126,7 @@ const Home: React.FC = () => {
         <meta name="description" content="My Gunupur - Your one-stop platform for all citizen services in Gunupur, Odisha." />
       </Helmet>
 
-      {/* Hero Section */}
       <div className="max-w-6xl mx-auto">
-        {/* Welcome Banner */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -171,9 +158,7 @@ const Home: React.FC = () => {
           </div>
         </motion.div>
 
-        {/* Weather & Emergency Section */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-          {/* Weather Card */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
@@ -205,7 +190,6 @@ const Home: React.FC = () => {
             </div>
           </motion.div>
 
-          {/* Emergency Call Card */}
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
@@ -225,7 +209,6 @@ const Home: React.FC = () => {
           </motion.div>
         </div>
 
-        {/* Quick Services Grid */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -261,7 +244,6 @@ const Home: React.FC = () => {
           </div>
         </motion.div>
 
-        {/* Hero Slider */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -287,7 +269,6 @@ const Home: React.FC = () => {
                 </div>
               </motion.div>
             </AnimatePresence>
-            {/* Slide Indicators */}
             <div className="absolute top-6 right-6 flex gap-2 z-10">
               {heroSlides.map((_, index) => (
                 <button
@@ -300,7 +281,6 @@ const Home: React.FC = () => {
           </div>
         </motion.div>
 
-        {/* Featured Services Cards */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -324,7 +304,7 @@ const Home: React.FC = () => {
                   className="flex items-center gap-6 p-8 bg-white rounded-3xl border border-slate-100 hover:border-slate-200 shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer"
                   whileHover={{ scale: 1.02 }}
                 >
-                  <div className={`w-16 h-16 bg-gradient-to-br ${service.color} rounded-2xl flex items-center justify-center text-white shadow-lg">
+                  <div className={`w-16 h-16 bg-gradient-to-br ${service.color} rounded-2xl flex items-center justify-center text-white shadow-lg`}>
                     <Icon className="w-8 h-8" />
                   </div>
                   <div className="text-left">
@@ -337,7 +317,6 @@ const Home: React.FC = () => {
           </div>
         </motion.div>
 
-        {/* Featured Places */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -358,29 +337,29 @@ const Home: React.FC = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {touristPlaces.map((place, index) => (
-            <motion.div
-              key={place._id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1 + index * 0.1 }}
-              onClick={() => navigate('/explore')}
-              className="bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-xl border border-slate-100 cursor-pointer group"
-            >
-              <div className="h-48 relative overflow-hidden">
-                <img
-                  src={place.image} alt={place.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
-              </div>
-              <div className="p-6">
-                <h4 className="font-black text-slate-800 text-lg mb-2">{place.title}</h4>
-                <p className="text-sm text-slate-500 font-semibold">{place.description}</p>
-              </div>
-            </motion.div>
-          ))}
-        </div>
+              <motion.div
+                key={place._id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 1 + index * 0.1 }}
+                onClick={() => navigate('/explore')}
+                className="bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-xl border border-slate-100 cursor-pointer group"
+              >
+                <div className="h-48 relative overflow-hidden">
+                  <img
+                    src={place.image} alt={place.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                </div>
+                <div className="p-6">
+                  <h4 className="font-black text-slate-800 text-lg mb-2">{place.title}</h4>
+                  <p className="text-sm text-slate-500 font-semibold">{place.description}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
       </div>
     </div>
   );
 };
 
 export default Home;
-

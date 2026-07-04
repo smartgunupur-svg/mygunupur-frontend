@@ -79,7 +79,7 @@ const AdminSettings: React.FC = () => {
   };
 
   const toggleFeature = (key: string) => {
-    setSettings(prev => ({
+    setSettings((prev: any) => ({
       ...prev,
       features: {
         ...prev.features,
