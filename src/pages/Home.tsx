@@ -3,19 +3,13 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import {
-  Home as HomeIcon,
   Building2,
   AlertTriangle,
   HeartPulse,
-  Phone,
-  ArrowUpRight,
   MapPin,
   ChevronRight,
-  ChevronLeft,
   Banknote,
   FileText,
-  PhoneCall,
-  Sparkles,
   Droplets,
   Search,
   CloudSun,
@@ -61,7 +55,6 @@ const Home: React.FC = () => {
   const navigate = useNavigate();
   const [currentSlide, setCurrentSlide] = useState(0);
   const [touristPlaces, setTouristPlaces] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -88,20 +81,10 @@ const Home: React.FC = () => {
           { _id: 1, title: 'Jagannath Temple', description: 'Ancient temple with beautiful architecture', image: 'https://images.unsplash.com/photo-1561361513-2d000a50f0dc?w=600&h=400&fit=crop', googleMap: '#' },
           { _id: 2, title: 'Putudi Waterfall', description: 'Serene waterfall surrounded by nature', image: 'https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?w=600&h=400&fit=crop', googleMap: '#' }
         ]);
-      } finally {
-        setLoading(false);
       }
     };
     fetchData();
   }, []);
-
-  const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
-  };
-
-  const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + heroSlides.length) % heroSlides.length);
-  };
 
   return (
     <div className="p-4 space-y-5 bg-[#f8fafc] pb-24">

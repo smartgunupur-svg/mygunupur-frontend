@@ -8,7 +8,6 @@ import {
   Phone, 
   MapPin,
   CheckCircle2,
-  XCircle,
   Plus
 } from 'lucide-react';
 import axios from 'axios';

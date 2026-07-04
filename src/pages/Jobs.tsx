@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Search, Phone, MapPin, Briefcase, Calendar, Award } from 'lucide-react';
+import { Search, Phone, MapPin, Briefcase, Award } from 'lucide-react';
 import axios from 'axios';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';

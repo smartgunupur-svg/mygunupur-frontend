@@ -3,7 +3,6 @@ import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { 
   ArrowLeft, 
-  FileText, 
   Phone, 
   Plus, 
   Edit, 
@@ -11,8 +10,7 @@ import {
   LogOut,
   Droplets,
   MapPin,
-  CheckCircle2,
-  XCircle
+  CheckCircle2
 } from 'lucide-react';
 import axios from 'axios';
 
