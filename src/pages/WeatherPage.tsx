@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { CloudSun, Sun, CloudRain, Droplets, Wind, Thermometer } from 'lucide-react';
+import { Droplets, Wind, Thermometer } from 'lucide-react';
 import axios from 'axios';
 
 const API_URL = 'https://api.weatherapi.com/v1';

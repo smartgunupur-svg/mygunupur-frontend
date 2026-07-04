@@ -8,7 +8,6 @@ import {
   BookOpen,
   Menu,
   X,
-  ArrowLeft,
   Phone,
   Droplets,
   Building2,
@@ -16,48 +15,22 @@ import {
   AlertTriangle,
   FileText,
   HelpCircle,
-  MapPin,
   Calendar,
   Image,
   CloudSun,
   Briefcase,
   MessageSquare,
   Info,
-  Mail,
   UserCheck,
   Building,
   Utensils,
-  Banknote,
-  Star,
   ChevronRight
 } from 'lucide-react';
 import axios from 'axios';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
-const routeTitles: { [key: string]: string } = {
-  '/': 'Home',
-  '/home-loan': 'Home Loan EMI',
-  '/building-enquiry': 'Building Plan Assistance',
-  '/emergency': 'Emergency Contacts',
-  '/hospitals': 'Hospitals Directory',
-  '/blood-donors': 'Blood Donor Directory',
-  '/explore': 'Explore Gunupur',
-  '/services': 'All Services',
-  '/directory': 'Local Directory',
-  '/government-schemes': 'Government Schemes',
-  '/notices': 'Notices & Updates',
-  '/hotels': 'Hotels Directory',
-  '/restaurants': 'Restaurants Directory',
-  '/important-contacts': 'Important Contacts',
-  '/events': 'Events & Festivals',
-  '/gallery': 'Gallery',
-  '/weather': 'Weather Update',
-  '/jobs': 'Local Jobs',
-  '/feedback': 'Feedback & Contact',
-  '/about': 'About Us',
-  '/contact': 'Contact Us'
-};
+
 
 const BottomNavLayout: React.FC = () => {
   const navigate = useNavigate();
@@ -104,7 +77,6 @@ const BottomNavLayout: React.FC = () => {
 
   const currentPath = location.pathname;
   const isHome = currentPath === '/';
-  const pageTitle = routeTitles[currentPath] || 'My Gunupur';
 
   // Define the menu links for the drawer with visibility controlled by settings
   const getDrawerLinks = () => {
@@ -301,7 +273,7 @@ const BottomNavLayout: React.FC = () => {
 
               {/* Drawer Content */}
               <div className="flex-1 overflow-y-auto px-4 py-6 space-y-2 scrollbar-thin">
-                {getDrawerLinks().map((link, index) => {
+                {getDrawerLinks().map((link, _index) => {
                   const Icon = link.icon;
                   const isActive = currentPath === link.path;
                   return (
