@@ -19,7 +19,13 @@ import {
   X,
   ChevronRight,
   CheckCircle,
-  Clock
+  Clock,
+  Droplets,
+  Briefcase,
+  Award,
+  Image,
+  Calendar,
+  BookOpen
 } from 'lucide-react';
 import axios from 'axios';
 
@@ -35,6 +41,13 @@ const AdminDashboard: React.FC = () => {
   const [hospitals, setHospitals] = useState<any[]>([]);
   const [touristPlaces, setTouristPlaces] = useState<any[]>([]);
   const [emergencyContacts, setEmergencyContacts] = useState<any[]>([]);
+  const [bloodDonors, setBloodDonors] = useState<any[]>([]);
+  const [notices, setNotices] = useState<any[]>([]);
+  const [gallery, setGallery] = useState<any[]>([]);
+  const [events, setEvents] = useState<any[]>([]);
+  const [jobs, setJobs] = useState<any[]>([]);
+  const [schemes, setSchemes] = useState<any[]>([]);
+  const [businesses, setBusinesses] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
@@ -55,7 +68,14 @@ const AdminDashboard: React.FC = () => {
           shopsRes, 
           hospitalsRes, 
           touristRes, 
-          emergencyRes
+          emergencyRes,
+          bloodDonorsRes,
+          noticesRes,
+          galleryRes,
+          eventsRes,
+          jobsRes,
+          schemesRes,
+          businessesRes
         ] = await Promise.all([
           axios.get(`${API_URL}/loan-enquiries`, {
             headers: { Authorization: `Bearer ${token}` }
@@ -67,7 +87,14 @@ const AdminDashboard: React.FC = () => {
           axios.get(`${API_URL}/construction-material-shops`),
           axios.get(`${API_URL}/hospitals`),
           axios.get(`${API_URL}/tourist-places`),
-          axios.get(`${API_URL}/emergency-contacts`)
+          axios.get(`${API_URL}/emergency-contacts`),
+          axios.get(`${API_URL}/blood-donors`),
+          axios.get(`${API_URL}/notices`),
+          axios.get(`${API_URL}/gallery`),
+          axios.get(`${API_URL}/events`),
+          axios.get(`${API_URL}/jobs`),
+          axios.get(`${API_URL}/government-schemes`),
+          axios.get(`${API_URL}/businesses`)
         ]);
         setLoanEnquiries(loanRes.data);
         setBuildingEnquiries(buildingRes.data);
@@ -76,6 +103,13 @@ const AdminDashboard: React.FC = () => {
         setHospitals(hospitalsRes.data);
         setTouristPlaces(touristRes.data);
         setEmergencyContacts(emergencyRes.data);
+        setBloodDonors(bloodDonorsRes.data);
+        setNotices(noticesRes.data);
+        setGallery(galleryRes.data);
+        setEvents(eventsRes.data);
+        setJobs(jobsRes.data);
+        setSchemes(schemesRes.data);
+        setBusinesses(businessesRes.data);
       } catch (error) {
         console.error('Error fetching data:', error);
       } finally {
@@ -99,8 +133,15 @@ const AdminDashboard: React.FC = () => {
     { title: 'Banks', icon: Banknote, path: '/admin/banks', color: 'text-indigo-500', bg: 'bg-indigo-50' },
     { title: 'Construction Material', icon: ShoppingCart, path: '/admin/construction-material', color: 'text-orange-500', bg: 'bg-orange-50' },
     { title: 'Hospitals', icon: HeartPulse, path: '/admin/hospitals', color: 'text-pink-500', bg: 'bg-pink-50' },
+    { title: 'Blood Donors', icon: Droplets, path: '/admin/blood-donors', color: 'text-red-500', bg: 'bg-red-50' },
     { title: 'Tourist Places', icon: MapPin, path: '/admin/tourist-places', color: 'text-teal-500', bg: 'bg-teal-50' },
-    { title: 'Emergency Contacts', icon: AlertTriangle, path: '/admin/emergency-contacts', color: 'text-red-500', bg: 'bg-red-50' }
+    { title: 'Emergency Contacts', icon: AlertTriangle, path: '/admin/emergency-contacts', color: 'text-red-500', bg: 'bg-red-50' },
+    { title: 'Notices', icon: Bell, path: '/admin/notices', color: 'text-purple-500', bg: 'bg-purple-50' },
+    { title: 'Gallery Media', icon: Image, path: '/admin/gallery', color: 'text-sky-500', bg: 'bg-sky-50' },
+    { title: 'Events Calendar', icon: Calendar, path: '/admin/events', color: 'text-yellow-500', bg: 'bg-yellow-50' },
+    { title: 'Local Jobs', icon: Briefcase, path: '/admin/jobs', color: 'text-indigo-600', bg: 'bg-indigo-50' },
+    { title: 'Govt Schemes', icon: Award, path: '/admin/schemes', color: 'text-cyan-500', bg: 'bg-cyan-50' },
+    { title: 'Businesses & Directory', icon: BookOpen, path: '/admin/businesses', color: 'text-amber-600', bg: 'bg-amber-50' }
   ];
 
   const stats = [
@@ -109,7 +150,14 @@ const AdminDashboard: React.FC = () => {
     { title: 'Total Banks', value: banks.length, icon: Banknote, color: 'from-indigo-500 to-purple-600', change: '+5%', trend: 'up' },
     { title: 'Material Shops', value: shops.length, icon: ShoppingCart, color: 'from-orange-500 to-red-600', change: '+3%', trend: 'up' },
     { title: 'Hospitals', value: hospitals.length, icon: HeartPulse, color: 'from-pink-500 to-rose-600', change: '+2%', trend: 'up' },
+    { title: 'Blood Donors', value: bloodDonors.length, icon: Droplets, color: 'from-red-500 to-rose-600', change: '+6%', trend: 'up' },
     { title: 'Tourist Places', value: touristPlaces.length, icon: MapPin, color: 'from-teal-500 to-cyan-600', change: '+4%', trend: 'up' },
+    { title: 'Notices', value: notices.length, icon: Bell, color: 'from-purple-500 to-purple-600', change: '+15%', trend: 'up' },
+    { title: 'Gallery Media', value: gallery.length, icon: Image, color: 'from-sky-500 to-blue-600', change: '+20%', trend: 'up' },
+    { title: 'Events Scheduled', value: events.length, icon: Calendar, color: 'from-yellow-500 to-amber-600', change: '+10%', trend: 'up' },
+    { title: 'Jobs Posted', value: jobs.length, icon: Briefcase, color: 'from-indigo-500 to-indigo-600', change: '+25%', trend: 'up' },
+    { title: 'Govt Schemes', value: schemes.length, icon: Award, color: 'from-cyan-500 to-blue-600', change: '+5%', trend: 'up' },
+    { title: 'Businesses & Shops', value: businesses.length, icon: BookOpen, color: 'from-amber-500 to-orange-600', change: '+12%', trend: 'up' },
   ];
 
   const recentEnquiries = [...loanEnquiries, ...buildingEnquiries]

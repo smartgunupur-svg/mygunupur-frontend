@@ -1,0 +1,350 @@
+import React, { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, BookOpen, Plus, Edit, Trash2, LogOut } from 'lucide-react';
+import axios from 'axios';
+
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+
+const AdminBusinesses: React.FC = () => {
+  const navigate = useNavigate();
+  const [businesses, setBusinesses] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [showForm, setShowForm] = useState(false);
+  const [editingBusiness, setEditingBusiness] = useState<any | null>(null);
+  const [formData, setFormData] = useState({
+    name: '',
+    category: 'hotel',
+    phone: '',
+    address: '',
+    googleMap: '',
+    description: '',
+    rating: '4.5',
+    priceRange: '₹₹',
+    isVeg: 'false',
+    features: ''
+  });
+
+  useEffect(() => {
+    const token = localStorage.getItem('adminToken');
+    if (!token) {
+      navigate('/admin/login');
+      return;
+    }
+
+    const fetchBusinesses = async () => {
+      try {
+        const response = await axios.get(`${API_URL}/businesses`);
+        setBusinesses(response.data);
+      } catch (error) {
+        console.error('Error fetching businesses:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchBusinesses();
+  }, [navigate]);
+
+  const handleLogout = () => {
+    localStorage.removeItem('adminToken');
+    localStorage.removeItem('adminEmail');
+    navigate('/admin/login');
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const token = localStorage.getItem('adminToken');
+    const data = {
+      ...formData,
+      rating: parseFloat(formData.rating),
+      isVeg: formData.isVeg === 'true',
+      features: formData.features.split(',').map(f => f.trim()).filter(f => f)
+    };
+    try {
+      if (editingBusiness) {
+        await axios.put(`${API_URL}/businesses/${editingBusiness._id}`, data, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        setBusinesses(businesses.map(b => b._id === editingBusiness._id ? { ...b, ...data } : b));
+      } else {
+        const response = await axios.post(`${API_URL}/businesses`, data, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        setBusinesses([...businesses, response.data]);
+      }
+      setShowForm(false);
+      setEditingBusiness(null);
+      setFormData({
+        name: '',
+        category: 'hotel',
+        phone: '',
+        address: '',
+        googleMap: '',
+        description: '',
+        rating: '4.5',
+        priceRange: '₹₹',
+        isVeg: 'false',
+        features: ''
+      });
+    } catch (error) {
+      console.error('Error saving business:', error);
+    }
+  };
+
+  const handleEdit = (business: any) => {
+    setEditingBusiness(business);
+    setFormData({
+      name: business.name,
+      category: business.category || 'hotel',
+      phone: business.phone,
+      address: business.address || '',
+      googleMap: business.googleMap || '',
+      description: business.description || '',
+      rating: String(business.rating || 4.5),
+      priceRange: business.priceRange || '₹₹',
+      isVeg: business.isVeg ? 'true' : 'false',
+      features: business.features?.join(', ') || ''
+    });
+    setShowForm(true);
+  };
+
+  const handleDelete = async (id: string) => {
+    if (!window.confirm('Are you sure you want to delete this business?')) return;
+    const token = localStorage.getItem('adminToken');
+    try {
+      await axios.delete(`${API_URL}/businesses/${id}`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      setBusinesses(businesses.filter(b => b._id !== id));
+    } catch (error) {
+      console.error('Error deleting business:', error);
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-slate-50 pb-24">
+      <motion.header
+        initial={{ y: -80 }}
+        animate={{ y: 0 }}
+        className="sticky top-0 z-50 bg-white border-b border-slate-200/50 h-[72px]"
+      >
+        <div className="max-w-6xl mx-auto px-4 h-full flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => navigate('/admin/dashboard')}
+              className="p-2 hover:bg-slate-100 rounded-xl transition-all"
+            >
+              <ArrowLeft className="w-5 h-5 text-slate-600" />
+            </button>
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 bg-gradient-to-br from-amber-500 to-orange-500 rounded-xl flex items-center justify-center shadow-lg">
+                <BookOpen className="w-5 h-5 text-white" />
+              </div>
+              <div>
+                <h1 className="text-lg font-bold text-slate-800">Business Directory</h1>
+                <p className="text-xs text-slate-500 font-medium">{businesses.length} businesses registered</p>
+              </div>
+            </div>
+          </div>
+          <button
+            onClick={handleLogout}
+            className="flex items-center gap-2 px-4 py-2 bg-red-50 text-red-600 hover:bg-red-100 rounded-xl transition-all font-semibold text-sm"
+          >
+            <LogOut className="w-4 h-4" />
+            Logout
+          </button>
+        </div>
+      </motion.header>
+
+      <div className="max-w-6xl mx-auto px-4 space-y-4 pt-6">
+        <button
+          onClick={() => setShowForm(!showForm)}
+          className="flex items-center gap-2 px-6 py-3 bg-gradient-to-br from-amber-500 to-orange-500 text-white font-bold rounded-2xl shadow-lg hover:shadow-xl transition-all"
+        >
+          <Plus className="w-5 h-5" />
+          {showForm ? 'Cancel' : 'Register New Business'}
+        </button>
+
+        {showForm && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="bg-white rounded-2xl p-6 shadow-lg border border-slate-100"
+          >
+            <h3 className="text-lg font-bold text-slate-800 mb-4">
+              {editingBusiness ? 'Edit Business Details' : 'Register New Business'}
+            </h3>
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-bold text-slate-700 mb-2">Business Name</label>
+                  <input
+                    type="text"
+                    required
+                    value={formData.name}
+                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:border-amber-500"
+                    placeholder="Enter business name"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-bold text-slate-700 mb-2">Category</label>
+                  <select
+                    value={formData.category}
+                    onChange={(e) => setFormData({ ...formData, category: e.target.value })}
+                    className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:border-amber-500"
+                  >
+                    <option value="hotel">Hotel</option>
+                    <option value="restaurant">Restaurant</option>
+                    <option value="Medical Stores">Medical Stores</option>
+                    <option value="Hardware">Hardware</option>
+                    <option value="Electronics">Electronics</option>
+                    <option value="Grocery">Grocery</option>
+                    <option value="Salons">Salons</option>
+                    <option value="Repair Shops">Repair Shops</option>
+                  </select>
+                </div>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div>
+                  <label className="block text-sm font-bold text-slate-700 mb-2">Phone</label>
+                  <input
+                    type="text"
+                    required
+                    value={formData.phone}
+                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                    className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:border-amber-500"
+                    placeholder="Mobile number"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-bold text-slate-700 mb-2">Price Range</label>
+                  <select
+                    value={formData.priceRange}
+                    onChange={(e) => setFormData({ ...formData, priceRange: e.target.value })}
+                    className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:border-amber-500"
+                  >
+                    <option value="₹">₹ (Budget)</option>
+                    <option value="₹₹">₹₹ (Medium)</option>
+                    <option value="₹₹₹">₹₹₹ (Premium)</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-sm font-bold text-slate-700 mb-2">Is Veg? (For Restaurants)</label>
+                  <select
+                    value={formData.isVeg}
+                    onChange={(e) => setFormData({ ...formData, isVeg: e.target.value })}
+                    className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:border-amber-500"
+                  >
+                    <option value="false">No / Mix</option>
+                    <option value="true">Yes (100% Veg)</option>
+                  </select>
+                </div>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-bold text-slate-700 mb-2">Rating</label>
+                  <input
+                    type="number"
+                    step="0.1"
+                    min="1"
+                    max="5"
+                    value={formData.rating}
+                    onChange={(e) => setFormData({ ...formData, rating: e.target.value })}
+                    className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:border-amber-500"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-bold text-slate-700 mb-2">Features (comma separated)</label>
+                  <input
+                    type="text"
+                    value={formData.features}
+                    onChange={(e) => setFormData({ ...formData, features: e.target.value })}
+                    className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:border-amber-500"
+                    placeholder="24x7, Free Wifi, A/C, Home Delivery"
+                  />
+                </div>
+              </div>
+              <div>
+                <label className="block text-sm font-bold text-slate-700 mb-2">Address</label>
+                <input
+                  type="text"
+                  value={formData.address}
+                  onChange={(e) => setFormData({ ...formData, address: e.target.value })}
+                  className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:border-amber-500"
+                  placeholder="Street / Area in Gunupur"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-bold text-slate-700 mb-2">Google Map link</label>
+                <input
+                  type="text"
+                  value={formData.googleMap}
+                  onChange={(e) => setFormData({ ...formData, googleMap: e.target.value })}
+                  className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:border-amber-500"
+                  placeholder="Paste map coordinate link"
+                />
+              </div>
+              <button
+                type="submit"
+                className="w-full py-3 bg-gradient-to-br from-amber-500 to-orange-500 text-white font-bold rounded-xl"
+              >
+                {editingBusiness ? 'Update Business' : 'Register Business'}
+              </button>
+            </form>
+          </motion.div>
+        )}
+
+        {loading ? (
+          <div className="text-center py-20 text-slate-500 text-lg">Loading businesses...</div>
+        ) : businesses.length === 0 ? (
+          <div className="bg-white rounded-3xl p-12 text-center shadow-lg border border-slate-100">
+            <BookOpen className="w-16 h-16 text-slate-300 mx-auto mb-4" />
+            <h3 className="text-xl font-bold text-slate-800 mb-2">No Businesses Registered</h3>
+            <p className="text-slate-500">Add hotels, eateries, and shops to the directory</p>
+          </div>
+        ) : (
+          <div className="space-y-4">
+            {businesses.map((business, index) => (
+              <motion.div
+                key={business._id || business.id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.05 }}
+                className="bg-white rounded-2xl p-6 shadow-md border border-slate-100"
+              >
+                <div className="flex items-start justify-between">
+                  <div>
+                    <span className="px-2.5 py-0.5 bg-amber-50 border border-amber-100 text-amber-600 text-[10px] font-bold rounded-full uppercase">
+                      {business.category}
+                    </span>
+                    <h3 className="text-base font-bold text-slate-800 mt-1">{business.name}</h3>
+                    <p className="text-xs text-slate-500 font-bold">Phone: {business.phone}</p>
+                    <p className="text-xs text-slate-500 font-medium">Address: {business.address || 'Gunupur'}</p>
+                  </div>
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => handleEdit(business)}
+                      className="p-2 text-amber-600 hover:bg-amber-50 rounded-xl"
+                    >
+                      <Edit className="w-5 h-5" />
+                    </button>
+                    <button
+                      onClick={() => handleDelete(business._id)}
+                      className="p-2 text-red-600 hover:bg-red-50 rounded-xl"
+                    >
+                      <Trash2 className="w-5 h-5" />
+                    </button>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default AdminBusinesses;

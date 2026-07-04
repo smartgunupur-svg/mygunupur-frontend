@@ -15,7 +15,11 @@ import {
   Banknote,
   FileText,
   PhoneCall,
-  Sparkles
+  Sparkles,
+  Droplets,
+  Search,
+  CloudSun,
+  Grid
 } from 'lucide-react';
 import axios from 'axios';
 
@@ -43,17 +47,15 @@ const heroSlides = [
 ];
 
 const quickServices = [
-  { id: 1, title: 'Home Loan', description: 'EMI Calculator & Apply', icon: HomeIcon, color: 'from-blue-500 to-blue-600', bg: 'bg-blue-50', path: '/home-loan' },
-  { id: 2, title: 'Building Plan Assistance', description: 'Calculate & Apply', icon: Building2, color: 'from-green-500 to-teal-600', bg: 'bg-green-50', path: '/building-enquiry' },
-  { id: 3, title: 'Hospitals', description: 'Nearby Care & Contacts', icon: HeartPulse, color: 'from-pink-500 to-rose-600', bg: 'bg-pink-50', path: '/hospitals' },
-  { id: 4, title: 'Emergency Contacts', description: '24/7 Support', icon: AlertTriangle, color: 'from-red-500 to-red-600', bg: 'bg-red-50', path: '/emergency' },
-  { id: 5, title: 'Banks', description: 'All Bank Details', icon: Banknote, color: 'from-indigo-500 to-purple-600', bg: 'bg-indigo-50', path: '/home-loan' },
-  { id: 6, title: 'Tourist Places', description: 'Explore Now & More', icon: MapPin, color: 'from-green-500 to-emerald-600', bg: 'bg-green-50', path: '#tourist' },
-  { id: 7, title: 'Notices', description: 'Latest Updates', icon: FileText, color: 'from-purple-500 to-pink-600', bg: 'bg-purple-50', path: '#' },
-  { id: 8, title: 'Contact Us', description: 'Get in Touch', icon: PhoneCall, color: 'from-orange-500 to-amber-600', bg: 'bg-orange-50', path: '/contact' }
+  { id: 1, title: 'Home Loan', icon: Banknote, color: 'text-blue-600', bg: 'bg-blue-50 border-blue-100/50', path: '/home-loan' },
+  { id: 2, title: 'Building Plan', icon: Building2, color: 'text-green-600', bg: 'bg-green-50 border-green-100/50', path: '/building-enquiry' },
+  { id: 3, title: 'Emergency', icon: AlertTriangle, color: 'text-red-600', bg: 'bg-red-50 border-red-100/50', path: '/emergency' },
+  { id: 4, title: 'Hospitals', icon: HeartPulse, color: 'text-pink-600', bg: 'bg-pink-50 border-pink-100/50', path: '/hospitals' },
+  { id: 5, title: 'Notices', icon: FileText, color: 'text-purple-600', bg: 'bg-purple-50 border-purple-100/50', path: '/notices' },
+  { id: 6, title: 'Blood Donors', icon: Droplets, color: 'text-red-500', bg: 'bg-red-50 border-red-100/50', path: '/blood-donors' },
+  { id: 7, title: 'Explore', icon: MapPin, color: 'text-emerald-600', bg: 'bg-emerald-50 border-emerald-100/50', path: '/explore' },
+  { id: 8, title: 'More', icon: Grid, color: 'text-slate-600', bg: 'bg-slate-50 border-slate-200/50', path: '/services' }
 ];
-
-const whatsappLogo = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" class="w-6 h-6"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.488-.492-.67-.5h-.572c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .162 5.332.162 11.885c0 2.102.553 4.136 1.56 5.943L0 24l6.324-1.659a11.858 11.858 0 005.726 1.467c.003 0 0 0 .004 0 6.557 0 11.886-5.333 11.886-11.885 0-3.173-1.234-6.151-3.475-8.388"/></svg>`;
 
 const Home: React.FC = () => {
   const navigate = useNavigate();
@@ -72,12 +74,19 @@ const Home: React.FC = () => {
     const fetchData = async () => {
       try {
         const placesRes = await axios.get(`${API_URL}/tourist-places`);
-        setTouristPlaces(placesRes.data);
+        if (placesRes.data && placesRes.data.length > 0) {
+          setTouristPlaces(placesRes.data.slice(0, 2));
+        } else {
+          setTouristPlaces([
+            { _id: 1, title: 'Jagannath Temple', description: 'Ancient temple with beautiful architecture', image: 'https://images.unsplash.com/photo-1561361513-2d000a50f0dc?w=600&h=400&fit=crop', googleMap: '#' },
+            { _id: 2, title: 'Putudi Waterfall', description: 'Serene waterfall surrounded by nature', image: 'https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?w=600&h=400&fit=crop', googleMap: '#' }
+          ]);
+        }
       } catch (error) {
         console.error('Error fetching data:', error);
         setTouristPlaces([
           { _id: 1, title: 'Jagannath Temple', description: 'Ancient temple with beautiful architecture', image: 'https://images.unsplash.com/photo-1561361513-2d000a50f0dc?w=600&h=400&fit=crop', googleMap: '#' },
-          { _id: 2, title: 'Tumma Waterfall', description: 'Serene waterfall surrounded by nature', image: 'https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?w=600&h=400&fit=crop', googleMap: '#' }
+          { _id: 2, title: 'Putudi Waterfall', description: 'Serene waterfall surrounded by nature', image: 'https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?w=600&h=400&fit=crop', googleMap: '#' }
         ]);
       } finally {
         setLoading(false);
@@ -95,512 +104,160 @@ const Home: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#f8fafc] pb-28">
+    <div className="p-4 space-y-5 bg-[#f8fafc] pb-24">
       <Helmet>
         <title>My Gunupur - Your Gateway to Citizen Services</title>
         <meta name="description" content="My Gunupur - Your one-stop platform for all citizen services in Gunupur, Odisha." />
-        <meta property="og:title" content="My Gunupur - Your Gateway to Citizen Services" />
-        <meta property="og:description" content="My Gunupur - Your one-stop platform for all citizen services in Gunupur, Odisha." />
-        <meta property="og:url" content="https://mygunupur.in" />
       </Helmet>
 
-      {/* Header */}
-      <motion.header
-        initial={{ y: -60, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        className="sticky top-0 z-50 bg-white shadow-sm"
+      {/* Hero Welcome Banner Card */}
+      <motion.div
+        initial={{ opacity: 0, y: 15 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="relative rounded-[32px] overflow-hidden shadow-lg bg-gradient-to-br from-blue-900 via-indigo-900 to-slate-900 text-white p-6"
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-3">
-            <div className="flex items-center gap-3">
-              <img src="/layoutlogo.png" alt="My Gunupur" className="h-16 w-auto" />
-            </div>
-            <div className="hidden md:flex items-center gap-6">
-              <button
-                onClick={() => navigate('/')}
-                className="text-sm font-semibold text-blue-600 border-b-2 border-blue-600 pb-1"
-              >
-                Home
-              </button>
-              <button
-                onClick={() => navigate('/about')}
-                className="text-sm font-semibold text-gray-700 hover:text-blue-600"
-              >
-                About
-              </button>
-              <div className="relative group">
-                <button className="text-sm font-semibold text-gray-700 hover:text-blue-600 flex items-center gap-1">
-                  Services <ChevronRight className="w-3 h-3" />
-                </button>
-              </div>
-              <button
-                onClick={() => navigate('#explore')}
-                className="text-sm font-semibold text-gray-700 hover:text-blue-600"
-              >
-                Explore
-              </button>
-              <button
-                onClick={() => navigate('#')}
-                className="text-sm font-semibold text-gray-700 hover:text-blue-600"
-              >
-                Notices
-              </button>
-              <button
-                onClick={() => navigate('#')}
-                className="text-sm font-semibold text-gray-700 hover:text-blue-600"
-              >
-                Gallery
-              </button>
-              <button
-                onClick={() => navigate('/contact')}
-                className="text-sm font-semibold text-gray-700 hover:text-blue-600"
-              >
-                Contact
-              </button>
-              <button
-                onClick={() => navigate('/contact')}
-                className="px-5 py-2 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-lg font-semibold text-sm hover:shadow-lg hover:shadow-blue-500/30 transition-all"
-              >
-                Get in Touch
-              </button>
-            </div>
-          </div>
+        <div className="space-y-1">
+          <p className="text-[10px] font-bold text-blue-300 uppercase tracking-widest">Welcome to</p>
+          <h2 className="text-2xl font-black tracking-tight leading-tight">MY GUNUPUR</h2>
+          <p className="text-xs text-blue-100/70 font-semibold leading-relaxed">A Digital Initiative for a Better Tomorrow.</p>
         </div>
-      </motion.header>
+        <div className="mt-5 relative">
+          <Search className="absolute left-3.5 top-1/2 transform -translate-y-1/2 w-4 h-4 text-blue-300" />
+          <input
+            type="text"
+            readOnly
+            placeholder="Search services, places..."
+            onClick={() => navigate('/services')}
+            className="w-full pl-10 pr-4 py-3 bg-white/10 border border-white/10 rounded-2xl text-xs font-semibold text-white placeholder-blue-200/60 focus:outline-none cursor-pointer hover:bg-white/20 transition-all duration-200"
+          />
+        </div>
+      </motion.div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12 py-6">
-        {/* Hero Slider */}
-        <motion.section
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="relative rounded-3xl overflow-hidden shadow-2xl"
+      {/* Weather & Emergency Call Row */}
+      <div className="grid grid-cols-2 gap-3">
+        {/* Weather Card */}
+        <div
+          onClick={() => navigate('/weather')}
+          className="bg-white border border-slate-100 p-4 rounded-[24px] shadow-sm flex items-center justify-between cursor-pointer hover:border-slate-200 transition-all duration-200"
         >
-          <div className="relative h-[350px] md:h-[450px] lg:h-[550px]">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={heroSlides[currentSlide].id}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.7 }}
-                className="absolute inset-0"
-              >
-                <img
-                  src={heroSlides[currentSlide].image}
-                  alt={heroSlides[currentSlide].title}
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/30" />
-                <div className="absolute inset-0 flex items-center">
-                  <div className="container mx-auto px-6 md:px-12">
-                    <div className="max-w-3xl">
-                      <motion.div
-                        initial={{ y: 20, opacity: 0 }}
-                        animate={{ y: 0, opacity: 1 }}
-                        transition={{ delay: 0.3 }}
-                      >
-                        <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm px-3 py-1.5 rounded-full mb-4 border border-white/20">
-                          <HeartPulse className="w-3.5 h-3.5 text-green-400" />
-                          <span className="text-white text-xs font-semibold">Welcome to My Gunupur</span>
-                        </div>
-                        <h2 className="text-2xl md:text-4xl lg:text-5xl font-extrabold text-white leading-tight mb-3">
-                          {heroSlides[currentSlide].title.split(' ').map((word, index) => (
-                            <span key={index} className="mr-2">
-                              {word === 'Every' || word === 'Citizen' || word === 'Service' ? (
-                                <span className="text-green-400">{word}</span>
-                              ) : (
-                                word
-                              )}
-                            </span>
-                          ))}
-                        </h2>
-                        <p className="text-gray-200 text-sm md:text-lg mb-6">
-                          {heroSlides[currentSlide].subtitle}
-                        </p>
-                        <div className="flex flex-wrap gap-3">
-                          <button
-                            onClick={() => navigate('/')}
-                            className="px-5 py-2.5 bg-gradient-to-r from-blue-500 to-blue-600 text-white font-semibold rounded-lg shadow-md hover:shadow-blue-500/40 hover:scale-105 transition-all flex items-center gap-2 text-sm"
-                          >
-                            Explore Services <ArrowUpRight className="w-4 h-4" />
-                          </button>
-                          <button
-                            onClick={() => navigate('/contact')}
-                            className="px-5 py-2.5 bg-white/10 backdrop-blur-sm border border-white/30 text-white font-semibold rounded-lg hover:bg-white/20 transition-all flex items-center gap-2 text-sm"
-                          >
-                            Contact Us <Phone className="w-4 h-4" />
-                          </button>
-                        </div>
-                      </motion.div>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-            </AnimatePresence>
-
-            {/* Quick Links on Right Side of Hero */}
-            <div className="absolute right-6 top-1/2 transform -translate-y-1/2 hidden lg:flex flex-col gap-4 z-20">
-              <motion.a
-                href="/emergency"
-                whileHover={{ scale: 1.05 }}
-                className="bg-white/95 backdrop-blur-sm p-4 rounded-2xl shadow-lg border border-gray-100 w-48"
-              >
-                <div className="flex items-center gap-3 mb-2">
-                  <div className="w-10 h-10 bg-gradient-to-br from-red-500 to-red-600 rounded-full flex items-center justify-center">
-                    <Phone className="w-5 h-5 text-white" />
-                  </div>
-                  <div>
-                    <h4 className="font-bold text-gray-800 text-sm">Emergency Contacts</h4>
-                    <p className="text-xs text-gray-500">24/7 Support</p>
-                  </div>
-                </div>
-              </motion.a>
-              <motion.a
-                href="/home-loan"
-                whileHover={{ scale: 1.05 }}
-                className="bg-white/95 backdrop-blur-sm p-4 rounded-2xl shadow-lg border border-gray-100 w-48"
-              >
-                <div className="flex items-center gap-3 mb-2">
-                  <div className="w-10 h-10 bg-gradient-to-br from-green-500 to-green-600 rounded-full flex items-center justify-center">
-                    <HomeIcon className="w-5 h-5 text-white" />
-                  </div>
-                  <div>
-                    <h4 className="font-bold text-gray-800 text-sm">Home Loan</h4>
-                    <p className="text-xs text-gray-500">Calculate & Apply</p>
-                  </div>
-                </div>
-              </motion.a>
-              <motion.a
-                href="/building-enquiry"
-                whileHover={{ scale: 1.05 }}
-                className="bg-white/95 backdrop-blur-sm p-4 rounded-2xl shadow-lg border border-gray-100 w-48"
-              >
-                <div className="flex items-center gap-3 mb-2">
-                  <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center">
-                    <Building2 className="w-5 h-5 text-white" />
-                  </div>
-                  <div>
-                    <h4 className="font-bold text-gray-800 text-sm">Building Plan</h4>
-                    <p className="text-xs text-gray-500">Assistance Expert Help</p>
-                  </div>
-                </div>
-              </motion.a>
-            </div>
-
-            {/* Slider Controls */}
-            <button
-              onClick={prevSlide}
-              className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/90 backdrop-blur-sm p-2 rounded-full shadow-lg hover:bg-white transition-all z-20"
-            >
-              <ChevronLeft className="w-6 h-6 text-gray-800" />
-            </button>
-            <button
-              onClick={nextSlide}
-              className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/90 backdrop-blur-sm p-2 rounded-full shadow-lg hover:bg-white transition-all z-20"
-            >
-              <ChevronRight className="w-6 h-6 text-gray-800" />
-            </button>
-
-            {/* Slider Indicators */}
-            <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex gap-2 z-20">
-              {heroSlides.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => setCurrentSlide(index)}
-                  className={`h-2 rounded-full transition-all duration-300 ${index === currentSlide ? 'w-10 bg-white' : 'w-3 bg-white/50'}`}
-                />
-              ))}
-            </div>
+          <div>
+            <p className="text-[9px] text-slate-400 font-extrabold uppercase leading-none">Gunupur, Odisha</p>
+            <p className="text-lg font-black text-slate-800 mt-1.5 leading-none">28°C</p>
+            <p className="text-[9px] text-slate-500 font-bold mt-1 leading-none">Sunny</p>
           </div>
-        </motion.section>
+          <CloudSun className="w-8 h-8 text-amber-500" />
+        </div>
 
-        {/* Quick Access Section */}
-        <motion.section
-          id="services"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="bg-white rounded-3xl shadow-xl overflow-hidden"
+        {/* Emergency Call Card */}
+        <div
+          onClick={() => navigate('/emergency')}
+          className="bg-gradient-to-br from-red-500 to-rose-600 text-white p-4 rounded-[24px] shadow-sm flex items-center justify-between cursor-pointer hover:shadow-md transition-all duration-200"
         >
-          <div className="px-6 py-6 border-b border-gray-100 bg-gradient-to-r from-blue-50 via-indigo-50 to-cyan-50">
-            <div className="flex justify-between items-center">
-              <h3 className="text-2xl font-bold text-gray-800 flex items-center gap-2">
-                <Sparkles className="w-6 h-6 text-blue-600" /> Quick Access
-              </h3>
-              <button className="text-blue-600 font-semibold text-sm hover:text-blue-700 flex items-center gap-1">
-                View All <ArrowUpRight className="w-4 h-4" />
-              </button>
-            </div>
+          <div>
+            <h4 className="text-xs font-black">Emergency</h4>
+            <p className="text-[8px] text-red-100 font-semibold mt-0.5 uppercase tracking-wide">One Tap Call</p>
           </div>
-          <div className="p-4 md:p-8">
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-8 gap-3">
-              {quickServices.map((service, index) => (
-                <motion.button
-                  key={service.id}
-                  whileHover={{ y: -3, scale: 1.02 }}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.05 }}
-                  onClick={() => service.path && navigate(service.path)}
-                  className="flex flex-col items-center gap-2 p-3 rounded-xl border border-gray-100 hover:border-blue-200 hover:shadow-md transition-all"
-                >
-                  <div className={`w-10 h-10 bg-gradient-to-br ${service.color} rounded-xl flex items-center justify-center shadow-sm`}>
-                    <service.icon className="w-5 h-5 text-white" />
-                  </div>
-                  <div className="text-center">
-                    <h4 className="text-xs font-bold text-gray-800">{service.title}</h4>
-                  </div>
-                </motion.button>
-              ))}
-            </div>
-          </div>
-        </motion.section>
-
-        {/* Features Section */}
-        <motion.section
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
-        >
-          {/* EMI Calculator */}
-          <motion.div
-            whileHover={{ y: -5 }}
-            className="bg-white rounded-3xl shadow-lg p-6 border border-gray-100"
-            onClick={() => navigate('/home-loan')}
-          >
-            <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-2xl p-4 mb-4">
-              <HomeIcon className="w-10 h-10 text-green-600" />
-            </div>
-            <h4 className="text-lg font-bold text-gray-800 mb-2">EMI Calculator</h4>
-            <p className="text-sm text-gray-600 mb-4">Calculate your home loan EMI instantly and plan better.</p>
-            <button
-              onClick={() => navigate('/home-loan')}
-              className="w-full py-2 bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-xl font-semibold text-sm"
-            >
-              Calculate Now
-            </button>
-          </motion.div>
-
-          {/* Latest Notices */}
-          <motion.div
-            whileHover={{ y: -5 }}
-            className="bg-white rounded-3xl shadow-lg p-6 border border-gray-100"
-          >
-            <div className="bg-gradient-to-r from-purple-50 to-pink-50 rounded-2xl p-4 mb-4">
-              <FileText className="w-10 h-10 text-purple-600" />
-            </div>
-            <h4 className="text-lg font-bold text-gray-800 mb-2">Latest Notices</h4>
-            <p className="text-sm text-gray-600 mb-4">Stay updated with the latest announcements.</p>
-            <button className="w-full py-2 bg-gradient-to-r from-purple-500 to-purple-600 text-white rounded-xl font-semibold text-sm">
-              View Notices
-            </button>
-          </motion.div>
-
-          {/* Explore Gunupur */}
-          <motion.div
-            whileHover={{ y: -5 }}
-            className="bg-white rounded-3xl shadow-lg p-6 border border-gray-100 overflow-hidden"
-          >
-            <div className="relative rounded-2xl overflow-hidden mb-4 -m-6 mb-4">
-              <img
-                src="https://images.unsplash.com/photo-1561361513-2d000a50f0dc?w=600&h=300&fit=crop"
-                alt="Gunupur"
-                className="w-full h-32 object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-            </div>
-            <h4 className="text-lg font-bold text-gray-800 mb-2">Explore Gunupur</h4>
-            <p className="text-sm text-gray-600 mb-4">Discover beautiful places, tourist spots and more.</p>
-            <button className="w-full py-2 bg-gradient-to-r from-blue-500 to-cyan-600 text-white rounded-xl font-semibold text-sm">
-              Explore Now
-            </button>
-          </motion.div>
-
-          {/* Emergency Helpline */}
-          <motion.div
-            whileHover={{ y: -5 }}
-            className="bg-white rounded-3xl shadow-lg p-6 border border-gray-100"
-            onClick={() => navigate('/emergency')}
-          >
-            <div className="bg-gradient-to-r from-red-50 to-orange-50 rounded-2xl p-4 mb-4">
-              <AlertTriangle className="w-10 h-10 text-red-600" />
-            </div>
-            <h4 className="text-lg font-bold text-gray-800 mb-2">Emergency Helpline</h4>
-            <p className="text-sm text-gray-600 mb-4">Important numbers at your fingertips.</p>
-            <button
-              onClick={() => navigate('/emergency')}
-              className="w-full py-2 bg-gradient-to-r from-red-500 to-red-600 text-white rounded-xl font-semibold text-sm"
-            >
-              View All Numbers
-            </button>
-          </motion.div>
-        </motion.section>
-
-        {/* Explore Gunupur Section */}
-        <motion.section
-          id="tourist"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-        >
-          <div className="flex justify-between items-center mb-6">
-            <h3 className="text-2xl font-bold text-gray-800 flex items-center gap-2">
-              <MapPin className="w-6 h-6 text-blue-600" /> Explore Gunupur
-            </h3>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {loading ? (
-              [1, 2, 3, 4].map((i) => (
-                <div key={i} className="bg-white rounded-3xl shadow-lg border border-gray-100 overflow-hidden animate-pulse">
-                  <div className="h-48 bg-gray-200" />
-                  <div className="p-5">
-                    <div className="h-5 bg-gray-200 rounded w-3/4 mb-2" />
-                    <div className="h-4 bg-gray-200 rounded w-full" />
-                  </div>
-                </div>
-              ))
-            ) : (
-              touristPlaces.map((place, index) => (
-                <motion.div
-                  key={place._id || place.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.08 }}
-                  whileHover={{ y: -5 }}
-                  className="bg-white rounded-3xl shadow-lg border border-gray-100 overflow-hidden"
-                >
-                  <div className="h-48 overflow-hidden">
-                    <img
-                      src={place.image}
-                      alt={place.title}
-                      className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
-                    />
-                  </div>
-                  <div className="p-5">
-                    <h4 className="font-bold text-gray-800 text-lg mb-2">{place.title}</h4>
-                    <p className="text-sm text-gray-600 mb-4">{place.description}</p>
-                    <button
-                      onClick={() => place.googleMap && window.open(place.googleMap, '_blank')}
-                      className="text-blue-600 font-semibold text-sm flex items-center gap-1"
-                    >
-                      View on Map <ArrowUpRight className="w-4 h-4" />
-                    </button>
-                  </div>
-                </motion.div>
-              ))
-            )}
-          </div>
-        </motion.section>
-      </div>
-
-      {/* Footer */}
-      <div className="bg-gradient-to-r from-slate-900 to-blue-900 pt-12 pb-8">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 mb-10">
-            <div>
-              <div className="mb-4">
-                <img src="/layoutlogo.png" alt="My Gunupur" className="h-16 w-auto" />
-              </div>
-              <p className="text-slate-300 text-sm mb-4">
-                Your one-stop platform for all citizen services in Gunupur, Odisha.
-              </p>
-              <div className="flex gap-3">
-                <a href="#" className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-white/20 transition-all">
-                  <span className="text-white text-sm">📘</span>
-                </a>
-                <a href="#" className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-white/20 transition-all">
-                  <span className="text-white text-sm">📷</span>
-                </a>
-                <a href="#" className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-white/20 transition-all">
-                  <span className="text-white text-sm">🐦</span>
-                </a>
-              </div>
-            </div>
-
-            <div>
-              <h4 className="text-white font-bold text-lg mb-4">Quick Links</h4>
-              <ul className="space-y-2">
-                <li><a href="/home-loan" className="text-slate-300 text-sm hover:text-white transition-all">Home Loan</a></li>
-                <li><a href="/building-enquiry" className="text-slate-300 text-sm hover:text-white transition-all">Building Plan</a></li>
-                <li><a href="/hospitals" className="text-slate-300 text-sm hover:text-white transition-all">Hospitals</a></li>
-                <li><a href="/emergency" className="text-slate-300 text-sm hover:text-white transition-all">Emergency</a></li>
-              </ul>
-            </div>
-
-            <div>
-              <h4 className="text-white font-bold text-lg mb-4">Services</h4>
-              <ul className="space-y-2">
-                <li><a href="#" className="text-slate-300 text-sm hover:text-white transition-all">Tourist Places</a></li>
-                <li><a href="#" className="text-slate-300 text-sm hover:text-white transition-all">Notices</a></li>
-                <li><a href="#" className="text-slate-300 text-sm hover:text-white transition-all">Contact Us</a></li>
-                <li><a href="#" className="text-slate-300 text-sm hover:text-white transition-all">About Us</a></li>
-              </ul>
-            </div>
-
-            <div>
-              <div className="flex items-center justify-between mb-4">
-                <h4 className="text-white font-bold text-lg">Contact Info</h4>
-                <button
-                  onClick={() => navigate('/admin/login')}
-                  className="p-2 bg-white/10 rounded-lg hover:bg-white/20 transition-all"
-                  title="Admin Login"
-                >
-                  <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                  </svg>
-                </button>
-              </div>
-              <ul className="space-y-2">
-                <li className="flex items-center gap-2 text-slate-300 text-sm">
-                  <Phone className="w-4 h-4 text-blue-400" />
-                  <span>+91 94375 78310</span>
-                </li>
-                <li className="flex items-center gap-2 text-slate-300 text-sm">
-                  <span className="w-4 h-4 text-blue-400 text-center">📧</span>
-                  <span>info@mygunupur.in</span>
-                </li>
-                <li className="flex items-center gap-2 text-slate-300 text-sm">
-                  <MapPin className="w-4 h-4 text-blue-400" />
-                  <span>Gunupur, Odisha</span>
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          <div className="pt-6 border-t border-white/10 text-center">
-            <p className="text-slate-400 text-sm">
-              © 2024 My Gunupur. All rights reserved.
-            </p>
-          </div>
+          <AlertTriangle className="w-8 h-8 text-white animate-pulse" />
         </div>
       </div>
 
-      {/* Floating Action Buttons */}
-      <div className="fixed bottom-28 right-5 flex flex-col gap-3 z-40">
-        <motion.a
-          href="https://wa.me/919437578310"
-          initial={{ opacity: 0, scale: 0 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.6, type: 'spring' }}
-          whileHover={{ scale: 1.06 }}
-          whileTap={{ scale: 0.94 }}
-          className="w-14 h-14 rounded-full bg-[#25D366] shadow-lg flex items-center justify-center"
-          dangerouslySetInnerHTML={{ __html: whatsappLogo }}
-        />
-        <motion.a
-          href="tel:9437578310"
-          initial={{ opacity: 0, scale: 0 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.7, type: 'spring' }}
-          whileHover={{ scale: 1.06 }}
-          whileTap={{ scale: 0.94 }}
-          className="w-14 h-14 rounded-full bg-gradient-to-r from-blue-600 to-blue-700 shadow-lg flex items-center justify-center"
-        >
-          <Phone className="w-6 h-6 text-white" />
-        </motion.a>
+      {/* Quick Access Services */}
+      <div className="space-y-2">
+        <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider px-1">Quick Access</h3>
+        <div className="grid grid-cols-4 gap-2">
+          {quickServices.map((service) => {
+            const Icon = service.icon;
+            return (
+              <button
+                key={service.id}
+                onClick={() => navigate(service.path)}
+                className="flex flex-col items-center gap-1.5 p-2 bg-white border border-slate-100 rounded-2xl hover:border-slate-200 transition-all duration-200"
+              >
+                <div className={`w-9 h-9 rounded-xl flex items-center justify-center ${service.bg.split(' ')[0]} border border-slate-100 shadow-sm`}>
+                  <Icon className={`w-5 h-5 ${service.color}`} />
+                </div>
+                <span className="text-[9px] font-bold text-slate-700 leading-tight text-center truncate w-full">{service.title}</span>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Today's Update notices banner */}
+      <div
+        onClick={() => navigate('/notices')}
+        className="bg-white border border-slate-100 p-4 rounded-2xl flex items-center justify-between cursor-pointer hover:bg-slate-50/50 transition-colors"
+      >
+        <div className="flex items-center gap-3">
+          <span className="bg-red-500 text-white px-2 py-0.5 rounded-lg text-[9px] font-black uppercase">Today's Update</span>
+          <span className="text-xs font-bold text-slate-700">2 New Notices & Updates published</span>
+        </div>
+        <ChevronRight className="w-4 h-4 text-slate-400" />
+      </div>
+
+      {/* Slider Banner Section */}
+      <div className="relative rounded-[24px] overflow-hidden shadow-md h-36 bg-slate-800">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={heroSlides[currentSlide].id}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.5 }}
+            className="absolute inset-0"
+          >
+            <img
+              src={heroSlides[currentSlide].image}
+              alt={heroSlides[currentSlide].title}
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
+            <div className="absolute bottom-3 left-4 right-4">
+              <h4 className="text-xs font-extrabold text-white leading-tight">{heroSlides[currentSlide].title}</h4>
+              <p className="text-[9px] text-slate-200 mt-0.5 truncate">{heroSlides[currentSlide].subtitle}</p>
+            </div>
+          </motion.div>
+        </AnimatePresence>
+        {/* Indicators */}
+        <div className="absolute top-3 right-4 flex gap-1 z-20">
+          {heroSlides.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setCurrentSlide(index)}
+              className={`h-1 rounded-full transition-all duration-300 ${index === currentSlide ? 'w-4 bg-white' : 'w-1 bg-white/50'}`}
+            />
+          ))}
+        </div>
+      </div>
+
+      {/* Featured Places */}
+      <div className="space-y-3">
+        <div className="flex items-center justify-between px-1">
+          <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider">Featured Places</h3>
+          <button
+            onClick={() => navigate('/explore')}
+            className="text-[10px] font-extrabold text-blue-600 uppercase tracking-wider flex items-center gap-0.5 hover:text-blue-700"
+          >
+            View All <ChevronRight className="w-3.5 h-3.5" />
+          </button>
+        </div>
+        <div className="grid grid-cols-2 gap-3">
+          {touristPlaces.map((place) => (
+            <div
+              key={place._id || place.id}
+              onClick={() => navigate('/explore')}
+              className="bg-white border border-slate-100 rounded-[20px] overflow-hidden shadow-sm flex flex-col cursor-pointer"
+            >
+              <div className="h-24 bg-slate-100 relative">
+                <img src={place.image} alt={place.title} className="w-full h-full object-cover" />
+              </div>
+              <div className="p-3">
+                <h4 className="text-xs font-extrabold text-slate-800 truncate">{place.title}</h4>
+                <p className="text-[10px] text-slate-400 font-semibold truncate mt-0.5">{place.description}</p>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
