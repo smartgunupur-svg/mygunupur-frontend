@@ -25,7 +25,10 @@ import {
   Award,
   Image,
   Calendar,
-  BookOpen
+  BookOpen,
+  Home,
+  Utensils,
+  Settings
 } from 'lucide-react';
 import axios from 'axios';
 
@@ -48,6 +51,8 @@ const AdminDashboard: React.FC = () => {
   const [jobs, setJobs] = useState<any[]>([]);
   const [schemes, setSchemes] = useState<any[]>([]);
   const [businesses, setBusinesses] = useState<any[]>([]);
+  const [hotels, setHotels] = useState<any[]>([]);
+  const [restaurants, setRestaurants] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
@@ -75,7 +80,9 @@ const AdminDashboard: React.FC = () => {
           eventsRes,
           jobsRes,
           schemesRes,
-          businessesRes
+          businessesRes,
+          hotelsRes,
+          restaurantsRes
         ] = await Promise.all([
           axios.get(`${API_URL}/loan-enquiries`, {
             headers: { Authorization: `Bearer ${token}` }
@@ -94,7 +101,9 @@ const AdminDashboard: React.FC = () => {
           axios.get(`${API_URL}/events`),
           axios.get(`${API_URL}/jobs`),
           axios.get(`${API_URL}/government-schemes`),
-          axios.get(`${API_URL}/businesses`)
+          axios.get(`${API_URL}/businesses`),
+          axios.get(`${API_URL}/hotels`),
+          axios.get(`${API_URL}/restaurants`)
         ]);
         setLoanEnquiries(loanRes.data);
         setBuildingEnquiries(buildingRes.data);
@@ -110,6 +119,8 @@ const AdminDashboard: React.FC = () => {
         setJobs(jobsRes.data);
         setSchemes(schemesRes.data);
         setBusinesses(businessesRes.data);
+        setHotels(hotelsRes.data);
+        setRestaurants(restaurantsRes.data);
       } catch (error) {
         console.error('Error fetching data:', error);
       } finally {
@@ -134,6 +145,8 @@ const AdminDashboard: React.FC = () => {
     { title: 'Construction Material', icon: ShoppingCart, path: '/admin/construction-material', color: 'text-orange-500', bg: 'bg-orange-50' },
     { title: 'Hospitals', icon: HeartPulse, path: '/admin/hospitals', color: 'text-pink-500', bg: 'bg-pink-50' },
     { title: 'Blood Donors', icon: Droplets, path: '/admin/blood-donors', color: 'text-red-500', bg: 'bg-red-50' },
+    { title: 'Hotels', icon: Home, path: '/admin/hotels', color: 'text-orange-600', bg: 'bg-orange-50' },
+    { title: 'Restaurants', icon: Utensils, path: '/admin/restaurants', color: 'text-rose-600', bg: 'bg-rose-50' },
     { title: 'Tourist Places', icon: MapPin, path: '/admin/tourist-places', color: 'text-teal-500', bg: 'bg-teal-50' },
     { title: 'Emergency Contacts', icon: AlertTriangle, path: '/admin/emergency-contacts', color: 'text-red-500', bg: 'bg-red-50' },
     { title: 'Notices', icon: Bell, path: '/admin/notices', color: 'text-purple-500', bg: 'bg-purple-50' },
@@ -141,7 +154,8 @@ const AdminDashboard: React.FC = () => {
     { title: 'Events Calendar', icon: Calendar, path: '/admin/events', color: 'text-yellow-500', bg: 'bg-yellow-50' },
     { title: 'Local Jobs', icon: Briefcase, path: '/admin/jobs', color: 'text-indigo-600', bg: 'bg-indigo-50' },
     { title: 'Govt Schemes', icon: Award, path: '/admin/schemes', color: 'text-cyan-500', bg: 'bg-cyan-50' },
-    { title: 'Businesses & Directory', icon: BookOpen, path: '/admin/businesses', color: 'text-amber-600', bg: 'bg-amber-50' }
+    { title: 'Businesses & Directory', icon: BookOpen, path: '/admin/businesses', color: 'text-amber-600', bg: 'bg-amber-50' },
+    { title: 'Settings', icon: Settings, path: '/admin/settings', color: 'text-slate-600', bg: 'bg-slate-50' }
   ];
 
   const stats = [
@@ -151,6 +165,8 @@ const AdminDashboard: React.FC = () => {
     { title: 'Material Shops', value: shops.length, icon: ShoppingCart, color: 'from-orange-500 to-red-600', change: '+3%', trend: 'up' },
     { title: 'Hospitals', value: hospitals.length, icon: HeartPulse, color: 'from-pink-500 to-rose-600', change: '+2%', trend: 'up' },
     { title: 'Blood Donors', value: bloodDonors.length, icon: Droplets, color: 'from-red-500 to-rose-600', change: '+6%', trend: 'up' },
+    { title: 'Hotels', value: hotels.length, icon: Home, color: 'from-orange-600 to-red-600', change: '+7%', trend: 'up' },
+    { title: 'Restaurants', value: restaurants.length, icon: Utensils, color: 'from-rose-600 to-pink-600', change: '+9%', trend: 'up' },
     { title: 'Tourist Places', value: touristPlaces.length, icon: MapPin, color: 'from-teal-500 to-cyan-600', change: '+4%', trend: 'up' },
     { title: 'Notices', value: notices.length, icon: Bell, color: 'from-purple-500 to-purple-600', change: '+15%', trend: 'up' },
     { title: 'Gallery Media', value: gallery.length, icon: Image, color: 'from-sky-500 to-blue-600', change: '+20%', trend: 'up' },

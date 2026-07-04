@@ -13,7 +13,16 @@ import {
   Droplets,
   Search,
   CloudSun,
-  Grid
+  Grid,
+  Clock,
+  Phone,
+  Map,
+  Calendar,
+  Utensils,
+  Briefcase,
+  Home,
+  Hospital,
+  Building
 } from 'lucide-react';
 import axios from 'axios';
 
@@ -41,21 +50,31 @@ const heroSlides = [
 ];
 
 const quickServices = [
-  { id: 1, title: 'Home Loan', icon: Banknote, color: 'text-blue-600', bg: 'bg-blue-50 border-blue-100/50', path: '/home-loan' },
-  { id: 2, title: 'Building Plan', icon: Building2, color: 'text-green-600', bg: 'bg-green-50 border-green-100/50', path: '/building-enquiry' },
-  { id: 3, title: 'Emergency', icon: AlertTriangle, color: 'text-red-600', bg: 'bg-red-50 border-red-100/50', path: '/emergency' },
-  { id: 4, title: 'Hospitals', icon: HeartPulse, color: 'text-pink-600', bg: 'bg-pink-50 border-pink-100/50', path: '/hospitals' },
-  { id: 5, title: 'Notices', icon: FileText, color: 'text-purple-600', bg: 'bg-purple-50 border-purple-100/50', path: '/notices' },
-  { id: 6, title: 'Blood Donors', icon: Droplets, color: 'text-red-500', bg: 'bg-red-50 border-red-100/50', path: '/blood-donors' },
-  { id: 7, title: 'Explore', icon: MapPin, color: 'text-emerald-600', bg: 'bg-emerald-50 border-emerald-100/50', path: '/explore' },
-  { id: 8, title: 'More', icon: Grid, color: 'text-slate-600', bg: 'bg-slate-50 border-slate-200/50', path: '/services' }
+  { id: 1, title: 'Home Loan', icon: Banknote, color: 'text-blue-600', bg: 'bg-blue-50', path: '/home-loan', description: 'Calculate EMI' },
+  { id: 2, title: 'Building Plan', icon: Building2, color: 'text-green-600', bg: 'bg-green-50', path: '/building-enquiry', description: 'Plan Assistance' },
+  { id: 3, title: 'Emergency', icon: AlertTriangle, color: 'text-red-600', bg: 'bg-red-50', path: '/emergency', description: 'Quick Call' },
+  { id: 4, title: 'Hospitals', icon: HeartPulse, color: 'text-pink-600', bg: 'bg-pink-50', path: '/hospitals', description: 'Directory' },
+  { id: 5, title: 'Notices', icon: FileText, color: 'text-purple-600', bg: 'bg-purple-50', path: '/notices', description: 'Updates' },
+  { id: 6, title: 'Blood Donors', icon: Droplets, color: 'text-red-500', bg: 'bg-red-50', path: '/blood-donors', description: 'Find Donors' },
+  { id: 7, title: 'Explore', icon: MapPin, color: 'text-emerald-600', bg: 'bg-emerald-50', path: '/explore', description: 'Discover' },
+  { id: 8, title: 'Jobs', icon: Briefcase, color: 'text-indigo-600', bg: 'bg-indigo-50', path: '/jobs', description: 'Opportunities' }
+];
+
+const featuredServices = [
+  { id: 9, title: 'Government Schemes', icon: Building, color: 'from-cyan-600 to-blue-600', path: '/government-schemes', description: 'PMAY, Pension, Scholarships' },
+  { id: 10, title: 'Hotels', icon: Home, color: 'from-orange-500 to-red-500', path: '/hotels', description: 'Stay & Accommodation' },
+  { id: 11, title: 'Restaurants', icon: Utensils, color: 'from-pink-500 to-rose-500', path: '/restaurants', description: 'Food & Dining' },
+  { id: 12, title: 'Events', icon: Calendar, color: 'from-yellow-500 to-orange-500', path: '/events', description: 'Festivals & Events' }
 ];
 
 const Home: React.FC = () => {
   const navigate = useNavigate();
   const [currentSlide, setCurrentSlide] = useState(0);
   const [touristPlaces, setTouristPlaces] = useState<any[]>([]);
+  const [weather, setWeather] = useState<any>(null);
+  const [loadingWeather, setLoadingWeather] = useState(true);
 
+  // Auto slide hero
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
@@ -63,182 +82,299 @@ const Home: React.FC = () => {
     return () => clearInterval(timer);
   }, []);
 
+  // Fetch tourist places
   useEffect(() => {
     const fetchData = async () => {
       try {
         const placesRes = await axios.get(`${API_URL}/tourist-places`);
         if (placesRes.data && placesRes.data.length > 0) {
-          setTouristPlaces(placesRes.data.slice(0, 2));
+          setTouristPlaces(placesRes.data.slice(0, 4));
         } else {
           setTouristPlaces([
             { _id: 1, title: 'Jagannath Temple', description: 'Ancient temple with beautiful architecture', image: 'https://images.unsplash.com/photo-1561361513-2d000a50f0dc?w=600&h=400&fit=crop', googleMap: '#' },
-            { _id: 2, title: 'Putudi Waterfall', description: 'Serene waterfall surrounded by nature', image: 'https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?w=600&h=400&fit=crop', googleMap: '#' }
+            { _id: 2, title: 'Putudi Waterfall', description: 'Serene waterfall surrounded by nature', image: 'https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?w=600&h=400&fit=crop', googleMap: '#' },
+            { _id: 3, title: 'Gunupur College', description: 'Historic educational institution', image: 'https://images.unsplash.com/photo-1562774053-7019393745?w=600&h=400&fit=crop', googleMap: '#' },
+            { _id: 4, title: 'Maa Tarini Temple', description: 'Powerful goddess temple', image: 'https://images.unsplash.com/photo-1603302576837-375f9845f315?w=600&h=400&fit=crop', googleMap: '#' }
           ]);
         }
       } catch (error) {
         console.error('Error fetching data:', error);
         setTouristPlaces([
           { _id: 1, title: 'Jagannath Temple', description: 'Ancient temple with beautiful architecture', image: 'https://images.unsplash.com/photo-1561361513-2d000a50f0dc?w=600&h=400&fit=crop', googleMap: '#' },
-          { _id: 2, title: 'Putudi Waterfall', description: 'Serene waterfall surrounded by nature', image: 'https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?w=600&h=400&fit=crop', googleMap: '#' }
+          { _id: 2, title: 'Putudi Waterfall', description: 'Serene waterfall surrounded by nature', image: 'https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?w=600&h=400&fit=crop', googleMap: '#' },
+          { _id: 3, title: 'Gunupur College', description: 'Historic educational institution', image: 'https://images.unsplash.com/photo-1562774053-7019393745?w=600&h=400&fit=crop', googleMap: '#' },
+          { _id: 4, title: 'Maa Tarini Temple', description: 'Powerful goddess temple', image: 'https://images.unsplash.com/photo-1603302576837-375f9845f315?w=600&h=400&fit=crop', googleMap: '#' }
         ]);
       }
     };
     fetchData();
   }, []);
 
+  // Fetch weather (using free weatherapi.com for Gunupur, Odisha)
+  useEffect(() => {
+    const fetchWeather = async () => {
+      try {
+        // Gunupur coordinates: approx 19.08° N, 83.82° E
+        const response = await axios.get('https://api.weatherapi.com/v1/current.json?key=e1b301203ef34fd39d8110550252901&q=19.08,83.82');
+        setWeather(response.data);
+      } catch (error) {
+        // Fallback to static weather data
+        setWeather({
+          location: { name: 'Gunupur', region: 'Odisha' },
+          current: { temp_c: 28, condition: { text: 'Sunny', icon: 'https://cdn.weatherapi.com/weather/64x64/day/113.png' }, humidity: 65, wind_kph: 12 }
+        });
+      } finally {
+        setLoadingWeather(false);
+      }
+    };
+    fetchWeather();
+  }, []);
+
   return (
-    <div className="p-4 space-y-5 bg-[#f8fafc] pb-24">
+    <div className="space-y-8 py-6 px-4 md:px-0">
       <Helmet>
         <title>My Gunupur - Your Gateway to Citizen Services</title>
         <meta name="description" content="My Gunupur - Your one-stop platform for all citizen services in Gunupur, Odisha." />
       </Helmet>
 
-      {/* Hero Welcome Banner Card */}
-      <motion.div
-        initial={{ opacity: 0, y: 15 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="relative rounded-[32px] overflow-hidden shadow-lg bg-gradient-to-br from-blue-900 via-indigo-900 to-slate-900 text-white p-6"
-      >
-        <div className="space-y-1">
-          <p className="text-[10px] font-bold text-blue-300 uppercase tracking-widest">Welcome to</p>
-          <h2 className="text-2xl font-black tracking-tight leading-tight">MY GUNUPUR</h2>
-          <p className="text-xs text-blue-100/70 font-semibold leading-relaxed">A Digital Initiative for a Better Tomorrow.</p>
-        </div>
-        <div className="mt-5 relative">
-          <Search className="absolute left-3.5 top-1/2 transform -translate-y-1/2 w-4 h-4 text-blue-300" />
-          <input
-            type="text"
-            readOnly
-            placeholder="Search services, places..."
-            onClick={() => navigate('/services')}
-            className="w-full pl-10 pr-4 py-3 bg-white/10 border border-white/10 rounded-2xl text-xs font-semibold text-white placeholder-blue-200/60 focus:outline-none cursor-pointer hover:bg-white/20 transition-all duration-200"
-          />
-        </div>
-      </motion.div>
-
-      {/* Weather & Emergency Call Row */}
-      <div className="grid grid-cols-2 gap-3">
-        {/* Weather Card */}
-        <div
-          onClick={() => navigate('/weather')}
-          className="bg-white border border-slate-100 p-4 rounded-[24px] shadow-sm flex items-center justify-between cursor-pointer hover:border-slate-200 transition-all duration-200"
+      {/* Hero Section */}
+      <div className="max-w-6xl mx-auto">
+        {/* Welcome Banner */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="relative rounded-3xl overflow-hidden shadow-2xl bg-gradient-to-br from-blue-900 via-indigo-900 to-slate-900 text-white p-8 md:p-12 mb-6"
         >
-          <div>
-            <p className="text-[9px] text-slate-400 font-extrabold uppercase leading-none">Gunupur, Odisha</p>
-            <p className="text-lg font-black text-slate-800 mt-1.5 leading-none">28°C</p>
-            <p className="text-[9px] text-slate-500 font-bold mt-1 leading-none">Sunny</p>
+          <div className="flex flex-col md:flex-row items-center justify-between gap-8">
+            <div className="flex-1">
+              <p className="text-sm font-bold text-blue-300 uppercase tracking-wider mb-2">Welcome to</p>
+              <h1 className="text-4xl md:text-5xl font-black tracking-tight leading-tight mb-4">MY GUNUPUR</h1>
+              <p className="text-lg text-blue-100 font-semibold mb-8 max-w-2xl">
+                A Digital Initiative for a Better Tomorrow. Everything You Need, All In One Place.</p>
+              
+              <div className="relative max-w-md">
+                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-blue-300" />
+                <input
+                  type="text"
+                  readOnly
+                  placeholder="Search services, places, businesses..."
+                  onClick={() => navigate('/services')}
+                  className="w-full pl-12 pr-6 py-4 bg-white/10 border-2xl border-white/10 rounded-xl text-white placeholder-blue-200/80 focus:outline-none cursor-pointer hover:bg-white/20 transition-all duration-300 font-semibold"
+                />
+              </div>
+            </div>
+
+            <div className="w-full md:w-1/3">
+              <img src="/layoutlogo.png" alt="My Gunupur" className="w-48 h-48 object-contain drop-shadow-2xl" />
+            </div>
           </div>
-          <CloudSun className="w-8 h-8 text-amber-500" />
-        </div>
+        </motion.div>
 
-        {/* Emergency Call Card */}
-        <div
-          onClick={() => navigate('/emergency')}
-          className="bg-gradient-to-br from-red-500 to-rose-600 text-white p-4 rounded-[24px] shadow-sm flex items-center justify-between cursor-pointer hover:shadow-md transition-all duration-200"
-        >
-          <div>
-            <h4 className="text-xs font-black">Emergency</h4>
-            <p className="text-[8px] text-red-100 font-semibold mt-0.5 uppercase tracking-wide">One Tap Call</p>
-          </div>
-          <AlertTriangle className="w-8 h-8 text-white animate-pulse" />
-        </div>
-      </div>
-
-      {/* Quick Access Services */}
-      <div className="space-y-2">
-        <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider px-1">Quick Access</h3>
-        <div className="grid grid-cols-4 gap-2">
-          {quickServices.map((service) => {
-            const Icon = service.icon;
-            return (
-              <button
-                key={service.id}
-                onClick={() => navigate(service.path)}
-                className="flex flex-col items-center gap-1.5 p-2 bg-white border border-slate-100 rounded-2xl hover:border-slate-200 transition-all duration-200"
-              >
-                <div className={`w-9 h-9 rounded-xl flex items-center justify-center ${service.bg.split(' ')[0]} border border-slate-100 shadow-sm`}>
-                  <Icon className={`w-5 h-5 ${service.color}`} />
-                </div>
-                <span className="text-[9px] font-bold text-slate-700 leading-tight text-center truncate w-full">{service.title}</span>
-              </button>
-            );
-          })}
-        </div>
-      </div>
-
-      {/* Today's Update notices banner */}
-      <div
-        onClick={() => navigate('/notices')}
-        className="bg-white border border-slate-100 p-4 rounded-2xl flex items-center justify-between cursor-pointer hover:bg-slate-50/50 transition-colors"
-      >
-        <div className="flex items-center gap-3">
-          <span className="bg-red-500 text-white px-2 py-0.5 rounded-lg text-[9px] font-black uppercase">Today's Update</span>
-          <span className="text-xs font-bold text-slate-700">2 New Notices & Updates published</span>
-        </div>
-        <ChevronRight className="w-4 h-4 text-slate-400" />
-      </div>
-
-      {/* Slider Banner Section */}
-      <div className="relative rounded-[24px] overflow-hidden shadow-md h-36 bg-slate-800">
-        <AnimatePresence mode="wait">
+        {/* Weather & Emergency Section */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+          {/* Weather Card */}
           <motion.div
-            key={heroSlides[currentSlide].id}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.5 }}
-            className="absolute inset-0"
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.2 }}
+            onClick={() => navigate('/weather')}
+            className="bg-gradient-to-br from-slate-50 to-blue-50 p-8 rounded-3xl border-2xl border-slate-100 shadow-lg hover:shadow-2xl transition-all cursor-pointer"
           >
-            <img
-              src={heroSlides[currentSlide].image}
-              alt={heroSlides[currentSlide].title}
-              className="w-full h-full object-cover"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
-            <div className="absolute bottom-3 left-4 right-4">
-              <h4 className="text-xs font-extrabold text-white leading-tight">{heroSlides[currentSlide].title}</h4>
-              <p className="text-[9px] text-slate-200 mt-0.5 truncate">{heroSlides[currentSlide].subtitle}</p>
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-xs font-extrabold text-slate-500 uppercase tracking-widest mb-1">GUNUPUR, ODISHA</p>
+                {loadingWeather ? (
+                  <div className="animate-pulse">
+                    <div className="h-12 w-24 bg-slate-200 rounded mb-2" />
+                    <div className="h-4 w-32 bg-slate-200 rounded" />
+                  </div>
+                ) : (
+                  <>
+                    <h3 className="text-5xl font-black text-slate-800 mb-1">{weather?.current?.temp_c}°C</h3>
+                    <p className="text-sm text-slate-600 font-semibold">{weather?.current?.condition?.text}</p>
+                  </>
+                )}
+              </div>
+              {weather && (
+                <div className="flex flex-col items-center">
+                  <img src={weather?.current?.condition?.icon} alt={weather?.current?.condition?.text} className="w-24 h-24" />
+                  <span className="text-xs font-bold text-slate-500">H: {weather?.current?.humidity}% | W: {weather?.current?.wind_kph} km/h</span>
+                </div>
+              )}
             </div>
           </motion.div>
-        </AnimatePresence>
-        {/* Indicators */}
-        <div className="absolute top-3 right-4 flex gap-1 z-20">
-          {heroSlides.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => setCurrentSlide(index)}
-              className={`h-1 rounded-full transition-all duration-300 ${index === currentSlide ? 'w-4 bg-white' : 'w-1 bg-white/50'}`}
-            />
-          ))}
-        </div>
-      </div>
 
-      {/* Featured Places */}
-      <div className="space-y-3">
-        <div className="flex items-center justify-between px-1">
-          <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider">Featured Places</h3>
-          <button
-            onClick={() => navigate('/explore')}
-            className="text-[10px] font-extrabold text-blue-600 uppercase tracking-wider flex items-center gap-0.5 hover:text-blue-700"
+          {/* Emergency Call Card */}
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.3 }}
+            onClick={() => navigate('/emergency')}
+            className="bg-gradient-to-br from-red-500 to-rose-600 text-white p-8 rounded-3xl shadow-lg hover:shadow-2xl transition-all cursor-pointer"
           >
-            View All <ChevronRight className="w-3.5 h-3.5" />
-          </button>
-        </div>
-        <div className="grid grid-cols-2 gap-3">
-          {touristPlaces.map((place) => (
-            <div
-              key={place._id || place.id}
-              onClick={() => navigate('/explore')}
-              className="bg-white border border-slate-100 rounded-[20px] overflow-hidden shadow-sm flex flex-col cursor-pointer"
-            >
-              <div className="h-24 bg-slate-100 relative">
-                <img src={place.image} alt={place.title} className="w-full h-full object-cover" />
+            <div className="flex items-center justify-between h-full">
+              <div>
+                <h3 className="text-3xl font-black mb-2">Emergency</h3>
+                <p className="text-sm text-red-100 font-semibold uppercase tracking-wide">Quick Call</p>
               </div>
-              <div className="p-3">
-                <h4 className="text-xs font-extrabold text-slate-800 truncate">{place.title}</h4>
-                <p className="text-[10px] text-slate-400 font-semibold truncate mt-0.5">{place.description}</p>
+              <div className="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm">
+                <AlertTriangle className="w-10 h-10 text-white animate-pulse" />
               </div>
             </div>
+          </motion.div>
+        </div>
+
+        {/* Quick Services Grid */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4 }}
+          className="mb-8"
+        >
+          <h2 className="text-2xl font-black text-slate-800 mb-6 flex items-center gap-3">
+            <span className="w-2 h-10 bg-gradient-to-b from-blue-600 to-indigo-600 rounded-full"></span>
+            Quick Services
+          </h2>
+          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-4">
+            {quickServices.map((service, index) => {
+              const Icon = service.icon;
+              return (
+                <motion.button
+                  key={service.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.5 + index * 0.05 }}
+                  onClick={() => navigate(service.path)}
+                  className="flex flex-col items-center justify-center p-6 bg-white rounded-2xl border border-slate-100 hover:border-slate-200 hover:shadow-xl hover:scale-105 transition-all duration-2xl"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  <div className={`w-16 h-16 rounded-2xl flex items-center justify-center mb-3 shadow-md ${service.bg}`}>
+                    <Icon className={`w-8 h-8 ${service.color}`} />
+                  </div>
+                  <span className="font-bold text-slate-800 mb-1">{service.title}</span>
+                  <span className="text-xs text-slate-500 font-semibold">{service.description}</span>
+                </motion.button>
+              );
+            })}
+          </div>
+        </motion.div>
+
+        {/* Hero Slider */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.6 }}
+          className="mb-8"
+        >
+          <div className="relative rounded-3xl overflow-hidden shadow-2xl h-64 md:h-80 lg:h-96">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={heroSlides[currentSlide].id}
+                initial={{ opacity: 0, scale: 1.05 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.7 }}
+                className="absolute inset-0"
+              >
+                <img
+                  src={heroSlides[currentSlide].image} alt={heroSlides[currentSlide].title} className="w-full h-full object-cover" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
+                <div className="absolute bottom-8 left-8 right-8">
+                  <h3 className="text-3xl md:text-4xl font-black text-white mb-2">{heroSlides[currentSlide].title}</h3>
+                  <p className="text-lg text-slate-200">{heroSlides[currentSlide].subtitle}</p>
+                </div>
+              </motion.div>
+            </AnimatePresence>
+            {/* Slide Indicators */}
+            <div className="absolute top-6 right-6 flex gap-2 z-10">
+              {heroSlides.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentSlide(index)}
+                  className={`h-2 rounded-full transition-all duration-300 ${index === currentSlide ? 'w-8 bg-white' : 'w-2 bg-white/60'}`}
+                />
+              ))}
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Featured Services Cards */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.7 }}
+          className="mb-8"
+        >
+          <h2 className="text-2xl font-black text-slate-800 mb-6 flex items-center gap-3">
+            <span className="w-2 h-10 bg-gradient-to-b from-green-600 to-emerald-600 rounded-full"></span>
+            More Services
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {featuredServices.map((service, index) => {
+              const Icon = service.icon;
+              return (
+                <motion.button
+                  key={service.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.8 + index * 0.1 }}
+                  onClick={() => navigate(service.path)}
+                  className="flex items-center gap-6 p-8 bg-white rounded-3xl border border-slate-100 hover:border-slate-200 shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer"
+                  whileHover={{ scale: 1.02 }}
+                >
+                  <div className={`w-16 h-16 bg-gradient-to-br ${service.color} rounded-2xl flex items-center justify-center text-white shadow-lg">
+                    <Icon className="w-8 h-8" />
+                  </div>
+                  <div className="text-left">
+                    <h4 className="font-black text-slate-800 text-lg">{service.title}</h4>
+                    <p className="text-sm text-slate-500 font-semibold">{service.description}</p>
+                  </div>
+                </motion.button>
+              );
+            })}
+          </div>
+        </motion.div>
+
+        {/* Featured Places */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.9 }}
+        >
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-2xl font-black text-slate-800 flex items-center gap-3">
+              <span className="w-2 h-10 bg-gradient-to-b from-pink-600 to-rose-600 rounded-full"></span>
+              Explore Gunupur
+            </h2>
+            <button
+              onClick={() => navigate('/explore')}
+              className="flex items-center gap-2 px-6 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-2xl transition-all duration-200"
+            >
+              View All <ChevronRight className="w-5 h-5" />
+            </button>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {touristPlaces.map((place, index) => (
+            <motion.div
+              key={place._id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1 + index * 0.1 }}
+              onClick={() => navigate('/explore')}
+              className="bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-xl border border-slate-100 cursor-pointer group"
+            >
+              <div className="h-48 relative overflow-hidden">
+                <img
+                  src={place.image} alt={place.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+              </div>
+              <div className="p-6">
+                <h4 className="font-black text-slate-800 text-lg mb-2">{place.title}</h4>
+                <p className="text-sm text-slate-500 font-semibold">{place.description}</p>
+              </div>
+            </motion.div>
           ))}
         </div>
       </div>
@@ -247,3 +383,4 @@ const Home: React.FC = () => {
 };
 
 export default Home;
+
