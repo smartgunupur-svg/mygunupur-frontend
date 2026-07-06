@@ -6,7 +6,7 @@ const contactsList = [
   {
     id: 1,
     name: 'Collectorate Rayagada',
-    phone: '06857-223233',
+    phone: '000000000',
     icon: Shield,
     color: 'text-indigo-600',
     bg: 'bg-indigo-50 border-indigo-100',
@@ -15,7 +15,7 @@ const contactsList = [
   {
     id: 2,
     name: 'Sub-Collector Office Gunupur',
-    phone: '06857-222446',
+    phone: '000000000',
     icon: UserCheck,
     color: 'text-blue-600',
     bg: 'bg-blue-50 border-blue-100',
@@ -24,7 +24,7 @@ const contactsList = [
   {
     id: 3,
     name: 'SP Office Rayagada',
-    phone: '06857-222555',
+    phone: '000000000',
     icon: ShieldAlert,
     color: 'text-red-600',
     bg: 'bg-red-50 border-red-100',
@@ -33,7 +33,7 @@ const contactsList = [
   {
     id: 4,
     name: 'BDO Office Gunupur',
-    phone: '06857-222666',
+    phone: '000000000000',
     icon: Building,
     color: 'text-green-600',
     bg: 'bg-green-50 border-green-100',
@@ -42,7 +42,7 @@ const contactsList = [
   {
     id: 5,
     name: 'Tahasil Office Gunupur',
-    phone: '06857-222777',
+    phone: '00000000000',
     icon: Building,
     color: 'text-emerald-600',
     bg: 'bg-emerald-50 border-emerald-100',
@@ -51,7 +51,7 @@ const contactsList = [
   {
     id: 6,
     name: 'Municipality Office Gunupur',
-    phone: '06857-222888',
+    phone: '000000000',
     icon: Building,
     color: 'text-teal-600',
     bg: 'bg-teal-50 border-teal-100',
