@@ -273,7 +273,7 @@ const AdminEvents: React.FC = () => {
           </div>
         )}
       </div>
-    </div>
+    </AdminLayout>
   );
 };
 

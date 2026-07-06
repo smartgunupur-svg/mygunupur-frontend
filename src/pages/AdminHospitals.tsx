@@ -358,7 +358,7 @@ const AdminHospitals: React.FC = () => {
           </div>
         )}
       </div>
-    </div>
+    </AdminLayout>
   );
 };
 

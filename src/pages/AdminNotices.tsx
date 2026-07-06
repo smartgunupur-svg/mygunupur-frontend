@@ -40,11 +40,7 @@ const AdminNotices: React.FC = () => {
     fetchNotices();
   }, [navigate]);
 
-  const handleLogout = () => {
-    localStorage.removeItem('adminToken');
-    localStorage.removeItem('adminEmail');
-    navigate('/admin/login');
-  };
+
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

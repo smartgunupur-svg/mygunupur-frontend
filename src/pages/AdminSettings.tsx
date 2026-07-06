@@ -2,14 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import {
-  ArrowLeft,
   Save,
-  LogOut,
   ToggleLeft,
   ToggleRight,
   Settings as SettingsIcon
 } from 'lucide-react';
 import axios from 'axios';
+import AdminLayout from '../components/AdminLayout';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
@@ -118,33 +117,7 @@ const AdminSettings: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50 pb-24">
-      {/* Header */}
-      <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm">
-        <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <button
-              onClick={() => navigate('/admin/dashboard')}
-              className="p-2 hover:bg-slate-100 rounded-xl transition-all"
-            >
-              <ArrowLeft className="w-5 h-5 text-slate-600" />
-            </button>
-            <div>
-              <h1 className="text-lg font-bold text-slate-800">App Settings</h1>
-              <p className="text-xs text-slate-500 font-medium">Control feature visibility</p>
-            </div>
-          </div>
-          <button
-            onClick={handleLogout}
-            className="flex items-center gap-2 px-4 py-2 bg-red-50 text-red-600 hover:bg-red-100 rounded-xl transition-all font-semibold text-sm"
-          >
-            <LogOut className="w-4 h-4" />
-            Logout
-          </button>
-        </div>
-      </header>
-
-      {/* Main Content */}
+    <AdminLayout title="App Settings">
       <div className="max-w-6xl mx-auto px-4 py-8 space-y-6">
         {/* Save Button */}
         <div className="flex justify-end">
@@ -200,15 +173,8 @@ const AdminSettings: React.FC = () => {
           </div>
         </div>
       </div>
-    </div>
+    </AdminLayout>
   );
-};
-
-// Adding handleLogout function
-const handleLogout = () => {
-  localStorage.removeItem('adminToken');
-  localStorage.removeItem('adminEmail');
-  window.location.href = '/admin/login';
 };
 
 export default AdminSettings;

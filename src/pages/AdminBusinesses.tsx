@@ -343,7 +343,7 @@ const AdminBusinesses: React.FC = () => {
           </div>
         )}
       </div>
-    </div>
+    </AdminLayout>
   );
 };
 

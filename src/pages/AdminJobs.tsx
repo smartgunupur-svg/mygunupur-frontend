@@ -46,11 +46,7 @@ const AdminJobs: React.FC = () => {
     fetchJobs();
   }, [navigate]);
 
-  const handleLogout = () => {
-    localStorage.removeItem('adminToken');
-    localStorage.removeItem('adminEmail');
-    navigate('/admin/login');
-  };
+
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

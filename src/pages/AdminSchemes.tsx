@@ -285,7 +285,7 @@ const AdminSchemes: React.FC = () => {
           </div>
         )}
       </div>
-    </div>
+    </AdminLayout>
   );
 };
 

@@ -236,7 +236,7 @@ const AdminGallery: React.FC = () => {
           </div>
         )}
       </div>
-    </div>
+    </AdminLayout>
   );
 };
 
