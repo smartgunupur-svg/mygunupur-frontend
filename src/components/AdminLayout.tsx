@@ -25,7 +25,10 @@ import {
   Home,
   Utensils,
   Settings,
-  Phone
+  Phone,
+  GraduationCap,
+  TreePine,
+  Trophy
 } from 'lucide-react';
 
 interface AdminLayoutProps {
@@ -56,6 +59,11 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children, title = 'Dashboard'
     { title: 'Hotels', icon: Home, path: '/admin/hotels', color: 'text-orange-600', bg: 'bg-orange-50' },
     { title: 'Restaurants', icon: Utensils, path: '/admin/restaurants', color: 'text-rose-600', bg: 'bg-rose-50' },
     { title: 'Tourist Places', icon: MapPin, path: '/admin/tourist-places', color: 'text-teal-500', bg: 'bg-teal-50' },
+    { title: 'Schools', icon: GraduationCap, path: '/admin/schools', color: 'text-blue-600', bg: 'bg-blue-50' },
+    { title: 'Colleges', icon: BookOpen, path: '/admin/colleges', color: 'text-green-600', bg: 'bg-green-50' },
+    { title: 'Govt Offices', icon: Building2, path: '/admin/govt-offices', color: 'text-purple-600', bg: 'bg-purple-50' },
+    { title: 'Parks', icon: TreePine, path: '/admin/parks', color: 'text-green-600', bg: 'bg-green-50' },
+    { title: 'Sports Places', icon: Trophy, path: '/admin/sports-places', color: 'text-orange-600', bg: 'bg-orange-50' },
     { title: 'Emergency Contacts', icon: AlertTriangle, path: '/admin/emergency-contacts', color: 'text-red-500', bg: 'bg-red-50' },
     { title: 'Important Contacts', icon: Phone, path: '/admin/important-contacts', color: 'text-indigo-600', bg: 'bg-indigo-50' },
     { title: 'Notices', icon: Bell, path: '/admin/notices', color: 'text-purple-500', bg: 'bg-purple-50' },

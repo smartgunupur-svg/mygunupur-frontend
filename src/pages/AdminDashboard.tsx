@@ -122,21 +122,21 @@ const AdminDashboard: React.FC = () => {
   }, [navigate]);
 
   const stats = [
-    { title: 'Loan Enquiries', value: loanEnquiries.length, icon: FileText, color: 'from-blue-500 to-blue-600', change: '+12%', trend: 'up' },
-    { title: 'Building Enquiries', value: buildingEnquiries.length, icon: Building2, color: 'from-green-500 to-emerald-600', change: '+8%', trend: 'up' },
-    { title: 'Total Banks', value: banks.length, icon: Banknote, color: 'from-indigo-500 to-purple-600', change: '+5%', trend: 'up' },
-    { title: 'Material Shops', value: shops.length, icon: ShoppingCart, color: 'from-orange-500 to-red-600', change: '+3%', trend: 'up' },
-    { title: 'Hospitals', value: hospitals.length, icon: HeartPulse, color: 'from-pink-500 to-rose-600', change: '+2%', trend: 'up' },
-    { title: 'Blood Donors', value: bloodDonors.length, icon: Droplets, color: 'from-red-500 to-rose-600', change: '+6%', trend: 'up' },
-    { title: 'Hotels', value: hotels.length, icon: Home, color: 'from-orange-600 to-red-600', change: '+7%', trend: 'up' },
-    { title: 'Restaurants', value: restaurants.length, icon: Utensils, color: 'from-rose-600 to-pink-600', change: '+9%', trend: 'up' },
-    { title: 'Tourist Places', value: touristPlaces.length, icon: MapPin, color: 'from-teal-500 to-cyan-600', change: '+4%', trend: 'up' },
-    { title: 'Notices', value: notices.length, icon: FileText, color: 'from-purple-500 to-purple-600', change: '+15%', trend: 'up' },
-    { title: 'Gallery Media', value: gallery.length, icon: Image, color: 'from-sky-500 to-blue-600', change: '+20%', trend: 'up' },
-    { title: 'Events Scheduled', value: events.length, icon: Calendar, color: 'from-yellow-500 to-amber-600', change: '+10%', trend: 'up' },
-    { title: 'Jobs Posted', value: jobs.length, icon: Briefcase, color: 'from-indigo-500 to-indigo-600', change: '+25%', trend: 'up' },
-    { title: 'Govt Schemes', value: schemes.length, icon: Award, color: 'from-cyan-500 to-blue-600', change: '+5%', trend: 'up' },
-    { title: 'Businesses & Shops', value: businesses.length, icon: BookOpen, color: 'from-amber-500 to-orange-600', change: '+12%', trend: 'up' },
+    { title: 'Loan Enquiries', value: loanEnquiries.length, icon: FileText, color: 'from-blue-500 to-blue-600' },
+    { title: 'Building Enquiries', value: buildingEnquiries.length, icon: Building2, color: 'from-green-500 to-emerald-600' },
+    { title: 'Total Banks', value: banks.length, icon: Banknote, color: 'from-indigo-500 to-purple-600' },
+    { title: 'Material Shops', value: shops.length, icon: ShoppingCart, color: 'from-orange-500 to-red-600' },
+    { title: 'Hospitals', value: hospitals.length, icon: HeartPulse, color: 'from-pink-500 to-rose-600' },
+    { title: 'Blood Donors', value: bloodDonors.length, icon: Droplets, color: 'from-red-500 to-rose-600' },
+    { title: 'Hotels', value: hotels.length, icon: Home, color: 'from-orange-600 to-red-600' },
+    { title: 'Restaurants', value: restaurants.length, icon: Utensils, color: 'from-rose-600 to-pink-600' },
+    { title: 'Tourist Places', value: touristPlaces.length, icon: MapPin, color: 'from-teal-500 to-cyan-600' },
+    { title: 'Notices', value: notices.length, icon: FileText, color: 'from-purple-500 to-purple-600' },
+    { title: 'Gallery Media', value: gallery.length, icon: Image, color: 'from-sky-500 to-blue-600' },
+    { title: 'Events Scheduled', value: events.length, icon: Calendar, color: 'from-yellow-500 to-amber-600' },
+    { title: 'Jobs Posted', value: jobs.length, icon: Briefcase, color: 'from-indigo-500 to-indigo-600' },
+    { title: 'Govt Schemes', value: schemes.length, icon: Award, color: 'from-cyan-500 to-blue-600' },
+    { title: 'Businesses & Shops', value: businesses.length, icon: BookOpen, color: 'from-amber-500 to-orange-600' },
   ];
 
   const recentEnquiries = [...loanEnquiries, ...buildingEnquiries]
@@ -160,9 +160,6 @@ const AdminDashboard: React.FC = () => {
               <div className="flex items-center justify-between mb-4">
                 <div className={`w-12 h-12 bg-gradient-to-br ${stat.color} rounded-xl flex items-center justify-center shadow-md`}>
                   <stat.icon className="w-6 h-6 text-white" />
-                </div>
-                <div className={`flex items-center gap-1 px-2 py-1 rounded-full text-xs font-semibold ${stat.trend === 'up' ? 'bg-green-50 text-green-600' : 'bg-red-50 text-red-600'}`}>
-                  {stat.change}
                 </div>
               </div>
               <p className="text-3xl font-black text-slate-800 mb-1">{loading ? '...' : stat.value}</p>

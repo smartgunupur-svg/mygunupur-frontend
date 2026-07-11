@@ -22,10 +22,10 @@ const whatsappLogo = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24
 
 const HomeLoan: React.FC = () => {
   const navigate = useNavigate();
-  const [loanAmount, setLoanAmount] = useState(1000000);
-  const [interestRate, setInterestRate] = useState(8.5);
-  const [loanTenure, setLoanTenure] = useState(20);
-  const [selectedBank, setSelectedBank] = useState<number | null>(null);
+  const [loanAmount, setLoanAmount] = useState<string>("1000000");
+  const [interestRate, setInterestRate] = useState<string>("8.5");
+  const [loanTenure, setLoanTenure] = useState<string>("20");
+  const [selectedBank, setSelectedBank] = useState<string | null>(null);
   const [emi, setEmi] = useState(0);
   const [totalInterest, setTotalInterest] = useState(0);
   const [totalPayment, setTotalPayment] = useState(0);
@@ -59,17 +59,23 @@ const HomeLoan: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    const principal = loanAmount;
-    const rate = interestRate / 12 / 100;
-    const tenure = loanTenure * 12;
+    const principal = Number(loanAmount) || 0;
+    const rate = (Number(interestRate) || 0) / 12 / 100;
+    const tenure = (Number(loanTenure) || 0) * 12;
 
-    const emiValue = (principal * rate * Math.pow(1 + rate, tenure)) / (Math.pow(1 + rate, tenure) - 1);
-    const totalPaymentValue = emiValue * tenure;
-    const totalInterestValue = totalPaymentValue - principal;
+    if (principal > 0 && rate > 0 && tenure > 0) {
+      const emiValue = (principal * rate * Math.pow(1 + rate, tenure)) / (Math.pow(1 + rate, tenure) - 1);
+      const totalPaymentValue = emiValue * tenure;
+      const totalInterestValue = totalPaymentValue - principal;
 
-    setEmi(Math.round(emiValue));
-    setTotalInterest(Math.round(totalInterestValue));
-    setTotalPayment(Math.round(totalPaymentValue));
+      setEmi(Math.round(emiValue));
+      setTotalInterest(Math.round(totalInterestValue));
+      setTotalPayment(Math.round(totalPaymentValue));
+    } else {
+      setEmi(0);
+      setTotalInterest(0);
+      setTotalPayment(0);
+    }
   }, [loanAmount, interestRate, loanTenure]);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -78,9 +84,9 @@ const HomeLoan: React.FC = () => {
     try {
       await axios.post(`${API_URL}/loan-enquiries`, {
         ...formData,
-        loanAmount,
-        interestRate,
-        loanTenure,
+        loanAmount: Number(loanAmount),
+        interestRate: Number(interestRate),
+        loanTenure: Number(loanTenure),
         emi,
         bankId: selectedBank
       });
@@ -226,12 +232,9 @@ const HomeLoan: React.FC = () => {
                 <div className="flex items-center gap-3 mb-4">
                   <span className="text-slate-600 font-semibold text-lg">₹</span>
                   <input
-                    type="number"
-                    min="100000"
-                    max="10000000"
-                    step="100000"
+                    type="text"
                     value={loanAmount}
-                    onChange={(e) => setLoanAmount(Number(e.target.value))}
+                    onChange={(e) => setLoanAmount(e.target.value)}
                     className="flex-1 text-2xl font-black bg-gradient-to-r from-blue-600 to-emerald-600 bg-clip-text text-transparent outline-none border-b-2 border-slate-200 focus:border-blue-600 transition-all"
                   />
                 </div>
@@ -240,8 +243,8 @@ const HomeLoan: React.FC = () => {
                   min="100000"
                   max="10000000"
                   step="100000"
-                  value={loanAmount}
-                  onChange={(e) => setLoanAmount(Number(e.target.value))}
+                  value={Number(loanAmount) || 0}
+                  onChange={(e) => setLoanAmount(e.target.value)}
                   className="w-full h-3 bg-slate-200 rounded-full appearance-none cursor-pointer accent-gradient-to-r from-blue-600 to-emerald-600"
                 />
                 <div className="flex justify-between mt-3 text-xs font-bold text-slate-400">
@@ -261,12 +264,9 @@ const HomeLoan: React.FC = () => {
                 </div>
                 <div className="flex items-center gap-3 mb-4">
                   <input
-                    type="number"
-                    min="5"
-                    max="15"
-                    step="0.1"
+                    type="text"
                     value={interestRate}
-                    onChange={(e) => setInterestRate(Number(e.target.value))}
+                    onChange={(e) => setInterestRate(e.target.value)}
                     className="flex-1 text-2xl font-black bg-gradient-to-r from-blue-600 to-emerald-600 bg-clip-text text-transparent outline-none border-b-2 border-slate-200 focus:border-blue-600 transition-all"
                   />
                   <span className="text-slate-600 font-semibold text-lg">%</span>
@@ -276,8 +276,8 @@ const HomeLoan: React.FC = () => {
                   min="5"
                   max="15"
                   step="0.1"
-                  value={interestRate}
-                  onChange={(e) => setInterestRate(Number(e.target.value))}
+                  value={Number(interestRate) || 0}
+                  onChange={(e) => setInterestRate(e.target.value)}
                   className="w-full h-3 bg-slate-200 rounded-full appearance-none cursor-pointer accent-gradient-to-r from-blue-600 to-emerald-600"
                 />
                 <div className="flex justify-between mt-3 text-xs font-bold text-slate-400">
@@ -297,12 +297,9 @@ const HomeLoan: React.FC = () => {
                 </div>
                 <div className="flex items-center gap-3 mb-4">
                   <input
-                    type="number"
-                    min="1"
-                    max="30"
-                    step="1"
+                    type="text"
                     value={loanTenure}
-                    onChange={(e) => setLoanTenure(Number(e.target.value))}
+                    onChange={(e) => setLoanTenure(e.target.value)}
                     className="flex-1 text-2xl font-black bg-gradient-to-r from-blue-600 to-emerald-600 bg-clip-text text-transparent outline-none border-b-2 border-slate-200 focus:border-blue-600 transition-all"
                   />
                   <span className="text-slate-600 font-semibold text-lg">Years</span>
@@ -312,8 +309,8 @@ const HomeLoan: React.FC = () => {
                   min="1"
                   max="30"
                   step="1"
-                  value={loanTenure}
-                  onChange={(e) => setLoanTenure(Number(e.target.value))}
+                  value={Number(loanTenure) || 0}
+                  onChange={(e) => setLoanTenure(e.target.value)}
                   className="w-full h-3 bg-slate-200 rounded-full appearance-none cursor-pointer accent-gradient-to-r from-blue-600 to-emerald-600"
                 />
                 <div className="flex justify-between mt-3 text-xs font-bold text-slate-400">

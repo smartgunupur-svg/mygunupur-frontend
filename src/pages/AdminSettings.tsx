@@ -5,7 +5,8 @@ import {
   Save,
   ToggleLeft,
   ToggleRight,
-  Settings as SettingsIcon
+  Settings as SettingsIcon,
+  Upload
 } from 'lucide-react';
 import axios from 'axios';
 import AdminLayout from '../components/AdminLayout';
@@ -17,6 +18,7 @@ const AdminSettings: React.FC = () => {
   const [settings, setSettings] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [uploading, setUploading] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem('adminToken');
@@ -32,6 +34,7 @@ const AdminSettings: React.FC = () => {
       } catch (error) {
         console.error('Error fetching settings:', error);
         setSettings({
+          donatedBy: {},
           features: {
             homeLoan: true,
             buildingPlan: true,
@@ -50,7 +53,12 @@ const AdminSettings: React.FC = () => {
             businesses: true,
             governmentSchemes: true,
             about: true,
-            contact: true
+            contact: true,
+            schools: true,
+            colleges: true,
+            govtOffices: true,
+            parks: true,
+            sportsPlaces: true,
           }
         });
       } finally {
@@ -77,6 +85,33 @@ const AdminSettings: React.FC = () => {
     }
   };
 
+  const handleDonorImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setUploading(true);
+    const uploadFormData = new FormData();
+    uploadFormData.append('image', file);
+
+    try {
+      const response = await axios.post(`${API_URL}/upload`, uploadFormData, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+      });
+      setSettings((prev: any) => ({
+        ...prev,
+        donatedBy: {
+          ...prev.donatedBy,
+          photo: response.data.url
+        }
+      }));
+    } catch (error) {
+      console.error('Error uploading image:', error);
+      alert('Error uploading image');
+    } finally {
+      setUploading(false);
+    }
+  };
+
   const toggleFeature = (key: string) => {
     setSettings((prev: any) => ({
       ...prev,
@@ -94,6 +129,11 @@ const AdminSettings: React.FC = () => {
     { key: 'hospitals', label: 'Hospitals Directory', color: 'text-rose-600', bg: 'bg-rose-50' },
     { key: 'bloodDonors', label: 'Blood Donors', color: 'text-red-500', bg: 'bg-red-50' },
     { key: 'touristPlaces', label: 'Explore Gunupur', color: 'text-teal-600', bg: 'bg-teal-50' },
+    { key: 'schools', label: 'Schools Directory', color: 'text-yellow-600', bg: 'bg-yellow-50' },
+    { key: 'colleges', label: 'Colleges Directory', color: 'text-teal-700', bg: 'bg-teal-50' },
+    { key: 'govtOffices', label: 'Government Offices', color: 'text-purple-700', bg: 'bg-purple-50' },
+    { key: 'parks', label: 'Parks', color: 'text-green-700', bg: 'bg-green-50' },
+    { key: 'sportsPlaces', label: 'Sports Places', color: 'text-orange-700', bg: 'bg-orange-50' },
     { key: 'notices', label: 'Notices & Updates', color: 'text-purple-600', bg: 'bg-purple-50' },
     { key: 'hotels', label: 'Hotels Directory', color: 'text-orange-600', bg: 'bg-orange-50' },
     { key: 'restaurants', label: 'Restaurants Directory', color: 'text-pink-600', bg: 'bg-pink-50' },
@@ -129,6 +169,64 @@ const AdminSettings: React.FC = () => {
             <Save className="w-5 h-5" />
             {saving ? 'Saving...' : 'Save Settings'}
           </button>
+        </div>
+
+        {/* Donated By Section */}
+        <div className="bg-white rounded-3xl p-8 shadow-xl border border-slate-100 mb-6">
+          <h2 className="text-2xl font-black text-slate-800 mb-6 flex items-center gap-3">
+            <SettingsIcon className="w-8 h-8 text-purple-600" />
+            Donated By
+          </h2>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label className="block text-sm font-bold text-slate-700 mb-2">Name</label>
+              <input
+                type="text"
+                value={settings?.donatedBy?.name || ''}
+                onChange={(e) => setSettings((prev: any) => ({
+                  ...prev,
+                  donatedBy: {
+                    ...prev.donatedBy,
+                    name: e.target.value
+                  }
+                }))}
+                className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:border-purple-500"
+                placeholder="Enter donor name"
+              />
+            </div>
+            
+            <div>
+              <label className="block text-sm font-bold text-slate-700 mb-2">Photo</label>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleDonorImageUpload}
+                disabled={uploading}
+                className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:border-purple-500"
+              />
+              {uploading && <div className="text-sm text-slate-500 mt-2">Uploading...</div>}
+              <div className="text-sm text-slate-400 mt-2">Or paste direct Image URL:</div>
+              <input
+                type="text"
+                value={settings?.donatedBy?.photo || ''}
+                onChange={(e) => setSettings((prev: any) => ({
+                  ...prev,
+                  donatedBy: {
+                    ...prev.donatedBy,
+                    photo: e.target.value
+                  }
+                }))}
+                className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:border-purple-500 mt-2"
+                placeholder="Direct Image URL"
+              />
+              {settings?.donatedBy?.photo && (
+                <div className="mt-4">
+                  <img src={settings.donatedBy.photo} alt="Donor" className="w-24 h-24 object-cover rounded-xl border border-slate-200" />
+                </div>
+              )}
+            </div>
+          </div>
         </div>
 
         {/* Feature Toggles */}

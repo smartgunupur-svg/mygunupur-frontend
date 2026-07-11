@@ -24,6 +24,11 @@ import Gallery from './pages/Gallery';
 import WeatherPage from './pages/WeatherPage';
 import Jobs from './pages/Jobs';
 import Feedback from './pages/Feedback';
+import Schools from './pages/Schools';
+import Colleges from './pages/Colleges';
+import GovtOffices from './pages/GovtOffices';
+import Parks from './pages/Parks';
+import SportsPlaces from './pages/SportsPlaces';
 
 // Admin pages
 import AdminLogin from './pages/AdminLogin';
@@ -48,6 +53,11 @@ import AdminSettings from './pages/AdminSettings';
 import AdminHotels from './pages/AdminHotels';
 import AdminRestaurants from './pages/AdminRestaurants';
 import AdminImportantContacts from './pages/AdminImportantContacts';
+import AdminSchools from './pages/AdminSchools';
+import AdminColleges from './pages/AdminColleges';
+import AdminGovtOffices from './pages/AdminGovtOffices';
+import AdminParks from './pages/AdminParks';
+import AdminSportsPlaces from './pages/AdminSportsPlaces';
 
 function App() {
   return (
@@ -77,6 +87,11 @@ function App() {
           <Route path="/weather" element={<WeatherPage />} />
           <Route path="/jobs" element={<Jobs />} />
           <Route path="/feedback" element={<Feedback />} />
+          <Route path="/schools" element={<Schools />} />
+          <Route path="/colleges" element={<Colleges />} />
+          <Route path="/govt-offices" element={<GovtOffices />} />
+          <Route path="/parks" element={<Parks />} />
+          <Route path="/sports-places" element={<SportsPlaces />} />
         </Route>
 
         {/* Admin panel routes */}
@@ -101,6 +116,11 @@ function App() {
         <Route path="/admin/hotels" element={<AdminHotels />} />
         <Route path="/admin/restaurants" element={<AdminRestaurants />} />
         <Route path="/admin/important-contacts" element={<AdminImportantContacts />} />
+        <Route path="/admin/schools" element={<AdminSchools />} />
+        <Route path="/admin/colleges" element={<AdminColleges />} />
+        <Route path="/admin/govt-offices" element={<AdminGovtOffices />} />
+        <Route path="/admin/parks" element={<AdminParks />} />
+        <Route path="/admin/sports-places" element={<AdminSportsPlaces />} />
       </Routes>
     </Router>
   );
