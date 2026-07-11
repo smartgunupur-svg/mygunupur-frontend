@@ -47,6 +47,7 @@ import AdminBusinesses from './pages/AdminBusinesses';
 import AdminSettings from './pages/AdminSettings';
 import AdminHotels from './pages/AdminHotels';
 import AdminRestaurants from './pages/AdminRestaurants';
+import AdminImportantContacts from './pages/AdminImportantContacts';
 
 function App() {
   return (
@@ -99,6 +100,7 @@ function App() {
         <Route path="/admin/settings" element={<AdminSettings />} />
         <Route path="/admin/hotels" element={<AdminHotels />} />
         <Route path="/admin/restaurants" element={<AdminRestaurants />} />
+        <Route path="/admin/important-contacts" element={<AdminImportantContacts />} />
       </Routes>
     </Router>
   );
