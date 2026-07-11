@@ -5,8 +5,7 @@ import {
   Save,
   ToggleLeft,
   ToggleRight,
-  Settings as SettingsIcon,
-  Upload
+  Settings as SettingsIcon
 } from 'lucide-react';
 import axios from 'axios';
 import AdminLayout from '../components/AdminLayout';
