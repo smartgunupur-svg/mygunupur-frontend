@@ -82,22 +82,9 @@ const Home: React.FC = () => {
         const placesRes = await axios.get(`${API_URL}/tourist-places`);
         if (placesRes.data && placesRes.data.length > 0) {
           setTouristPlaces(placesRes.data.slice(0, 4));
-        } else {
-          setTouristPlaces([
-            { _id: 1, title: 'Jagannath Temple', description: 'Ancient temple with beautiful architecture', image: 'https://images.unsplash.com/photo-1561361513-2d000a50f0dc?w=600&h=400&fit=crop', googleMap: '#' },
-            { _id: 2, title: 'Putudi Waterfall', description: 'Serene waterfall surrounded by nature', image: 'https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?w=600&h=400&fit=crop', googleMap: '#' },
-            { _id: 3, title: 'Gunupur College', description: 'Historic educational institution', image: 'https://images.unsplash.com/photo-1562774053-7019393745?w=600&h=400&fit=crop', googleMap: '#' },
-            { _id: 4, title: 'Maa Tarini Temple', description: 'Powerful goddess temple', image: 'https://images.unsplash.com/photo-1603302576837-375f9845f315?w=600&h=400&fit=crop', googleMap: '#' }
-          ]);
         }
       } catch (error) {
         console.error('Error fetching data:', error);
-        setTouristPlaces([
-          { _id: 1, title: 'Jagannath Temple', description: 'Ancient temple with beautiful architecture', image: 'https://images.unsplash.com/photo-1561361513-2d000a50f0dc?w=600&h=400&fit=crop', googleMap: '#' },
-          { _id: 2, title: 'Putudi Waterfall', description: 'Serene waterfall surrounded by nature', image: 'https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?w=600&h=400&fit=crop', googleMap: '#' },
-          { _id: 3, title: 'Gunupur College', description: 'Historic educational institution', image: 'https://images.unsplash.com/photo-1562774053-7019393745?w=600&h=400&fit=crop', googleMap: '#' },
-          { _id: 4, title: 'Maa Tarini Temple', description: 'Powerful goddess temple', image: 'https://images.unsplash.com/photo-1603302576837-375f9845f315?w=600&h=400&fit=crop', googleMap: '#' }
-        ]);
       }
     };
     fetchData();

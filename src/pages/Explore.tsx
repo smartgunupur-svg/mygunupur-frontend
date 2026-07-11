@@ -5,45 +5,6 @@ import axios from 'axios';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
-const fallbackPlaces = [
-  {
-    id: 1,
-    title: 'Putudi Waterfall',
-    category: 'Waterfalls',
-    image: 'https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?w=600&h=400&fit=crop',
-    description: 'A beautiful cascade surrounded by dense forest, offering a perfect getaway for nature lovers.',
-    bestTime: 'October to February',
-    googleMap: 'https://maps.google.com'
-  },
-  {
-    id: 2,
-    title: 'Maa Tarini Temple',
-    category: 'Temples',
-    image: 'https://images.unsplash.com/photo-1561361513-2d000a50f0dc?w=600&h=400&fit=crop',
-    description: 'A holy shrine dedicated to Maa Tarini, drawing devotees from across the region.',
-    bestTime: 'Throughout the year',
-    googleMap: 'https://maps.google.com'
-  },
-  {
-    id: 3,
-    title: 'Belghar Nature Camp',
-    category: 'Tourist Places',
-    image: 'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=600&h=400&fit=crop',
-    description: 'Perched in the hills, known for its scenic wildlife, indigenous tribe culture, and wooden cottages.',
-    bestTime: 'November to April',
-    googleMap: 'https://maps.google.com'
-  },
-  {
-    id: 4,
-    title: 'Joranda Waterfall',
-    category: 'Waterfalls',
-    image: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&h=400&fit=crop',
-    description: 'Stunning high waterfall drop making a beautiful roar inside nature camp forests.',
-    bestTime: 'July to November',
-    googleMap: 'https://maps.google.com'
-  }
-];
-
 const Explore: React.FC = () => {
   const [places, setPlaces] = useState<any[]>([]);
   const [activeTab, setActiveTab] = useState('All');
@@ -55,12 +16,9 @@ const Explore: React.FC = () => {
         const res = await axios.get(`${API_URL}/tourist-places`);
         if (res.data && res.data.length > 0) {
           setPlaces(res.data);
-        } else {
-          setPlaces(fallbackPlaces);
         }
       } catch (error) {
         console.error('Error fetching tourist places:', error);
-        setPlaces(fallbackPlaces);
       } finally {
         setLoading(false);
       }
