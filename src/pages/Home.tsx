@@ -16,7 +16,8 @@ import {
   Utensils,
   Briefcase,
   Home as HomeIcon,
-  Building
+  Building,
+  Phone
 } from 'lucide-react';
 import axios from 'axios';
 
@@ -153,7 +154,38 @@ const Home: React.FC = () => {
             </div>
 
             <div className="w-full md:w-1/3">
-              <img src="/layoutlogo.png" alt="My Gunupur" className="w-48 h-48 object-contain drop-shadow-2xl" />
+              <img src="/layoutlogo.png" alt="My Gunupur" className="w-full h-80 object-contain drop-shadow-2xl" />
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Swarga Ratha */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+          className="bg-gradient-to-br from-amber-500 to-orange-600 rounded-3xl p-6 md:p-8 text-white shadow-2xl mb-8"
+        >
+          <div className="flex flex-col items-center gap-6">
+            <div className="text-center">
+              <h2 className="text-3xl md:text-4xl font-black mb-2">Swarga Ratha</h2>
+              <p className="text-xl md:text-2xl font-bold text-amber-100 mb-4">ସ୍ୱର୍ଗ ରଥ</p>
+            </div>
+            <div className="flex flex-col md:flex-row gap-4 w-full">
+              <a
+                href="tel:7735706860"
+                className="flex-1 flex items-center justify-center gap-3 px-6 py-4 bg-white text-orange-700 font-black text-xl rounded-2xl hover:shadow-xl transition-all"
+              >
+                <Phone className="w-7 h-7" />
+                7735706860
+              </a>
+              <a
+                href="tel:8895186071"
+                className="flex-1 flex items-center justify-center gap-3 px-6 py-4 bg-white text-orange-700 font-black text-xl rounded-2xl hover:shadow-xl transition-all"
+              >
+                <Phone className="w-7 h-7" />
+                8895186071
+              </a>
             </div>
           </div>
         </motion.div>

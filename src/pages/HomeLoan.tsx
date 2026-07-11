@@ -222,12 +222,18 @@ const HomeLoan: React.FC = () => {
                     <IndianRupee className="w-5 h-5 text-blue-600" />
                     Loan Amount
                   </label>
-                  <div className="flex items-center gap-2 bg-slate-100 px-4 py-2 rounded-xl border border-slate-200">
-                    <span className="text-slate-600 font-semibold">₹</span>
-                    <span className="text-2xl font-black bg-gradient-to-r from-blue-600 to-emerald-600 bg-clip-text text-transparent">
-                      {loanAmount.toLocaleString()}
-                    </span>
-                  </div>
+                </div>
+                <div className="flex items-center gap-3 mb-4">
+                  <span className="text-slate-600 font-semibold text-lg">₹</span>
+                  <input
+                    type="number"
+                    min="100000"
+                    max="10000000"
+                    step="100000"
+                    value={loanAmount}
+                    onChange={(e) => setLoanAmount(Number(e.target.value))}
+                    className="flex-1 text-2xl font-black bg-gradient-to-r from-blue-600 to-emerald-600 bg-clip-text text-transparent outline-none border-b-2 border-slate-200 focus:border-blue-600 transition-all"
+                  />
                 </div>
                 <input
                   type="range"
@@ -252,11 +258,18 @@ const HomeLoan: React.FC = () => {
                     <Percent className="w-5 h-5 text-blue-600" />
                     Interest Rate (p.a)
                   </label>
-                  <div className="flex items-center gap-2 bg-slate-100 px-4 py-2 rounded-xl border border-slate-200">
-                    <span className="text-2xl font-black bg-gradient-to-r from-blue-600 to-emerald-600 bg-clip-text text-transparent">
-                      {interestRate}%
-                    </span>
-                  </div>
+                </div>
+                <div className="flex items-center gap-3 mb-4">
+                  <input
+                    type="number"
+                    min="5"
+                    max="15"
+                    step="0.1"
+                    value={interestRate}
+                    onChange={(e) => setInterestRate(Number(e.target.value))}
+                    className="flex-1 text-2xl font-black bg-gradient-to-r from-blue-600 to-emerald-600 bg-clip-text text-transparent outline-none border-b-2 border-slate-200 focus:border-blue-600 transition-all"
+                  />
+                  <span className="text-slate-600 font-semibold text-lg">%</span>
                 </div>
                 <input
                   type="range"
@@ -281,11 +294,18 @@ const HomeLoan: React.FC = () => {
                     <Calendar className="w-5 h-5 text-blue-600" />
                     Loan Tenure
                   </label>
-                  <div className="flex items-center gap-2 bg-slate-100 px-4 py-2 rounded-xl border border-slate-200">
-                    <span className="text-2xl font-black bg-gradient-to-r from-blue-600 to-emerald-600 bg-clip-text text-transparent">
-                      {loanTenure} Years
-                    </span>
-                  </div>
+                </div>
+                <div className="flex items-center gap-3 mb-4">
+                  <input
+                    type="number"
+                    min="1"
+                    max="30"
+                    step="1"
+                    value={loanTenure}
+                    onChange={(e) => setLoanTenure(Number(e.target.value))}
+                    className="flex-1 text-2xl font-black bg-gradient-to-r from-blue-600 to-emerald-600 bg-clip-text text-transparent outline-none border-b-2 border-slate-200 focus:border-blue-600 transition-all"
+                  />
+                  <span className="text-slate-600 font-semibold text-lg">Years</span>
                 </div>
                 <input
                   type="range"
