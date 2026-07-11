@@ -24,7 +24,8 @@ import {
   BookOpen,
   Home,
   Utensils,
-  Settings
+  Settings,
+  Phone
 } from 'lucide-react';
 
 interface AdminLayoutProps {

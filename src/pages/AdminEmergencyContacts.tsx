@@ -1,17 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { 
-  ArrowLeft, 
-  FileText, 
-  Phone, 
-  Plus, 
-  Edit, 
-  Trash2, 
-  LogOut,
-  AlertTriangle
-} from 'lucide-react';
+import { FileText, Phone, Plus, Edit, Trash2 } from 'lucide-react';
 import axios from 'axios';
+import AdminLayout from '../components/AdminLayout';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
@@ -36,7 +28,7 @@ const AdminEmergencyContacts: React.FC = () => {
 
     const fetchContacts = async () => {
       try {
-        const response = await axios.get(`${API_URL}/emergency-contacts`);
+        const response = await axios.get(API_URL + '/emergency-contacts');
         setContacts(response.data);
       } catch (error) {
         console.error('Error fetching contacts:', error);
@@ -48,20 +40,18 @@ const AdminEmergencyContacts: React.FC = () => {
     fetchContacts();
   }, [navigate]);
 
-
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const token = localStorage.getItem('adminToken');
     try {
       if (editingContact) {
-        await axios.put(`${API_URL}/emergency-contacts/${editingContact._id}`, formData, {
-          headers: { Authorization: `Bearer ${token}` }
+        await axios.put(API_URL + '/emergency-contacts/' + editingContact._id, formData, {
+          headers: { Authorization: 'Bearer ' + token }
         });
         setContacts(contacts.map(c => c._id === editingContact._id ? { ...c, ...formData } : c));
       } else {
-        const response = await axios.post(`${API_URL}/emergency-contacts`, formData, {
-          headers: { Authorization: `Bearer ${token}` }
+        const response = await axios.post(API_URL + '/emergency-contacts', formData, {
+          headers: { Authorization: 'Bearer ' + token }
         });
         setContacts([...contacts, response.data]);
       }
@@ -87,8 +77,8 @@ const AdminEmergencyContacts: React.FC = () => {
     if (!window.confirm('Are you sure you want to delete this contact?')) return;
     const token = localStorage.getItem('adminToken');
     try {
-      await axios.delete(`${API_URL}/emergency-contacts/${id}`, {
-        headers: { Authorization: `Bearer ${token}` }
+      await axios.delete(API_URL + '/emergency-contacts/' + id, {
+        headers: { Authorization: 'Bearer ' + token }
       });
       setContacts(contacts.filter(c => c._id !== id));
     } catch (error) {
@@ -97,43 +87,7 @@ const AdminEmergencyContacts: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 via-blue-50 to-emerald-50 pb-32">
-      <motion.header
-        initial={{ y: -80 }}
-        animate={{ y: 0 }}
-        className="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-slate-200/50"
-        style={{ height: '72px' }}
-      >
-        <div className="max-w-6xl mx-auto px-4 h-full flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <button
-              onClick={() => navigate('/admin/dashboard')}
-              className="p-2 hover:bg-slate-100 rounded-xl transition-all"
-            >
-              <ArrowLeft className="w-5 h-5 text-slate-600" />
-            </button>
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-gradient-to-br from-red-600 to-orange-600 rounded-xl flex items-center justify-center shadow-lg">
-                <AlertTriangle className="w-5 h-5 text-white" />
-              </div>
-              <div>
-                <h1 className="text-lg font-bold bg-gradient-to-r from-red-700 to-orange-600 bg-clip-text text-transparent">
-                  Emergency Contacts
-                </h1>
-                <p className="text-xs text-slate-500 font-medium">{contacts.length} contacts</p>
-              </div>
-            </div>
-          </div>
-          <button
-            onClick={handleLogout}
-            className="flex items-center gap-2 px-4 py-2 bg-red-50 text-red-600 hover:bg-red-100 rounded-xl transition-all font-semibold text-sm"
-          >
-            <LogOut className="w-4 h-4" />
-            Logout
-          </button>
-        </div>
-      </motion.header>
-
+    <AdminLayout title="Emergency Contacts">
       <div className="max-w-6xl mx-auto px-4 space-y-4 pt-6">
         <button
           onClick={() => setShowForm(!showForm)}
@@ -227,7 +181,7 @@ const AdminEmergencyContacts: React.FC = () => {
                     <h3 className="text-lg font-bold text-slate-800">{contact.name}</h3>
                     <div className="mt-2 flex items-center gap-2 text-slate-600">
                       <Phone className="w-4 h-4" />
-                      <a href={`tel:${contact.phone}`} className="text-lg font-bold text-slate-800 hover:text-red-600">
+                      <a href={'tel:' + contact.phone} className="text-lg font-bold text-slate-800 hover:text-red-600">
                         {contact.phone}
                       </a>
                     </div>
@@ -252,7 +206,7 @@ const AdminEmergencyContacts: React.FC = () => {
           </div>
         )}
       </div>
-    </div>
+    </AdminLayout>
   );
 };
 

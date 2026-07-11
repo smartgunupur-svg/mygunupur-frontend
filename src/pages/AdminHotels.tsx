@@ -7,7 +7,6 @@ import {
   Plus,
   Edit,
   Trash2,
-  Home,
   MapPin,
   Star
 } from 'lucide-react';
@@ -54,12 +53,6 @@ const AdminHotels: React.FC = () => {
 
     fetchHotels();
   }, [navigate]);
-
-  const handleLogout = () => {
-    localStorage.removeItem('adminToken');
-    localStorage.removeItem('adminEmail');
-    navigate('/admin/login');
-  };
 
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -141,43 +134,7 @@ const AdminHotels: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-orange-50 via-yellow-50 to-amber-50 pb-32">
-      <motion.header
-        initial={{ y: -80 }}
-        animate={{ y: 0 }}
-        className="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-slate-200/50"
-        style={{ height: '72px' }}
-      >
-        <div className="max-w-6xl mx-auto px-4 h-full flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <button
-              onClick={() => navigate('/admin/dashboard')}
-              className="p-2 hover:bg-slate-100 rounded-xl transition-all"
-            >
-              <ArrowLeft className="w-5 h-5 text-slate-600" />
-            </button>
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-gradient-to-br from-orange-600 to-red-600 rounded-xl flex items-center justify-center shadow-lg">
-                <Home className="w-5 h-5 text-white" />
-              </div>
-              <div>
-                <h1 className="text-lg font-bold bg-gradient-to-r from-orange-700 to-red-600 bg-clip-text text-transparent">
-                  Hotels
-                </h1>
-                <p className="text-xs text-slate-500 font-medium">{hotels.length} hotels</p>
-              </div>
-            </div>
-          </div>
-          <button
-            onClick={handleLogout}
-            className="flex items-center gap-2 px-4 py-2 bg-red-50 text-red-600 hover:bg-red-100 rounded-xl transition-all font-semibold text-sm"
-          >
-            <LogOut className="w-4 h-4" />
-            Logout
-          </button>
-        </div>
-      </motion.header>
-
+    <AdminLayout title="Hotels">
       <div className="max-w-6xl mx-auto px-4 space-y-4 pt-6">
         <button
           onClick={() => setShowForm(!showForm)}
@@ -397,7 +354,7 @@ const AdminHotels: React.FC = () => {
           </div>
         )}
       </div>
-    </div>
+    </AdminLayout>
   );
 };
 

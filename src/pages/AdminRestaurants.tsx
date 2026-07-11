@@ -7,7 +7,6 @@ import {
   Plus,
   Edit,
   Trash2,
-  Utensils,
   MapPin,
   Star
 } from 'lucide-react';

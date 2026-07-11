@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, FileText, Plus, Edit, Trash2, LogOut, Bell } from 'lucide-react';
+import { FileText, Plus, Edit, Trash2 } from 'lucide-react';
 import axios from 'axios';
+import AdminLayout from '../components/AdminLayout';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
@@ -31,16 +32,14 @@ const AdminNotices: React.FC = () => {
         const response = await axios.get(`${API_URL}/notices`);
         setNotices(response.data);
       } catch (error) {
-        console.error('Error fetching notices:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
+          console.error('Error fetching notices:', error);
+        } finally {
+          setLoading(false);
+        }
+      };
 
-    fetchNotices();
+      fetchNotices();
   }, [navigate]);
-
-
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -90,40 +89,7 @@ const AdminNotices: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 pb-24">
-      <motion.header
-        initial={{ y: -80 }}
-        animate={{ y: 0 }}
-        className="sticky top-0 z-50 bg-white border-b border-slate-200/50 h-[72px]"
-      >
-        <div className="max-w-6xl mx-auto px-4 h-full flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <button
-              onClick={() => navigate('/admin/dashboard')}
-              className="p-2 hover:bg-slate-100 rounded-xl transition-all"
-            >
-              <ArrowLeft className="w-5 h-5 text-slate-600" />
-            </button>
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-gradient-to-br from-purple-600 to-indigo-600 rounded-xl flex items-center justify-center shadow-lg">
-                <Bell className="w-5 h-5 text-white" />
-              </div>
-              <div>
-                <h1 className="text-lg font-bold text-slate-800">Notices</h1>
-                <p className="text-xs text-slate-500 font-medium">{notices.length} notices</p>
-              </div>
-            </div>
-          </div>
-          <button
-            onClick={handleLogout}
-            className="flex items-center gap-2 px-4 py-2 bg-red-50 text-red-600 hover:bg-red-100 rounded-xl transition-all font-semibold text-sm"
-          >
-            <LogOut className="w-4 h-4" />
-            Logout
-          </button>
-        </div>
-      </motion.header>
-
+    <AdminLayout title="Notices">
       <div className="max-w-6xl mx-auto px-4 space-y-4 pt-6">
         <button
           onClick={() => setShowForm(!showForm)}
@@ -248,7 +214,7 @@ const AdminNotices: React.FC = () => {
           </div>
         )}
       </div>
-    </div>
+    </AdminLayout>
   );
 };
 

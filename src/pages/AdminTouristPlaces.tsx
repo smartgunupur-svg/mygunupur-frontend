@@ -5,8 +5,7 @@ import {
   FileText, 
   Plus, 
   Edit, 
-  Trash2, 
-  MapPin
+  Trash2
 } from 'lucide-react';
 import axios from 'axios';
 import AdminLayout from '../components/AdminLayout';
@@ -48,11 +47,7 @@ const AdminTouristPlaces: React.FC = () => {
     fetchPlaces();
   }, [navigate]);
 
-  const handleLogout = () => {
-    localStorage.removeItem('adminToken');
-    localStorage.removeItem('adminEmail');
-    navigate('/admin/login');
-  };
+
 
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];

@@ -2,12 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { 
-  ArrowLeft, 
   Phone, 
   Plus, 
   Edit, 
   Trash2, 
-  LogOut,
   Droplets,
   MapPin,
   CheckCircle2
@@ -53,12 +51,6 @@ const AdminBloodDonors: React.FC = () => {
 
     fetchDonors();
   }, [navigate]);
-
-  const handleLogout = () => {
-    localStorage.removeItem('adminToken');
-    localStorage.removeItem('adminEmail');
-    navigate('/admin/login');
-  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

@@ -1,7 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { FileText, Phone, Plus, Edit, Trash2, HeartPulse, MapPin } from 'lucide-react';
+import {
+  FileText,
+  Phone,
+  Plus,
+  Edit,
+  Trash2,
+  MapPin
+} from 'lucide-react';
 import axios from 'axios';
 import AdminLayout from '../components/AdminLayout';
 
