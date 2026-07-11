@@ -378,8 +378,19 @@ const HomeLoan: React.FC = () => {
                       : 'bg-white border-slate-100 hover:shadow-xl'
                   }`}
                 >
-                  <div className="w-16 h-16 bg-gradient-to-br from-blue-100 to-emerald-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                    <span className="text-2xl">🏦</span>
+                  <div className="w-16 h-16 bg-white border border-slate-200 rounded-2xl flex items-center justify-center mx-auto mb-4 overflow-hidden">
+                    {bank.image ? (
+                      <img
+                        src={bank.image}
+                        alt={bank.name}
+                        className="w-full h-full object-contain"
+                        onError={(e) => {
+                          (e.target as HTMLImageElement).style.display = 'none';
+                          (e.target as HTMLImageElement).nextElementSibling?.classList.remove('hidden');
+                        }}
+                      />
+                    ) : null}
+                    <span className="text-2xl hidden">🏦</span>
                   </div>
                   <h4 className="text-lg font-black text-slate-800 mb-2">
                     {bank.name}

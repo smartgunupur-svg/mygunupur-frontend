@@ -202,23 +202,55 @@ const BottomNavLayout: React.FC = () => {
       <footer className="bg-white border-t border-slate-100 py-8 px-4">
         <div className="max-w-6xl mx-auto">
           {settings?.donatedBy?.name && (
-            <div className="flex flex-col items-center justify-center gap-4 mb-6">
-              <p className="text-sm font-semibold text-slate-600">Donated By</p>
-              <div className="flex items-center gap-3">
-                {settings.donatedBy.photo && (
-                  <img
-                    src={settings.donatedBy.photo}
-                    alt={settings.donatedBy.name}
-                    className="w-12 h-12 object-cover rounded-full border-2 border-blue-100 shadow-sm"
-                  />
-                )}
-                <span className="text-lg font-bold text-slate-800">{settings.donatedBy.name}</span>
+            <div className="mb-10">
+              <div className="bg-gradient-to-r from-blue-50 via-indigo-50 to-purple-50 rounded-3xl p-8 border border-blue-100 text-center">
+                <p className="text-xs font-black text-blue-600 uppercase tracking-widest mb-3">Community Partner</p>
+                <div className="flex flex-col items-center gap-4">
+                  {settings.donatedBy.photo && (
+                    <img
+                      src={settings.donatedBy.photo}
+                      alt={settings.donatedBy.name}
+                      className="w-20 h-20 object-cover rounded-full border-3 border-white shadow-xl"
+                    />
+                  )}
+                  <h3 className="text-2xl font-black text-slate-800">{settings.donatedBy.name}</h3>
+                  <p className="text-sm font-semibold text-slate-500">Supporting Digital Gunupur</p>
+                </div>
               </div>
             </div>
           )}
-          <div className="text-center">
-            <p className="text-xs text-slate-500 font-semibold">© 2026 My Gunupur Initiative</p>
-            <p className="text-[10px] text-slate-400 mt-1">Everything You Need, All In One Place</p>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
+            <div className="flex flex-col items-center gap-1">
+              <button
+                onClick={() => navigate('/privacy')}
+                className="text-xs font-semibold text-slate-600 hover:text-blue-600 transition-colors"
+              >
+                Privacy Policy
+              </button>
+            </div>
+            <div className="flex flex-col items-center gap-1">
+              <button
+                onClick={() => navigate('/terms')}
+                className="text-xs font-semibold text-slate-600 hover:text-blue-600 transition-colors"
+              >
+                Terms of Service
+              </button>
+            </div>
+            <div className="flex flex-col items-center gap-1">
+              <button
+                onClick={() => navigate('/contact')}
+                className="text-xs font-semibold text-slate-600 hover:text-blue-600 transition-colors"
+              >
+                Contact Us
+              </button>
+            </div>
+            <div className="flex flex-col items-center gap-1">
+              <p className="text-xs font-semibold text-slate-500">Version 1.2.0</p>
+            </div>
+          </div>
+          <div className="text-center pt-6 border-t border-slate-100">
+            <p className="text-xs text-slate-500 font-semibold">© 2026 My Gunupur</p>
+            <p className="text-[10px] text-slate-400 mt-2">Developed with ❤️ for Gunupur Citizens</p>
           </div>
         </div>
       </footer>

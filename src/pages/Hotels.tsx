@@ -5,39 +5,6 @@ import axios from 'axios';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
-const fallbackHotels = [
-  {
-    id: 1,
-    name: 'Hotel Sunrise',
-    priceRange: '₹₹',
-    rating: 4.6,
-    phone: '9437578310',
-    address: 'Near Railway Station, Gunupur',
-    features: ['AC Rooms', 'Free Wifi', 'Restaurant'],
-    googleMap: 'https://maps.google.com'
-  },
-  {
-    id: 2,
-    name: 'Sai Residency Lodge',
-    priceRange: '₹',
-    rating: 4.1,
-    phone: '9876543210',
-    address: 'Main Road, Gunupur',
-    features: ['Budget Friendly', '24x7 Service', 'Parking'],
-    googleMap: 'https://maps.google.com'
-  },
-  {
-    id: 3,
-    name: 'The Royal Palace Inn',
-    priceRange: '₹ India',
-    rating: 4.8,
-    phone: '8877665544',
-    address: 'Near GIET University Gate, Gunupur',
-    features: ['Luxury Suite', 'Conference Hall', 'Cafe'],
-    googleMap: 'https://maps.google.com'
-  }
-];
-
 const Hotels: React.FC = () => {
   const [hotels, setHotels] = useState<any[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
@@ -46,15 +13,11 @@ const Hotels: React.FC = () => {
   useEffect(() => {
     const fetchHotels = async () => {
       try {
-        const res = await axios.get(`${API_URL}/businesses?category=hotel`);
-        if (res.data && res.data.length > 0) {
-          setHotels(res.data);
-        } else {
-          setHotels(fallbackHotels);
-        }
+        const res = await axios.get(`${API_URL}/hotels`);
+        setHotels(res.data || []);
       } catch (error) {
         console.error('Error fetching hotels:', error);
-        setHotels(fallbackHotels);
+        setHotels([]);
       } finally {
         setLoading(false);
       }

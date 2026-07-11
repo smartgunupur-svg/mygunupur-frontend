@@ -102,28 +102,25 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children, title = 'Dashboard'
         </div>
 
         <div className="p-4 space-y-1 overflow-y-auto flex-1" style={{ maxHeight: 'calc(100vh - 180px)' }}>
-          {navItems.map((item, index) => {
+          {navItems.map((item) => {
             const isActive = location.pathname === item.path;
             return (
-              <motion.button
+              <button
                 key={item.path}
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: index * 0.05 }}
                 onClick={() => {
                   navigate(item.path);
                   setSidebarOpen(false);
                 }}
                 className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 ${
-                  isActive 
-                    ? `bg-gradient-to-r ${item.bg} ${item.color} font-semibold shadow-sm border border-slate-100` 
-                    : 'text-slate-600 hover:bg-slate-50 hover:text-slate-800'
+                  isActive
+                    ? `bg-gradient-to-r ${item.bg} ${item.color} font-semibold shadow-sm border border-slate-100`
+                    : 'text-slate-600 hover:bg-slate-100 hover:text-slate-800'
                 }`}
               >
                 <item.icon className="w-5 h-5" />
                 <span className="text-sm font-medium">{item.title}</span>
                 {isActive && <ChevronRight className="w-4 h-4 ml-auto" />}
-              </motion.button>
+              </button>
             );
           })}
         </div>

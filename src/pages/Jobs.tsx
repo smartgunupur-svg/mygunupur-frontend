@@ -5,42 +5,6 @@ import axios from 'axios';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
-const fallbackJobs = [
-  {
-    id: 1,
-    title: 'Customer Relationship Executive',
-    company: 'Reliance Retail Smart Point',
-    type: 'Private',
-    location: 'Gunupur Town',
-    salary: '₹12,000 - ₹15,000 / month',
-    description: 'Looking for enthusiastic executives to manage customer relations and store billing desks.',
-    requirements: ['12th Pass or Graduate', 'Good communication', 'Basic computer knowledge'],
-    contactPhone: '9437578310'
-  },
-  {
-    id: 2,
-    title: 'Guest Lecturer (Computer Science)',
-    company: 'GIET University',
-    type: 'Walk-in',
-    location: 'Gobriguda Campus, Gunupur',
-    salary: '₹25,000 - ₹35,000 / month',
-    description: 'Walk-in interview for teaching CSE graduates. Candidates should have teaching aptitude and core subject knowledge.',
-    requirements: ['M.Tech or Ph.D. in CSE', '2 years experience preferred'],
-    contactPhone: '9876543210'
-  },
-  {
-    id: 3,
-    title: 'Technical Assistant (Water Supply)',
-    company: 'Public Health Department (Odisha Govt)',
-    type: 'Government',
-    location: 'Municipal Office, Gunupur',
-    salary: 'Contractual (State Scale)',
-    description: 'Supervise maintenance of city water storage points, pump houses, and pipeline distribution lines.',
-    requirements: ['Diploma in Civil/Mechanical Engineering', 'Odia language proficiency'],
-    contactPhone: '8877665544'
-  }
-];
-
 const Jobs: React.FC = () => {
   const [jobs, setJobs] = useState<any[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
@@ -50,14 +14,10 @@ const Jobs: React.FC = () => {
     const fetchJobs = async () => {
       try {
         const res = await axios.get(`${API_URL}/jobs`);
-        if (res.data && res.data.length > 0) {
-          setJobs(res.data);
-        } else {
-          setJobs(fallbackJobs);
-        }
+        setJobs(res.data || []);
       } catch (error) {
         console.error('Error fetching jobs:', error);
-        setJobs(fallbackJobs);
+        setJobs([]);
       } finally {
         setLoading(false);
       }

@@ -5,36 +5,6 @@ import axios from 'axios';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
-const fallbackEvents = [
-  {
-    id: 1,
-    title: 'Rath Yatra Festival 2025',
-    image: 'https://images.unsplash.com/photo-1561361513-2d000a50f0dc?w=600&h=400&fit=crop',
-    description: 'The auspicious annual chariot festival of Lord Jagannath, drawing thousands of devotees to Gunupur streets.',
-    date: '2025-06-27T10:00:00.000Z',
-    location: 'Jagannath Temple Road, Gunupur',
-    category: 'upcoming'
-  },
-  {
-    id: 2,
-    title: 'Maa Tarini Shodasha Puja',
-    image: 'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=600&h=400&fit=crop',
-    description: 'Special annual 16-day celebrations at the temple shrine with cultural programs and Prasad distribution.',
-    date: '2025-07-10T10:00:00.000Z',
-    location: 'Maa Tarini Temple Complex, Gunupur',
-    category: 'upcoming'
-  },
-  {
-    id: 3,
-    title: 'District Cultural Mahotsav',
-    image: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&h=400&fit=crop',
-    description: 'A grand celebration showcasing traditional tribal dance forms, local handicrafts, and heritage arts.',
-    date: '2025-08-30T10:00:00.000Z',
-    location: 'Municipality Ground, Gunupur',
-    category: 'upcoming'
-  }
-];
-
 const EventsAndFestivals: React.FC = () => {
   const [events, setEvents] = useState<any[]>([]);
   const [activeTab, setActiveTab] = useState('upcoming'); // upcoming, past
@@ -44,14 +14,10 @@ const EventsAndFestivals: React.FC = () => {
     const fetchEvents = async () => {
       try {
         const res = await axios.get(`${API_URL}/events`);
-        if (res.data && res.data.length > 0) {
-          setEvents(res.data);
-        } else {
-          setEvents(fallbackEvents);
-        }
+        setEvents(res.data || []);
       } catch (error) {
         console.error('Error fetching events:', error);
-        setEvents(fallbackEvents);
+        setEvents([]);
       } finally {
         setLoading(false);
       }
