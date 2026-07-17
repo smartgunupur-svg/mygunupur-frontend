@@ -53,19 +53,19 @@ const heroSlides = [
 ];
 
 const quickServices = [
-  { id: 1, title: 'Home Loan', icon: Banknote, color: 'text-blue-600', bg: 'bg-blue-50', path: '/home-loan', count: '12+' },
-  { id: 2, title: 'Building Plan', icon: Building2, color: 'text-green-600', bg: 'bg-green-50', path: '/building-enquiry', count: '5+' },
-  { id: 3, title: 'Emergency', icon: AlertTriangle, color: 'text-red-600', bg: 'bg-red-50', path: '/emergency', count: '24×7' },
-  { id: 4, title: 'Hospitals', icon: HeartPulse, color: 'text-pink-600', bg: 'bg-pink-50', path: '/hospitals', count: '15+' },
-  { id: 5, title: 'Schools', icon: GraduationCap, color: 'text-yellow-600', bg: 'bg-yellow-50', path: '/schools', count: '50+' },
-  { id: 6, title: 'Colleges', icon: Building, color: 'text-teal-600', bg: 'bg-teal-50', path: '/colleges', count: '10+' },
-  { id: 7, title: 'Govt Offices', icon: Building2, color: 'text-purple-600', bg: 'bg-purple-50', path: '/govt-offices', count: '18+' },
-  { id: 8, title: 'Parks', icon: TreePine, color: 'text-green-600', bg: 'bg-green-50', path: '/parks', count: '8+' },
-  { id: 9, title: 'Sports Places', icon: Trophy, color: 'text-orange-600', bg: 'bg-orange-50', path: '/sports-places', count: '5+' },
-  { id: 10, title: 'Notices', icon: FileText, color: 'text-purple-600', bg: 'bg-purple-50', path: '/notices', count: 'Latest' },
-  { id: 11, title: 'Blood Donors', icon: Droplets, color: 'text-red-500', bg: 'bg-red-50', path: '/blood-donors', count: '100+' },
-  { id: 12, title: 'Explore', icon: MapPin, color: 'text-emerald-600', bg: 'bg-emerald-50', path: '/explore', count: '25+' },
-  { id: 13, title: 'Jobs', icon: Briefcase, color: 'text-indigo-600', bg: 'bg-indigo-50', path: '/jobs', count: '30+' }
+  { id: 1, title: 'Home Loan', icon: Banknote, color: 'text-blue-600', bg: 'bg-blue-50', path: '/home-loan' },
+  { id: 2, title: 'Building Plan', icon: Building2, color: 'text-green-600', bg: 'bg-green-50', path: '/building-enquiry' },
+  { id: 3, title: 'Emergency', icon: AlertTriangle, color: 'text-red-600', bg: 'bg-red-50', path: '/emergency' },
+  { id: 4, title: 'Hospitals', icon: HeartPulse, color: 'text-pink-600', bg: 'bg-pink-50', path: '/hospitals' },
+  { id: 5, title: 'Schools', icon: GraduationCap, color: 'text-yellow-600', bg: 'bg-yellow-50', path: '/schools' },
+  { id: 6, title: 'Colleges', icon: Building, color: 'text-teal-600', bg: 'bg-teal-50', path: '/colleges' },
+  { id: 7, title: 'Govt Offices', icon: Building2, color: 'text-purple-600', bg: 'bg-purple-50', path: '/govt-offices' },
+  { id: 8, title: 'Parks', icon: TreePine, color: 'text-green-600', bg: 'bg-green-50', path: '/parks' },
+  { id: 9, title: 'Sports Places', icon: Trophy, color: 'text-orange-600', bg: 'bg-orange-50', path: '/sports-places' },
+  { id: 10, title: 'Notices', icon: FileText, color: 'text-purple-600', bg: 'bg-purple-50', path: '/notices' },
+  { id: 11, title: 'Blood Donors', icon: Droplets, color: 'text-red-500', bg: 'bg-red-50', path: '/blood-donors' },
+  { id: 12, title: 'Explore', icon: MapPin, color: 'text-emerald-600', bg: 'bg-emerald-50', path: '/explore' },
+  { id: 13, title: 'Jobs', icon: Briefcase, color: 'text-indigo-600', bg: 'bg-indigo-50', path: '/jobs' }
 ];
 
 const featuredServices = [
@@ -266,34 +266,49 @@ const Home: React.FC = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2, duration: 0.6 }}
-          className="bg-gradient-to-br from-amber-500 via-orange-500 to-red-500 rounded-3xl p-8 md:p-10 text-white shadow-2xl mb-8 relative overflow-hidden"
+          className="bg-gradient-to-br from-amber-400 via-orange-500 to-red-600 rounded-3xl p-10 md:p-14 text-white shadow-2xl mb-8 relative overflow-hidden"
         >
-          <div className="absolute inset-0 opacity-20">
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-yellow-200 via-transparent to-transparent"></div>
-          </div>
-          <div className="flex flex-col items-center gap-6 relative z-10">
-            <div className="flex items-center gap-6 mb-4">
-              <img src="/logo.png" alt="My Gunupur" className="w-24 h-24 object-contain drop-shadow-2xl" />
-              <div className="text-center">
-                <h2 className="text-4xl md:text-5xl font-black mb-2">Swarga Ratha</h2>
-                <p className="text-2xl md:text-3xl font-bold text-amber-100 mb-2">ସ୍ୱର୍ଗ ରଥ</p>
-                <p className="text-lg font-bold text-white bg-white/20 px-4 py-1 rounded-full">🆓 FREE SERVICE FOR EVERYONE</p>
+          {/* Decorative elements */}
+          <div className="absolute top-0 right-0 w-96 h-96 bg-white/15 rounded-full blur-3xl translate-x-1/2 -translate-y-1/2"></div>
+          <div className="absolute bottom-0 left-0 w-80 h-80 bg-yellow-300/20 rounded-full blur-3xl -translate-x-1/2 translate-y-1/2"></div>
+          
+          <div className="relative z-10">
+            <div className="flex flex-col items-center gap-8 mb-8">
+              <div className="flex items-center gap-8">
+                <div className="bg-white/20 backdrop-blur-lg p-4 rounded-3xl border border-white/30 shadow-2xl">
+                  <img src="/logo.png" alt="My Gunupur" className="w-32 h-32 object-contain drop-shadow-2xl" />
+                </div>
+                <div className="text-center">
+                  <h2 className="text-5xl md:text-6xl font-black mb-3 drop-shadow-2xl">Swarga Ratha</h2>
+                  <p className="text-3xl md:text-4xl font-bold text-yellow-100 mb-4">ସ୍ୱର୍ଗ ରଥ</p>
+                  <div className="inline-flex items-center gap-2 bg-white/30 backdrop-blur-md px-6 py-2 rounded-full border border-white/40 shadow-xl">
+                    <span className="text-2xl">✨</span>
+                    <span className="text-xl font-black tracking-wide">PREMIUM FREE SERVICE FOR EVERYONE</span>
+                  </div>
+                </div>
               </div>
             </div>
-            <div className="flex flex-col md:flex-row gap-5 w-full">
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <a
                 href="tel:7735706860"
-                className="flex-1 flex items-center justify-center gap-3 px-8 py-5 bg-white text-orange-700 font-black text-2xl rounded-2xl hover:shadow-2xl hover:scale-105 transition-all duration-300"
+                className="group relative flex items-center justify-center gap-4 px-10 py-7 bg-white text-orange-700 font-black text-3xl rounded-3xl shadow-2xl hover:shadow-[0_25px_50px_rgba(0,0,0,0.25)] hover:scale-105 transition-all duration-300 overflow-hidden"
               >
-                <Phone className="w-8 h-8" />
-                7735706860
+                <div className="absolute inset-0 bg-gradient-to-r from-orange-100 to-amber-100 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div className="relative z-10 flex items-center gap-4">
+                  <Phone className="w-10 h-10" />
+                  7735706860
+                </div>
               </a>
               <a
                 href="tel:8895186071"
-                className="flex-1 flex items-center justify-center gap-3 px-8 py-5 bg-white text-orange-700 font-black text-2xl rounded-2xl hover:shadow-2xl hover:scale-105 transition-all duration-300"
+                className="group relative flex items-center justify-center gap-4 px-10 py-7 bg-white text-orange-700 font-black text-3xl rounded-3xl shadow-2xl hover:shadow-[0_25px_50px_rgba(0,0,0,0.25)] hover:scale-105 transition-all duration-300 overflow-hidden"
               >
-                <Phone className="w-8 h-8" />
-                8895186071
+                <div className="absolute inset-0 bg-gradient-to-r from-orange-100 to-amber-100 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div className="relative z-10 flex items-center gap-4">
+                  <Phone className="w-10 h-10" />
+                  8895186071
+                </div>
               </a>
             </div>
           </div>
@@ -318,14 +333,14 @@ const Home: React.FC = () => {
                   </div>
                 ) : (
                   <>
-                    <h3 className="text-6xl font-black text-slate-800 mb-2">{weather?.current?.temp_c}°C</h3>
-                    <p className="text-base text-slate-600 font-semibold">{weather?.current?.condition?.text}</p>
+                    <h3 className="text-6xl font-black text-slate-800 mb-2">{(weather && weather.current) ? weather.current.temp_c : 28}°C</h3>
+                    <p className="text-base text-slate-600 font-semibold">{(weather && weather.current) ? weather.current.condition.text : 'Sunny'}</p>
                   </>
                 )}
               </div>
-              {weather && (
+              {weather && weather.current && weather.current.condition && (
                 <div className="flex flex-col items-center gap-2">
-                  <img src={weather?.current?.condition?.icon} alt={weather?.current?.condition?.text} className="w-28 h-28" />
+                  <img src={weather.current.condition.icon} alt={weather.current.condition.text} className="w-28 h-28" />
                 </div>
               )}
             </div>
@@ -333,24 +348,24 @@ const Home: React.FC = () => {
               <div className="text-center">
                 <Droplets className="w-5 h-5 text-blue-500 mx-auto mb-1" />
                 <p className="text-xs text-slate-500 font-bold">Humidity</p>
-                <p className="text-lg font-black text-slate-700">{weather?.current?.humidity}%</p>
+                <p className="text-lg font-black text-slate-700">{(weather && weather.current) ? weather.current.humidity : 65}%</p>
               </div>
               <div className="text-center">
                 <Wind className="w-5 h-5 text-cyan-500 mx-auto mb-1" />
                 <p className="text-xs text-slate-500 font-bold">Wind</p>
-                <p className="text-lg font-black text-slate-700">{weather?.current?.wind_kph} km/h</p>
+                <p className="text-lg font-black text-slate-700">{(weather && weather.current) ? weather.current.wind_kph : 12} km/h</p>
               </div>
               <div className="text-center">
                 <div className="w-5 h-5 bg-green-500 rounded-full mx-auto mb-1 flex items-center justify-center">
                   <span className="text-[8px] font-black text-white">AQI</span>
                 </div>
                 <p className="text-xs text-slate-500 font-bold">AQI</p>
-                <p className="text-lg font-black text-slate-700">{weather?.current?.air_quality?.['us-epa-index'] || 2}</p>
+                <p className="text-lg font-black text-slate-700">{(weather && weather.current && weather.current.air_quality) ? weather.current.air_quality['us-epa-index'] : 2}</p>
               </div>
               <div className="text-center">
                 <CloudRain className="w-5 h-5 text-indigo-500 mx-auto mb-1" />
                 <p className="text-xs text-slate-500 font-bold">Rain</p>
-                <p className="text-lg font-black text-slate-700">{weather?.current?.precip_mm || 0} mm</p>
+                <p className="text-lg font-black text-slate-700">{(weather && weather.current) ? (weather.current.precip_mm || 0) : 0} mm</p>
               </div>
             </div>
           </motion.div>
@@ -437,13 +452,10 @@ const Home: React.FC = () => {
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   transition={{ delay: 0.6 + index * 0.05 }}
                   onClick={() => navigate(service.path)}
-                  className="flex flex-col items-center justify-center p-7 bg-white rounded-3xl border border-slate-100 hover:border-slate-200 hover:shadow-2xl hover:scale-105 transition-all duration-300 relative"
+                  className="flex flex-col items-center justify-center p-7 bg-white rounded-3xl border border-slate-100 hover:border-slate-200 hover:shadow-2xl hover:scale-105 transition-all duration-300"
                   whileHover={{ scale: 1.08, y: -5 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  <div className="absolute top-3 right-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white text-[10px] font-black px-2 py-1 rounded-full">
-                    {service.count}
-                  </div>
                   <div className={`w-20 h-20 rounded-2xl flex items-center justify-center mb-4 shadow-lg ${service.bg}`}>
                     <Icon className={`w-10 h-10 ${service.color}`} />
                   </div>
@@ -579,13 +591,14 @@ const Home: React.FC = () => {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.8 + index * 0.1 }}
-                  className="bg-white rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl border border-slate-100"
+                  onClick={() => navigate('/directory')}
+                  className="bg-white rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl border border-slate-100 cursor-pointer hover:scale-105 transition-all duration-300"
                 >
                   <div className="h-48 relative overflow-hidden">
                     <img 
                       src={business.image || 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=400&h=300&fit=crop'} 
                       alt={business.name} 
-                      className="w-full h-full object-cover" 
+                      className="w-full h-full object-cover transition-transform duration-500 hover:scale-110" 
                     />
                     <div className="absolute top-4 right-4 bg-white rounded-full px-3 py-1 flex items-center gap-1 shadow-lg">
                       <Star className="w-4 h-4 fill-yellow-500 text-yellow-500" />
@@ -594,6 +607,9 @@ const Home: React.FC = () => {
                   </div>
                   <div className="p-6">
                     <h4 className="text-xl font-black text-slate-800">{business.name}</h4>
+                    {business.address && (
+                      <p className="text-sm text-slate-500 mt-1">{business.address}</p>
+                    )}
                   </div>
                 </motion.div>
               ))}

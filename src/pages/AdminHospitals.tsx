@@ -158,10 +158,9 @@ const AdminHospitals: React.FC = () => {
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-bold text-slate-700 mb-2">Phone</label>
+                  <label className="block text-sm font-bold text-slate-700 mb-2">Phone (optional)</label>
                   <input
                     type="text"
-                    required
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                     className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:border-pink-500"

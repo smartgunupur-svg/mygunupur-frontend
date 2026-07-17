@@ -386,11 +386,12 @@ const HomeLoan: React.FC = () => {
                         className="w-full h-full object-contain"
                         onError={(e) => {
                           (e.target as HTMLImageElement).style.display = 'none';
-                          (e.target as HTMLImageElement).nextElementSibling?.classList.remove('hidden');
+                          const fallback = (e.target as HTMLImageElement).parentElement?.querySelector('.bank-fallback');
+                          if (fallback) fallback.classList.remove('hidden');
                         }}
                       />
                     ) : null}
-                    <span className="text-2xl hidden">🏦</span>
+                    <span className={`text-2xl ${bank.image ? 'hidden' : ''} bank-fallback`}>🏦</span>
                   </div>
                   <h4 className="text-lg font-black text-slate-800 mb-2">
                     {bank.name}

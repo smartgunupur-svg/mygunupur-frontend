@@ -17,7 +17,7 @@ const AdminBanks: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
   const [editingBank, setEditingBank] = useState<any | null>(null);
-  const [formData, setFormData] = useState({ name: '', logo: '' });
+  const [formData, setFormData] = useState({ name: '', image: '' });
   const [uploading, setUploading] = useState(false);
 
   useEffect(() => {
@@ -55,7 +55,7 @@ const AdminBanks: React.FC = () => {
           'Content-Type': 'multipart/form-data',
         },
       });
-      setFormData(prev => ({ ...prev, logo: response.data.url }));
+      setFormData(prev => ({ ...prev, image: response.data.url }));
     } catch (error) {
       console.error('Error uploading image:', error);
       alert('Error uploading image');
@@ -81,7 +81,7 @@ const AdminBanks: React.FC = () => {
       }
       setShowForm(false);
       setEditingBank(null);
-      setFormData({ name: '', logo: '' });
+      setFormData({ name: '', image: '' });
     } catch (error) {
       console.error('Error saving bank:', error);
     }
@@ -89,7 +89,7 @@ const AdminBanks: React.FC = () => {
 
   const handleEdit = (bank: any) => {
     setEditingBank(bank);
-    setFormData({ name: bank.name, logo: bank.logo || '' });
+    setFormData({ name: bank.name, image: bank.image || '' });
     setShowForm(true);
   };
 
@@ -141,15 +141,15 @@ const AdminBanks: React.FC = () => {
               </div>
               <div>
                 <label className="block text-sm font-bold text-slate-700 mb-2">
-                  Logo (optional)
+                  Image (optional)
                 </label>
                 <div className="space-y-2">
-                  {formData.logo && (
+                  {formData.image && (
                     <div className="flex items-center gap-2">
-                      <img src={formData.logo} alt="Logo preview" className="w-16 h-16 rounded-lg object-cover" />
+                      <img src={formData.image} alt="Preview" className="w-16 h-16 rounded-lg object-cover" />
                       <button
                         type="button"
-                        onClick={() => setFormData({ ...formData, logo: '' })}
+                        onClick={() => setFormData({ ...formData, image: '' })}
                         className="text-red-600 hover:text-red-800"
                       >
                         Remove
@@ -167,8 +167,8 @@ const AdminBanks: React.FC = () => {
                   <div className="text-sm text-slate-500 mt-1">Or paste image URL:</div>
                   <input
                     type="text"
-                    value={formData.logo}
-                    onChange={(e) => setFormData({ ...formData, logo: e.target.value })}
+                    value={formData.image}
+                    onChange={(e) => setFormData({ ...formData, image: e.target.value })}
                     className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500"
                     placeholder="Image URL"
                   />
@@ -207,9 +207,9 @@ const AdminBanks: React.FC = () => {
                 className="bg-white rounded-2xl p-6 shadow-lg border border-slate-100 flex items-center justify-between"
               >
                 <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-xl flex items-center justify-center shadow-md">
-                    {bank.logo ? (
-                      <span className="text-2xl">{bank.logo}</span>
+                  <div className="w-12 h-12 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-xl flex items-center justify-center shadow-md overflow-hidden">
+                    {bank.image ? (
+                      <img src={bank.image} alt={bank.name} className="w-full h-full object-contain" />
                     ) : (
                       <Home className="w-6 h-6 text-white" />
                     )}

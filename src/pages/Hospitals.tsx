@@ -111,6 +111,13 @@ const Hospitals: React.FC = () => {
                 >
                   <div className="flex items-start justify-between">
                     <div className="flex-1">
+                      {hospital.image && (
+                        <img 
+                          src={hospital.image} 
+                          alt={hospital.name} 
+                          className="w-full h-48 object-cover rounded-2xl mb-4" 
+                        />
+                      )}
                       <h4 className="font-black text-slate-800 text-lg">{hospital.name}</h4>
                       {hospital.departments && hospital.departments.length > 0 && (
                         <div className="flex flex-wrap gap-2 mt-2">
@@ -128,13 +135,28 @@ const Hospitals: React.FC = () => {
                         </div>
                       )}
                     </div>
-                    <a
-                      href={`tel:${hospital.phone}`}
-                      className="flex items-center gap-2 px-5 py-3 bg-gradient-to-r from-pink-500 to-rose-600 text-white font-bold rounded-2xl shadow-lg hover:shadow-xl transition-all"
-                    >
-                      <Phone className="w-5 h-5" />
-                      Call
-                    </a>
+                    <div className="flex flex-col gap-3 ml-4">
+                      {hospital.phone && (
+                        <a
+                          href={`tel:${hospital.phone}`}
+                          className="flex items-center justify-center gap-2 px-5 py-3 bg-gradient-to-r from-pink-500 to-rose-600 text-white font-bold rounded-2xl shadow-lg hover:shadow-xl transition-all"
+                        >
+                          <Phone className="w-5 h-5" />
+                          Call
+                        </a>
+                      )}
+                      {hospital.googleMap && (
+                        <a
+                          href={hospital.googleMap}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center justify-center gap-2 px-5 py-3 bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-bold rounded-2xl shadow-lg hover:shadow-xl transition-all"
+                        >
+                          <MapPin className="w-5 h-5" />
+                          Map
+                        </a>
+                      )}
+                    </div>
                   </div>
                 </motion.div>
               ))}
