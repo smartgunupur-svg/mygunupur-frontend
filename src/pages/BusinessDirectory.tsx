@@ -158,20 +158,28 @@ const BusinessDirectory: React.FC = () => {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.05 }}
-                className="bg-white border border-slate-100 rounded-3xl p-5 shadow-sm space-y-3"
+                className="bg-white border border-slate-100 rounded-3xl overflow-hidden shadow-sm"
               >
-                <div className="flex justify-between items-start">
-                  <div>
-                    <h4 className="font-extrabold text-slate-800 text-sm">{b.name}</h4>
-                    <p className="text-xs text-slate-400 font-semibold mt-0.5 flex items-center gap-1">
-                      <MapPin className="w-3.5 h-3.5 text-blue-500" /> {b.address}
-                    </p>
+                {b.image && (
+                  <img
+                    src={b.image}
+                    alt={b.name}
+                    className="w-full h-40 object-cover"
+                  />
+                )}
+                <div className="p-5 space-y-3">
+                  <div className="flex justify-between items-start">
+                    <div>
+                      <h4 className="font-extrabold text-slate-800 text-sm">{b.name}</h4>
+                      <p className="text-xs text-slate-400 font-semibold mt-0.5 flex items-center gap-1">
+                        <MapPin className="w-3.5 h-3.5 text-blue-500" /> {b.address}
+                      </p>
+                    </div>
+                    <div className="flex items-center gap-0.5 bg-amber-50 text-amber-600 px-2 py-0.5 rounded-lg text-[10px] font-bold">
+                      <Star className="w-3 h-3 fill-amber-500 text-amber-500" />
+                      {b.rating || 4.5}
+                    </div>
                   </div>
-                  <div className="flex items-center gap-0.5 bg-amber-50 text-amber-600 px-2 py-0.5 rounded-lg text-[10px] font-bold">
-                    <Star className="w-3 h-3 fill-amber-500 text-amber-500" />
-                    {b.rating || 4.5}
-                  </div>
-                </div>
 
                 {/* Features Badges */}
                 {b.features && b.features.length > 0 && (
@@ -200,6 +208,7 @@ const BusinessDirectory: React.FC = () => {
                       <MapPin className="w-4 h-4" />
                     </button>
                   )}
+                </div>
                 </div>
               </motion.div>
             ))}

@@ -97,30 +97,32 @@ function App() {
         {/* Admin panel routes */}
         <Route path="/admin" element={<Navigate to="/admin/login" replace />} />
         <Route path="/admin/login" element={<AdminLogin />} />
-        <Route path="/admin/dashboard" element={<AdminDashboard />} />
-        <Route path="/admin/loan-enquiries" element={<AdminLoanEnquiries />} />
-        <Route path="/admin/building-enquiries" element={<AdminBuildingEnquiries />} />
-        <Route path="/admin/banks" element={<AdminBanks />} />
-        <Route path="/admin/construction-material" element={<AdminConstructionMaterial />} />
-        <Route path="/admin/hospitals" element={<AdminHospitals />} />
-        <Route path="/admin/tourist-places" element={<AdminTouristPlaces />} />
-        <Route path="/admin/emergency-contacts" element={<AdminEmergencyContacts />} />
-        <Route path="/admin/blood-donors" element={<AdminBloodDonors />} />
-        <Route path="/admin/notices" element={<AdminNotices />} />
-        <Route path="/admin/gallery" element={<AdminGallery />} />
-        <Route path="/admin/events" element={<AdminEvents />} />
-        <Route path="/admin/jobs" element={<AdminJobs />} />
-        <Route path="/admin/schemes" element={<AdminSchemes />} />
-        <Route path="/admin/businesses" element={<AdminBusinesses />} />
-        <Route path="/admin/settings" element={<AdminSettings />} />
-        <Route path="/admin/hotels" element={<AdminHotels />} />
-        <Route path="/admin/restaurants" element={<AdminRestaurants />} />
-        <Route path="/admin/important-contacts" element={<AdminImportantContacts />} />
-        <Route path="/admin/schools" element={<AdminSchools />} />
-        <Route path="/admin/colleges" element={<AdminColleges />} />
-        <Route path="/admin/govt-offices" element={<AdminGovtOffices />} />
-        <Route path="/admin/parks" element={<AdminParks />} />
-        <Route path="/admin/sports-places" element={<AdminSportsPlaces />} />
+        <Route element={<AdminLayout />}>
+          <Route path="/admin/dashboard" element={<AdminDashboard />} />
+          <Route path="/admin/loan-enquiries" element={<AdminLoanEnquiries />} />
+          <Route path="/admin/building-enquiries" element={<AdminBuildingEnquiries />} />
+          <Route path="/admin/banks" element={<AdminBanks />} />
+          <Route path="/admin/construction-material" element={<AdminConstructionMaterial />} />
+          <Route path="/admin/hospitals" element={<AdminHospitals />} />
+          <Route path="/admin/tourist-places" element={<AdminTouristPlaces />} />
+          <Route path="/admin/emergency-contacts" element={<AdminEmergencyContacts />} />
+          <Route path="/admin/blood-donors" element={<AdminBloodDonors />} />
+          <Route path="/admin/notices" element={<AdminNotices />} />
+          <Route path="/admin/gallery" element={<AdminGallery />} />
+          <Route path="/admin/events" element={<AdminEvents />} />
+          <Route path="/admin/jobs" element={<AdminJobs />} />
+          <Route path="/admin/schemes" element={<AdminSchemes />} />
+          <Route path="/admin/businesses" element={<AdminBusinesses />} />
+          <Route path="/admin/settings" element={<AdminSettings />} />
+          <Route path="/admin/hotels" element={<AdminHotels />} />
+          <Route path="/admin/restaurants" element={<AdminRestaurants />} />
+          <Route path="/admin/important-contacts" element={<AdminImportantContacts />} />
+          <Route path="/admin/schools" element={<AdminSchools />} />
+          <Route path="/admin/colleges" element={<AdminColleges />} />
+          <Route path="/admin/govt-offices" element={<AdminGovtOffices />} />
+          <Route path="/admin/parks" element={<AdminParks />} />
+          <Route path="/admin/sports-places" element={<AdminSportsPlaces />} />
+        </Route>
       </Routes>
     </Router>
   );

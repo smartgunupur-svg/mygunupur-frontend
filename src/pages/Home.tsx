@@ -272,9 +272,13 @@ const Home: React.FC = () => {
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-yellow-200 via-transparent to-transparent"></div>
           </div>
           <div className="flex flex-col items-center gap-6 relative z-10">
-            <div className="text-center">
-              <h2 className="text-4xl md:text-5xl font-black mb-2">Swarga Ratha</h2>
-              <p className="text-2xl md:text-3xl font-bold text-amber-100 mb-6">ସ୍ୱର୍ଗ ରଥ</p>
+            <div className="flex items-center gap-6 mb-4">
+              <img src="/logo.png" alt="My Gunupur" className="w-24 h-24 object-contain drop-shadow-2xl" />
+              <div className="text-center">
+                <h2 className="text-4xl md:text-5xl font-black mb-2">Swarga Ratha</h2>
+                <p className="text-2xl md:text-3xl font-bold text-amber-100 mb-2">ସ୍ୱର୍ଗ ରଥ</p>
+                <p className="text-lg font-bold text-white bg-white/20 px-4 py-1 rounded-full">🆓 FREE SERVICE FOR EVERYONE</p>
+              </div>
             </div>
             <div className="flex flex-col md:flex-row gap-5 w-full">
               <a

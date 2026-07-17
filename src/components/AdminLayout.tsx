@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation, Outlet } from 'react-router-dom';
 import { 
   FileText, 
   Building2, 
@@ -31,12 +31,7 @@ import {
   Trophy
 } from 'lucide-react';
 
-interface AdminLayoutProps {
-  children: React.ReactNode;
-  title?: string;
-}
-
-const AdminLayout: React.FC<AdminLayoutProps> = ({ children, title = 'Dashboard' }) => {
+const AdminLayout: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -75,6 +70,10 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children, title = 'Dashboard'
     { title: 'Settings', icon: Settings, path: '/admin/settings', color: 'text-slate-600', bg: 'bg-slate-50' }
   ];
 
+  // Generate title from path
+  const pathTitle = location.pathname.split('/').pop() || 'dashboard';
+  const title = pathTitle.charAt(0).toUpperCase() + pathTitle.slice(1).replace(/-/g, ' ');
+
   return (
     <div className="min-h-screen bg-slate-50 flex">
       {/* Mobile sidebar overlay */}
@@ -89,11 +88,11 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children, title = 'Dashboard'
       <motion.aside
         initial={false}
         animate={{ x: sidebarOpen ? 0 : -300 }}
-        className={`fixed left-0 top-0 h-full w-72 bg-white border-r border-slate-200 z-50 shadow-xl lg:static lg:translate-x-0 transition-transform duration-300 flex-shrink-0`}
+        className={`fixed left-0 top-0 h-full w-72 bg-white border-r border-slate-200 z-50 shadow-xl lg:static lg:translate-x-0 transition-transform duration-300 flex-shrink-0 flex flex-col`}
       >
         <div className="p-6 border-b border-slate-100">
           <div className="flex items-center gap-3">
-            <img src="/layoutlogo.png" alt="My Gunupur" className="h-12 w-auto" />
+            <img src="/logo.png" alt="My Gunupur" className="h-12 w-auto" />
             <div>
               <h1 className="text-lg font-bold text-slate-800">My Gunupur</h1>
               <p className="text-xs text-slate-500 font-medium">Admin Panel</p>
@@ -181,7 +180,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children, title = 'Dashboard'
 
         {/* Page Content */}
         <div className="flex-1 overflow-y-auto">
-          {children}
+          <Outlet />
         </div>
       </div>
     </div>

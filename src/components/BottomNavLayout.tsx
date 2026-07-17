@@ -125,7 +125,7 @@ const BottomNavLayout: React.FC = () => {
       <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-100 shadow-sm transition-all duration-300">
         <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
           <div className="flex items-center gap-3 cursor-pointer" onClick={() => navigate('/')}>
-            <img src="/layoutlogo.png" alt="Logo" className="h-12 w-12 object-contain rounded-xl shadow-lg" />
+            <img src="/logo.png" alt="Logo" className="h-12 w-12 object-contain rounded-xl shadow-lg" />
             <div>
               <h1 className="text-xl md:text-2xl font-black text-blue-900 tracking-tight leading-tight">MY GUNUPUR</h1>
               <p className="text-xs font-semibold text-slate-500 leading-none">Everything You Need, All In One Place</p>
@@ -284,7 +284,7 @@ const BottomNavLayout: React.FC = () => {
               {/* Drawer Header */}
               <div className="p-5 border-b border-slate-800 flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <img src="/layoutlogo.png" alt="Logo" className="h-8 w-8 rounded-full" />
+                  <img src="/logo.png" alt="Logo" className="h-8 w-8 rounded-full" />
                   <div>
                     <h2 className="text-sm font-black tracking-wider text-blue-400">MY GUNUPUR</h2>
                     <p className="text-[8px] text-slate-400 font-semibold uppercase">Citizen Super App</p>

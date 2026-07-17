@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { BookOpen, Plus, Edit, Trash2 } from 'lucide-react';
+import { BookOpen, Plus, Edit, Trash2, Upload, Image as ImageIcon } from 'lucide-react';
 import axios from 'axios';
 import AdminLayout from '../components/AdminLayout';
 
@@ -13,9 +13,10 @@ const AdminBusinesses: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
   const [editingBusiness, setEditingBusiness] = useState<any | null>(null);
+  const [uploadingImage, setUploadingImage] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
-    category: 'hotel',
+    category: 'Medical Stores',
     phone: '',
     address: '',
     googleMap: '',
@@ -23,7 +24,8 @@ const AdminBusinesses: React.FC = () => {
     rating: '4.5',
     priceRange: '₹₹',
     isVeg: 'false',
-    features: ''
+    features: '',
+    image: ''
   });
 
   useEffect(() => {
@@ -46,6 +48,27 @@ const AdminBusinesses: React.FC = () => {
 
     fetchBusinesses();
   }, [navigate]);
+
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files || e.target.files.length === 0) return;
+    
+    const file = e.target.files[0];
+    setUploadingImage(true);
+    
+    try {
+      const formData = new FormData();
+      formData.append('image', file);
+      
+      const response = await axios.post(`${API_URL}/upload`, formData);
+      
+      setFormData(prev => ({ ...prev, image: response.data.url }));
+    } catch (error) {
+      console.error('Error uploading image:', error);
+      alert('Failed to upload image');
+    } finally {
+      setUploadingImage(false);
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -72,7 +95,7 @@ const AdminBusinesses: React.FC = () => {
       setEditingBusiness(null);
       setFormData({
         name: '',
-        category: 'hotel',
+        category: 'Medical Stores',
         phone: '',
         address: '',
         googleMap: '',
@@ -80,7 +103,8 @@ const AdminBusinesses: React.FC = () => {
         rating: '4.5',
         priceRange: '₹₹',
         isVeg: 'false',
-        features: ''
+        features: '',
+        image: ''
       });
     } catch (error) {
       console.error('Error saving business:', error);
@@ -91,7 +115,7 @@ const AdminBusinesses: React.FC = () => {
     setEditingBusiness(business);
     setFormData({
       name: business.name,
-      category: business.category || 'hotel',
+      category: business.category || 'Medical Stores',
       phone: business.phone,
       address: business.address || '',
       googleMap: business.googleMap || '',
@@ -99,7 +123,8 @@ const AdminBusinesses: React.FC = () => {
       rating: String(business.rating || 4.5),
       priceRange: business.priceRange || '₹₹',
       isVeg: business.isVeg ? 'true' : 'false',
-      features: business.features?.join(', ') || ''
+      features: business.features?.join(', ') || '',
+      image: business.image || ''
     });
     setShowForm(true);
   };
@@ -168,6 +193,33 @@ const AdminBusinesses: React.FC = () => {
                   </select>
                 </div>
               </div>
+              
+              <div>
+                <label className="block text-sm font-bold text-slate-700 mb-2">Business Image</label>
+                {formData.image && (
+                  <div className="mb-3">
+                    <img
+                      src={formData.image}
+                      alt="Preview"
+                      className="w-full h-48 object-cover rounded-xl border border-slate-200"
+                    />
+                  </div>
+                )}
+                <label className="flex items-center gap-2 px-4 py-3 border border-dashed border-slate-300 rounded-xl cursor-pointer hover:bg-slate-50 transition-all">
+                  <Upload className="w-5 h-5 text-slate-500" />
+                  <span className="text-sm text-slate-600 font-medium">
+                    {uploadingImage ? 'Uploading...' : 'Click to upload image'}
+                  </span>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageUpload}
+                    disabled={uploadingImage}
+                    className="hidden"
+                  />
+                </label>
+              </div>
+              
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
                   <label className="block text-sm font-bold text-slate-700 mb-2">Phone</label>
