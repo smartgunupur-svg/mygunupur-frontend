@@ -3,8 +3,6 @@ import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { Image, Plus, Trash2 } from 'lucide-react';
 import axios from 'axios';
-import AdminLayout from '../components/AdminLayout';
-
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
 const AdminGallery: React.FC = () => {
@@ -90,8 +88,7 @@ const AdminGallery: React.FC = () => {
   };
 
   return (
-    <AdminLayout title="Gallery">
-      <div className="max-w-6xl mx-auto px-4 space-y-4 pt-6">
+    <div className="max-w-6xl mx-auto px-4 space-y-4 pt-6">
         <button
           onClick={() => setShowForm(!showForm)}
           className="flex items-center gap-2 px-6 py-3 bg-gradient-to-br from-sky-500 to-blue-500 text-white font-bold rounded-2xl shadow-lg hover:shadow-xl transition-all"
@@ -198,8 +195,7 @@ const AdminGallery: React.FC = () => {
           </div>
         )}
       </div>
-    </AdminLayout>
-  );
+  );;
 };
 
 export default AdminGallery;

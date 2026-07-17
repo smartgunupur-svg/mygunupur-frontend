@@ -11,8 +11,6 @@ import {
   Home
 } from 'lucide-react';
 import axios from 'axios';
-import AdminLayout from '../components/AdminLayout';
-
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
 const AdminLoanEnquiries: React.FC = () => {
@@ -44,8 +42,7 @@ const AdminLoanEnquiries: React.FC = () => {
   }, [navigate]);
 
   return (
-    <AdminLayout title="Loan Enquiries">
-      <div className="max-w-6xl mx-auto px-4 space-y-4 pt-6">
+    <div className="max-w-6xl mx-auto px-4 space-y-4 pt-6">
         {loading ? (
           <div className="text-center py-20 text-slate-500 text-lg">Loading enquiries...</div>
         ) : enquiries.length === 0 ? (
@@ -148,8 +145,7 @@ const AdminLoanEnquiries: React.FC = () => {
           </div>
         )}
       </div>
-    </AdminLayout>
-  );
+  );;
 };
 
 export default AdminLoanEnquiries;

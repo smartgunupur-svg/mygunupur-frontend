@@ -3,8 +3,6 @@ import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { FileText, Plus, Edit, Trash2 } from 'lucide-react';
 import axios from 'axios';
-import AdminLayout from '../components/AdminLayout';
-
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
 const AdminNotices: React.FC = () => {
@@ -89,8 +87,7 @@ const AdminNotices: React.FC = () => {
   };
 
   return (
-    <AdminLayout title="Notices">
-      <div className="max-w-6xl mx-auto px-4 space-y-4 pt-6">
+    <div className="max-w-6xl mx-auto px-4 space-y-4 pt-6">
         <button
           onClick={() => setShowForm(!showForm)}
           className="flex items-center gap-2 px-6 py-3 bg-gradient-to-br from-purple-600 to-indigo-600 text-white font-bold rounded-2xl shadow-lg hover:shadow-xl transition-all"
@@ -214,8 +211,7 @@ const AdminNotices: React.FC = () => {
           </div>
         )}
       </div>
-    </AdminLayout>
-  );
+  );;
 };
 
 export default AdminNotices;

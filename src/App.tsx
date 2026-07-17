@@ -32,6 +32,7 @@ import SportsPlaces from './pages/SportsPlaces';
 
 // Admin pages
 import AdminLogin from './pages/AdminLogin';
+import AdminLayout from './components/AdminLayout';
 import AdminDashboard from './pages/AdminDashboard';
 import AdminLoanEnquiries from './pages/AdminLoanEnquiries';
 import AdminBuildingEnquiries from './pages/AdminBuildingEnquiries';

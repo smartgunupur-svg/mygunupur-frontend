@@ -8,8 +8,6 @@ import {
   Settings as SettingsIcon
 } from 'lucide-react';
 import axios from 'axios';
-import AdminLayout from '../components/AdminLayout';
-
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
 const AdminSettings: React.FC = () => {
@@ -156,8 +154,7 @@ const AdminSettings: React.FC = () => {
   }
 
   return (
-    <AdminLayout title="App Settings">
-      <div className="max-w-6xl mx-auto px-4 py-8 space-y-6">
+    <div className="max-w-6xl mx-auto px-4 py-8 space-y-6">
         {/* Save Button */}
         <div className="flex justify-end">
           <button
@@ -270,8 +267,7 @@ const AdminSettings: React.FC = () => {
           </div>
         </div>
       </div>
-    </AdminLayout>
-  );
+  );;
 };
 
 export default AdminSettings;

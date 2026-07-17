@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { BookOpen, Plus, Edit, Trash2, Upload, Image as ImageIcon } from 'lucide-react';
+import { BookOpen, Plus, Edit, Trash2, Upload } from 'lucide-react';
 import axios from 'axios';
-import AdminLayout from '../components/AdminLayout';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
@@ -143,7 +142,6 @@ const AdminBusinesses: React.FC = () => {
   };
 
   return (
-    <AdminLayout title="Business Directory">
       <div className="max-w-6xl mx-auto px-4 space-y-4 pt-6">
         <button
           onClick={() => setShowForm(!showForm)}
@@ -357,7 +355,6 @@ const AdminBusinesses: React.FC = () => {
           </div>
         )}
       </div>
-    </AdminLayout>
   );
 };
 

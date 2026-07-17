@@ -10,8 +10,6 @@ import {
   BookOpen
 } from 'lucide-react';
 import axios from 'axios';
-import AdminLayout from '../components/AdminLayout';
-
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
 const AdminColleges: React.FC = () => {
@@ -132,8 +130,7 @@ const AdminColleges: React.FC = () => {
   };
 
   return (
-    <AdminLayout title="Colleges">
-      <div className="max-w-6xl mx-auto px-4 space-y-4 pt-6">
+    <div className="max-w-6xl mx-auto px-4 space-y-4 pt-6">
         <button
           onClick={() => setShowForm(!showForm)}
           className="flex items-center gap-2 px-6 py-3 bg-gradient-to-br from-emerald-600 to-green-600 text-white font-bold rounded-2xl shadow-lg hover:shadow-xl transition-all"
@@ -347,8 +344,7 @@ const AdminColleges: React.FC = () => {
           </div>
         )}
       </div>
-    </AdminLayout>
-  );
+  );;
 };
 
 export default AdminColleges;

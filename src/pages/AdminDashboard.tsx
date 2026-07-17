@@ -23,8 +23,6 @@ import {
   AlertTriangle
 } from 'lucide-react';
 import axios from 'axios';
-import AdminLayout from '../components/AdminLayout';
-
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
 const AdminDashboard: React.FC = () => {
@@ -144,8 +142,7 @@ const AdminDashboard: React.FC = () => {
     .slice(0, 8);
 
   return (
-    <AdminLayout title="Dashboard">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
         {/* Stats Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6">
           {stats.map((stat, index) => (
@@ -323,8 +320,7 @@ const AdminDashboard: React.FC = () => {
           </div>
         </div>
       </div>
-    </AdminLayout>
-  );
+  );;
 };
 
 export default AdminDashboard;

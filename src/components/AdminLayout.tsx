@@ -171,7 +171,6 @@ const AdminLayout: React.FC = () => {
                 </div>
                 <div className="hidden sm:block">
                   <p className="text-sm font-semibold text-slate-800">Admin</p>
-                  <p className="text-xs text-slate-500">admin@mygunupur.in</p>
                 </div>
               </div>
             </div>
