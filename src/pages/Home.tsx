@@ -134,7 +134,7 @@ const Home: React.FC = () => {
   useEffect(() => {
     const fetchWeather = async () => {
       try {
-        const response = await axios.get('https://api.weatherapi.com/v1/current.json?key=e1b301203ef34fd39d8110550252901&q=19.08,83.82&aqi=yes');
+        const response = await axios.get('https://api.weatherapi.com/v1/current.json?key=2eb17a81f9cf4f61b6672925261707&q=19.08,83.82&aqi=yes');
         setWeather(response.data);
       } catch (error) {
         setWeather({
@@ -281,9 +281,9 @@ const Home: React.FC = () => {
                 <div className="text-center">
                   <h2 className="text-5xl md:text-6xl font-black mb-3 drop-shadow-2xl">Swarga Ratha</h2>
                   <p className="text-3xl md:text-4xl font-bold text-yellow-100 mb-4">ସ୍ୱର୍ଗ ରଥ</p>
-                  <div className="inline-flex items-center gap-2 bg-white/30 backdrop-blur-md px-6 py-2 rounded-full border border-white/40 shadow-xl">
-                    <span className="text-2xl">✨</span>
-                    <span className="text-xl font-black tracking-wide">PREMIUM FREE SERVICE FOR EVERYONE</span>
+                  <div className="inline-flex items-center gap-3 bg-white/40 backdrop-blur-xl px-8 py-3 rounded-full border border-white/50 shadow-[0_8px_32px_rgba(0,0,0,0.15)]">
+                    <span className="text-3xl">✨</span>
+                    <span className="text-2xl font-black tracking-wide">FREE PREMIUM SERVICE</span>
                   </div>
                 </div>
               </div>
