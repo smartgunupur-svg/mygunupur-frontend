@@ -24,10 +24,7 @@ import {
   UserCheck,
   Building,
   Utensils,
-  ChevronRight,
-  GraduationCap,
-  TreePine,
-  Trophy
+  ChevronRight
 } from 'lucide-react';
 import axios from 'axios';
 
@@ -68,12 +65,7 @@ const BottomNavLayout: React.FC = () => {
             businesses: true,
             governmentSchemes: true,
             about: true,
-            contact: true,
-            schools: true,
-            colleges: true,
-            govtOffices: true,
-            parks: true,
-            sportsPlaces: true,
+            contact: true
           }
         });
       } finally {
@@ -96,11 +88,6 @@ const BottomNavLayout: React.FC = () => {
       { name: 'Emergency Contacts', path: '/emergency', icon: AlertTriangle, color: 'text-red-500', visible: settings?.features?.emergency },
       { name: 'Hospitals', path: '/hospitals', icon: HeartPulse, color: 'text-rose-500', visible: settings?.features?.hospitals },
       { name: 'Blood Donors', path: '/blood-donors', icon: Droplets, color: 'text-red-600', visible: settings?.features?.bloodDonors },
-      { name: 'Schools', path: '/schools', icon: GraduationCap, color: 'text-yellow-500', visible: settings?.features?.schools },
-      { name: 'Colleges', path: '/colleges', icon: BookOpen, color: 'text-teal-600', visible: settings?.features?.colleges },
-      { name: 'Government Offices', path: '/govt-offices', icon: Building, color: 'text-purple-600', visible: settings?.features?.govtOffices },
-      { name: 'Parks', path: '/parks', icon: TreePine, color: 'text-green-600', visible: settings?.features?.parks },
-      { name: 'Sports Places', path: '/sports-places', icon: Trophy, color: 'text-orange-600', visible: settings?.features?.sportsPlaces },
       { name: 'Government Schemes', path: '/government-schemes', icon: Building, color: 'text-cyan-500', visible: settings?.features?.governmentSchemes },
       { name: 'Notices & Updates', path: '/notices', icon: FileText, color: 'text-purple-500', visible: settings?.features?.notices },
       { name: 'Home Loan EMI', path: '/home-loan', icon: Building2, color: 'text-teal-500', visible: settings?.features?.homeLoan },
@@ -198,62 +185,32 @@ const BottomNavLayout: React.FC = () => {
         <Outlet />
       </main>
 
-      {/* Footer */}
-      <footer className="bg-white border-t border-slate-100 py-8 px-4">
-        <div className="max-w-6xl mx-auto">
-          {settings?.donatedBy?.name && (
-            <div className="mb-10">
-              <div className="bg-gradient-to-r from-blue-50 via-indigo-50 to-purple-50 rounded-3xl p-8 border border-blue-100 text-center">
-                <p className="text-xs font-black text-blue-600 uppercase tracking-widest mb-3">Community Partner</p>
-                <div className="flex flex-col items-center gap-4">
+      {/* Footer - Only on Home */}
+      {isHome && (
+        <footer className="bg-white border-t border-slate-100 py-8 px-4">
+          <div className="max-w-6xl mx-auto">
+            {settings?.donatedBy?.name && (
+              <div className="flex flex-col items-center justify-center gap-4 mb-6">
+                <p className="text-sm font-semibold text-slate-600">Donated By</p>
+                <div className="flex items-center gap-3">
                   {settings.donatedBy.photo && (
                     <img
                       src={settings.donatedBy.photo}
                       alt={settings.donatedBy.name}
-                      className="w-20 h-20 object-cover rounded-full border-3 border-white shadow-xl"
+                      className="w-12 h-12 object-cover rounded-full border-2 border-blue-100 shadow-sm"
                     />
                   )}
-                  <h3 className="text-2xl font-black text-slate-800">{settings.donatedBy.name}</h3>
-                  <p className="text-sm font-semibold text-slate-500">Supporting Digital Gunupur</p>
+                  <span className="text-lg font-bold text-slate-800">{settings.donatedBy.name}</span>
                 </div>
               </div>
-            </div>
-          )}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
-            <div className="flex flex-col items-center gap-1">
-              <button
-                onClick={() => navigate('/privacy')}
-                className="text-xs font-semibold text-slate-600 hover:text-blue-600 transition-colors"
-              >
-                Privacy Policy
-              </button>
-            </div>
-            <div className="flex flex-col items-center gap-1">
-              <button
-                onClick={() => navigate('/terms')}
-                className="text-xs font-semibold text-slate-600 hover:text-blue-600 transition-colors"
-              >
-                Terms of Service
-              </button>
-            </div>
-            <div className="flex flex-col items-center gap-1">
-              <button
-                onClick={() => navigate('/contact')}
-                className="text-xs font-semibold text-slate-600 hover:text-blue-600 transition-colors"
-              >
-                Contact Us
-              </button>
-            </div>
-            <div className="flex flex-col items-center gap-1">
-              <p className="text-xs font-semibold text-slate-500">Version 1.2.0</p>
+            )}
+            <div className="text-center">
+              <p className="text-xs text-slate-500 font-semibold">© 2026 My Gunupur Initiative</p>
+              <p className="text-[10px] text-slate-400 mt-1">Everything You Need, All In One Place</p>
             </div>
           </div>
-          <div className="text-center pt-6 border-t border-slate-100">
-            <p className="text-xs text-slate-500 font-semibold">© 2026 My Gunupur</p>
-            <p className="text-[10px] text-slate-400 mt-2">Developed with ❤️ for Gunupur Citizens</p>
-          </div>
-        </div>
-      </footer>
+        </footer>
+      )}
 
       {/* Sticky Bottom Nav Bar - Only on Mobile */}
       <nav className="fixed bottom-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-t border-slate-100 shadow-[0_-2px_10px_rgba(0,0,0,0.03)] md:hidden">

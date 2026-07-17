@@ -88,11 +88,7 @@ const popularSearches = [
   { id: 6, text: 'Restaurant', icon: Utensils }
 ];
 
-const topRatedBusinesses = [
-  { id: 1, name: 'Gupta Medical', rating: 4.8, image: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=400&h=300&fit=crop' },
-  { id: 2, name: 'Sardar Hardware', rating: 4.6, image: 'https://images.unsplash.com/photo-1504148455319-47339187765e?w=400&h=300&fit=crop' },
-  { id: 3, name: 'Hotel Sai', rating: 4.7, image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=400&h=300&fit=crop' }
-];
+
 
 const counters = [
   { id: 1, value: '25+', label: 'Services', icon: TrendingUp, color: 'from-blue-600 to-indigo-600' },
@@ -108,6 +104,7 @@ const Home: React.FC = () => {
   const [weather, setWeather] = useState<any>(null);
   const [loadingWeather, setLoadingWeather] = useState(true);
   const [notices, setNotices] = useState<any[]>([]);
+  const [businesses, setBusinesses] = useState<any[]>([]);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -125,6 +122,8 @@ const Home: React.FC = () => {
         }
         const noticesRes = await axios.get(`${API_URL}/notices`);
         setNotices(noticesRes.data || []);
+        const businessesRes = await axios.get(`${API_URL}/businesses`);
+        setBusinesses(businessesRes.data.slice(0, 3) || []);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -558,39 +557,45 @@ const Home: React.FC = () => {
         </motion.div>
 
         {/* Top Rated Businesses */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.75, duration: 0.6 }}
-          className="mb-10"
-        >
-          <h2 className="text-3xl font-black text-slate-800 mb-8 flex items-center gap-4">
-            <span className="w-3 h-12 bg-gradient-to-b from-yellow-600 to-amber-600 rounded-full"></span>
-            Top Rated Businesses
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-7">
-            {topRatedBusinesses.map((business, index) => (
-              <motion.div
-                key={business.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.8 + index * 0.1 }}
-                className="bg-white rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl border border-slate-100"
-              >
-                <div className="h-48 relative overflow-hidden">
-                  <img src={business.image} alt={business.name} className="w-full h-full object-cover" />
-                  <div className="absolute top-4 right-4 bg-white rounded-full px-3 py-1 flex items-center gap-1 shadow-lg">
-                    <Star className="w-4 h-4 fill-yellow-500 text-yellow-500" />
-                    <span className="font-black text-yellow-700">{business.rating}</span>
+        {businesses.length > 0 && (
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.75, duration: 0.6 }}
+            className="mb-10"
+          >
+            <h2 className="text-3xl font-black text-slate-800 mb-8 flex items-center gap-4">
+              <span className="w-3 h-12 bg-gradient-to-b from-yellow-600 to-amber-600 rounded-full"></span>
+              Top Rated Businesses
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-7">
+              {businesses.map((business, index) => (
+                <motion.div
+                  key={business._id || business.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.8 + index * 0.1 }}
+                  className="bg-white rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl border border-slate-100"
+                >
+                  <div className="h-48 relative overflow-hidden">
+                    <img 
+                      src={business.image || 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=400&h=300&fit=crop'} 
+                      alt={business.name} 
+                      className="w-full h-full object-cover" 
+                    />
+                    <div className="absolute top-4 right-4 bg-white rounded-full px-3 py-1 flex items-center gap-1 shadow-lg">
+                      <Star className="w-4 h-4 fill-yellow-500 text-yellow-500" />
+                      <span className="font-black text-yellow-700">{business.rating || 4.5}</span>
+                    </div>
                   </div>
-                </div>
-                <div className="p-6">
-                  <h4 className="text-xl font-black text-slate-800">{business.name}</h4>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
+                  <div className="p-6">
+                    <h4 className="text-xl font-black text-slate-800">{business.name}</h4>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+        )}
 
         {/* More Services */}
         <motion.div

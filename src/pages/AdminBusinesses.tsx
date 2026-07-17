@@ -157,14 +157,14 @@ const AdminBusinesses: React.FC = () => {
                     onChange={(e) => setFormData({ ...formData, category: e.target.value })}
                     className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:border-amber-500"
                   >
-                    <option value="hotel">Hotel</option>
-                    <option value="restaurant">Restaurant</option>
                     <option value="Medical Stores">Medical Stores</option>
                     <option value="Hardware">Hardware</option>
                     <option value="Electronics">Electronics</option>
                     <option value="Grocery">Grocery</option>
                     <option value="Salons">Salons</option>
                     <option value="Repair Shops">Repair Shops</option>
+                    <option value="Hotel">Hotel</option>
+                    <option value="Restaurant">Restaurant</option>
                   </select>
                 </div>
               </div>

@@ -112,13 +112,15 @@ const Explore: React.FC = () => {
                       <p className="mt-0.5">{place.bestTime || 'Oct to Feb'}</p>
                     </div>
                   </div>
-                  <div className="flex items-center gap-2 text-xs text-slate-500 font-semibold">
-                    <Clock className="w-4 h-4 text-slate-400" />
-                    <div>
-                      <p className="text-[10px] text-slate-400 leading-none">Duration</p>
-                      <p className="mt-0.5">2 - 4 Hours</p>
+                  {place.duration && (
+                    <div className="flex items-center gap-2 text-xs text-slate-500 font-semibold">
+                      <Clock className="w-4 h-4 text-slate-400" />
+                      <div>
+                        <p className="text-[10px] text-slate-400 leading-none">Duration</p>
+                        <p className="mt-0.5">{place.duration}</p>
+                      </div>
                     </div>
-                  </div>
+                  )}
                 </div>
 
                 {/* Call-to-action */}

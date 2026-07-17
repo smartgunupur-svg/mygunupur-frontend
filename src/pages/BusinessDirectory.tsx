@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Search, Phone, MapPin, Star, Activity, ShoppingBag, Radio, Sparkles, Wrench, ShieldAlert } from 'lucide-react';
+import { Search, Phone, MapPin, Star, Activity, ShoppingBag, Radio, Sparkles, Wrench, ShieldAlert, Home as HomeIcon, Utensils } from 'lucide-react';
 import axios from 'axios';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
@@ -11,7 +11,9 @@ const categoryIcons: { [key: string]: any } = {
   'Electronics': Radio,
   'Grocery': ShoppingBag,
   'Salons': Sparkles,
-  'Repair Shops': Wrench
+  'Repair Shops': Wrench,
+  'Hotel': HomeIcon,
+  'Restaurant': Utensils
 };
 
 const fallbackBusinesses = [
@@ -63,7 +65,7 @@ const BusinessDirectory: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [loading, setLoading] = useState(true);
 
-  const categories = ['Medical Stores', 'Hardware', 'Electronics', 'Grocery', 'Salons', 'Repair Shops'];
+  const categories = ['Medical Stores', 'Hardware', 'Electronics', 'Grocery', 'Salons', 'Repair Shops', 'Hotel', 'Restaurant'];
 
   useEffect(() => {
     const fetchBusinesses = async () => {
