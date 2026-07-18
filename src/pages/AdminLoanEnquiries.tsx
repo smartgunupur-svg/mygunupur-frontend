@@ -9,7 +9,6 @@ import {
   IndianRupee,
   Calendar,
   Home,
-  ChevronDown,
   CheckCircle,
   Clock,
   XCircle,
@@ -43,6 +42,7 @@ const AdminLoanEnquiries: React.FC = () => {
 
   const fetchEnquiries = async () => {
     try {
+      const token = localStorage.getItem('adminToken');
       const response = await axios.get(`${API_URL}/loan-enquiries`, {
         headers: { Authorization: `Bearer ${token}` }
       });

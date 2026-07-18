@@ -41,6 +41,7 @@ const AdminBuildingEnquiries: React.FC = () => {
 
   const fetchEnquiries = async () => {
     try {
+      const token = localStorage.getItem('adminToken');
       const response = await axios.get(`${API_URL}/building-enquiries`, {
         headers: { Authorization: `Bearer ${token}` }
       });

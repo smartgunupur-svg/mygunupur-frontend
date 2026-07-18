@@ -151,7 +151,7 @@ const AdminDashboard: React.FC = () => {
 
   const quickActions = [
     { title: 'Add New Bank', icon: Banknote, color: 'from-blue-50 to-indigo-50', iconColor: 'text-blue-600', border: 'border-blue-100', path: '/admin/banks' },
-    { title: 'Add Hero Slide', icon: Slideshow, color: 'from-purple-50 to-indigo-50', iconColor: 'text-purple-600', border: 'border-purple-100', path: '/admin/hero-slides' },
+    { title: 'Add Hero Slide', icon: MonitorPlay, color: 'from-purple-50 to-indigo-50', iconColor: 'text-purple-600', border: 'border-purple-100', path: '/admin/hero-slides' },
     { title: 'Add Shop', icon: ShoppingCart, color: 'from-orange-50 to-red-50', iconColor: 'text-orange-600', border: 'border-orange-100', path: '/admin/construction-material' },
     { title: 'Add Emergency Contact', icon: AlertTriangle, color: 'from-red-50 to-orange-50', iconColor: 'text-red-600', border: 'border-red-100', path: '/admin/emergency-contacts' },
   ];

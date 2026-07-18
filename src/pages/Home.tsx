@@ -67,15 +67,6 @@ const popularSearches = [
   { id: 6, text: 'Restaurant', icon: Utensils }
 ];
 
-
-
-const counters = [
-  { id: 1, value: '25+', label: 'Services', icon: TrendingUp, color: 'from-blue-600 to-indigo-600' },
-  { id: 2, value: '300+', label: 'Businesses', icon: Building, color: 'from-green-600 to-emerald-600' },
-  { id: 3, value: '18', label: 'Departments', icon: Building2, color: 'from-purple-600 to-pink-600' },
-  { id: 4, value: '24×7', label: 'Emergency', icon: AlertTriangle, color: 'from-red-600 to-rose-600' }
-];
-
 const Home: React.FC = () => {
   const navigate = useNavigate();
   const [currentSlide, setCurrentSlide] = useState(0);
