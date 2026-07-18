@@ -168,6 +168,15 @@ const AdminLoanEnquiries: React.FC = () => {
                       </a>
                     </div>
                   )}
+                  {enquiry.bankName && (
+                    <div className="bg-slate-50 p-4 rounded-xl">
+                      <div className="flex items-center gap-2 mb-2 text-slate-600">
+                        <div className="w-4 h-4 flex items-center justify-center">🏦</div>
+                        <span className="text-sm font-semibold">Selected Bank</span>
+                      </div>
+                      <p className="text-lg font-bold text-slate-800">{enquiry.bankName}</p>
+                    </div>
+                  )}
                   {enquiry.loanAmount && (
                     <div className="bg-slate-50 p-4 rounded-xl">
                       <div className="flex items-center gap-2 mb-2 text-slate-600">
