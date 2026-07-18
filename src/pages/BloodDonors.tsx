@@ -65,14 +65,16 @@ const BloodDonors: React.FC = () => {
 
   // Countdown timer
   useEffect(() => {
-    let timer: NodeJS.Timeout;
+    let timer: number | undefined;
     if (countdown > 0) {
-      timer = setInterval(() => setCountdown(c => c - 1), 1000);
+      timer = window.setInterval(() => setCountdown(c => c - 1), 1000);
     } else if (countdown === 0 && selectedDonor) {
       setKeyValid(false);
       setSelectedDonor(null);
     }
-    return () => clearInterval(timer);
+    return () => {
+      if (timer) window.clearInterval(timer);
+    };
   }, [countdown, selectedDonor]);
 
   const handleGetGPS = () => {

@@ -10,7 +10,6 @@ import {
   MapPin,
   CheckCircle2,
   Key,
-  RefreshCw,
   Clock,
   CalendarDays
 } from 'lucide-react';

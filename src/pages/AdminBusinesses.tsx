@@ -16,6 +16,7 @@ const AdminBusinesses: React.FC = () => {
   const [formData, setFormData] = useState({
     name: '',
     category: 'Medical Stores',
+    customCategory: '',
     phone: '',
     address: '',
     googleMap: '',

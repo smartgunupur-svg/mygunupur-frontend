@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
 import { useNavigate, useLocation, Outlet } from 'react-router-dom';
 import { 
   FileText, 
