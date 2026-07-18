@@ -232,26 +232,21 @@ const BottomNavLayout: React.FC = () => {
 
             {/* Column 3: Donated By */}
             <div className="flex flex-col items-center md:items-end justify-center h-full">
-              {settings?.donatedBy?.name ? (
-                <div className="flex flex-col items-center md:items-end gap-3 text-center md:text-right">
-                  <p className="text-[10px] font-black text-slate-450 uppercase tracking-widest">Donated By</p>
-                  <div className="flex items-center gap-3 bg-slate-50 border border-slate-100 rounded-2xl p-2 px-3">
-                    {settings.donatedBy.photo && (
-                      <img
-                        src={settings.donatedBy.photo}
-                        alt={settings.donatedBy.name}
-                        className="w-10 h-10 object-cover rounded-full border border-blue-100 shadow-sm"
-                      />
-                    )}
-                    <span className="text-sm font-extrabold text-slate-800">{settings.donatedBy.name}</span>
+              <div 
+                className="flex flex-col items-center md:items-end gap-3 text-center md:text-right cursor-pointer hover:scale-105 transition-transform"
+                onClick={() => navigate('/donor-detail')}
+              >
+                <p className="text-[10px] font-black text-slate-450 uppercase tracking-widest">Donated By</p>
+                <div className="flex items-center gap-3 bg-gradient-to-r from-amber-50 to-rose-50 border border-amber-100 rounded-2xl p-3 shadow-sm hover:shadow-md transition-all">
+                  <div className="w-12 h-12 bg-gradient-to-br from-amber-100 to-rose-100 rounded-full flex items-center justify-center border border-amber-200">
+                    <span className="text-2xl">🕊️</span>
+                  </div>
+                  <div className="text-left">
+                    <span className="text-sm font-extrabold text-slate-800">Late Teacher & Well-Wisher</span>
+                    <p className="text-[10px] text-slate-500 font-bold">Tribute Page →</p>
                   </div>
                 </div>
-              ) : (
-                <div className="text-center md:text-right">
-                  <p className="text-xs text-slate-500 font-semibold">© 2026 My Gunupur Initiative</p>
-                  <p className="text-[10px] text-slate-400 mt-1">Everything You Need, All In One Place</p>
-                </div>
-              )}
+              </div>
             </div>
 
           </div>
