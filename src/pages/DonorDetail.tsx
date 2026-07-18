@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, MapPin, CalendarDays, Heart, Candle, Sparkles } from 'lucide-react';
+import { ArrowLeft, MapPin, Heart, Sparkles, Flame } from 'lucide-react';
 
 const DonorDetail: React.FC = () => {
   const navigate = useNavigate();
@@ -74,7 +74,7 @@ const DonorDetail: React.FC = () => {
               transition={{ delay: 0.5 }}
               className="flex items-center justify-center gap-3 text-rose-100 font-semibold"
             >
-              <Candle className="w-6 h-6" />
+              <Flame className="w-6 h-6" />
               <span className="text-lg">Passed Away on 14th February 2023</span>
             </motion.div>
           </div>
@@ -133,7 +133,7 @@ const DonorDetail: React.FC = () => {
           transition={{ delay: 0.8 }}
           className="bg-gradient-to-br from-slate-900 to-slate-800 text-white rounded-3xl p-10 shadow-2xl text-center"
         >
-          <Candle className="w-12 h-12 mx-auto mb-6 text-amber-400" />
+          <Flame className="w-12 h-12 mx-auto mb-6 text-amber-400" />
           <h3 className="text-3xl font-black mb-4">Forever in Our Hearts</h3>
           <p className="text-lg text-slate-300 max-w-2xl mx-auto leading-relaxed">
             Your kindness, your wisdom, and your love for our community will never be forgotten. 
