@@ -45,8 +45,12 @@ const DonorDetail: React.FC = () => {
               transition={{ delay: 0.2 }}
               className="mb-6"
             >
-              <div className="w-28 h-28 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center mx-auto border border-white/30 shadow-inner">
-                <Heart className="w-14 h-14 text-white" />
+              <div className="w-40 h-40 md:w-52 md:h-52 rounded-full overflow-hidden mx-auto border-4 border-white/30 shadow-xl">
+                <img
+                  src="https://res.cloudinary.com/cfs0kcdh/image/upload/v1783889491/my-gunupur/acp8dg8jcervtlxm6b8z.jpg"
+                  alt="Voona Mallikarjun"
+                  className="w-full h-full object-cover"
+                />
               </div>
             </motion.div>
             
@@ -63,7 +67,16 @@ const DonorDetail: React.FC = () => {
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 0.4 }}
-              className="text-2xl md:text-3xl font-bold text-rose-100 mb-6"
+              className="text-2xl md:text-3xl font-bold text-rose-100 mb-2"
+            >
+              Voona Mallikarjun
+            </motion.p>
+            
+            <motion.p 
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.45 }}
+              className="text-xl font-semibold text-rose-100 mb-6"
             >
               Late Teacher & Well-Wisher of Gunupur
             </motion.p>

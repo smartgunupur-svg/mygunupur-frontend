@@ -238,16 +238,20 @@ const BottomNavLayout: React.FC = () => {
               >
                 <p className="text-[10px] font-black text-slate-450 uppercase tracking-widest">Donated By</p>
                 <div className="flex items-center gap-3 bg-gradient-to-r from-amber-50 to-rose-50 border border-amber-100 rounded-2xl p-3 shadow-sm hover:shadow-md transition-all">
-                  <div className="w-12 h-12 bg-gradient-to-br from-amber-100 to-rose-100 rounded-full flex items-center justify-center border border-amber-200">
-                    <span className="text-2xl">🕊️</span>
+                  <div className="w-12 h-12 rounded-full overflow-hidden border border-amber-200 shadow-sm">
+                    <img
+                      src="https://res.cloudinary.com/cfs0kcdh/image/upload/v1783889491/my-gunupur/acp8dg8jcervtlxm6b8z.jpg"
+                      alt="Voona Mallikarjun"
+                      className="w-full h-full object-cover"
+                    />
                   </div>
                   <div className="text-left">
-                    <span className="text-sm font-extrabold text-slate-800">Late Teacher & Well-Wisher</span>
+                    <span className="text-sm font-extrabold text-slate-800">Voona Mallikarjun</span>
                     <p className="text-[10px] text-slate-500 font-bold">Tribute Page →</p>
                   </div>
                 </div>
               </div>
-            </div>
+              </div>
 
           </div>
 
