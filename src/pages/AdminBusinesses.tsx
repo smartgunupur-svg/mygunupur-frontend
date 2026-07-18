@@ -95,6 +95,7 @@ const AdminBusinesses: React.FC = () => {
       setFormData({
         name: '',
         category: 'Medical Stores',
+        customCategory: '',
         phone: '',
         address: '',
         googleMap: '',

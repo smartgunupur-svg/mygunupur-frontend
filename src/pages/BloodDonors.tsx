@@ -8,7 +8,12 @@ import {
   Phone, 
   MapPin,
   CheckCircle2,
-  Plus
+  Plus,
+  Lock,
+  Unlock,
+  Clock,
+  CalendarDays,
+  LocateFixed
 } from 'lucide-react';
 import axios from 'axios';
 
@@ -25,9 +30,15 @@ const BloodDonors: React.FC = () => {
     name: '',
     bloodGroup: '',
     phone: '',
-    whatsapp: '',
-    area: ''
+    area: '',
+    availability: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+    age: '',
+    gender: ''
   });
+  const [accessKey, setAccessKey] = useState('');
+  const [selectedDonor, setSelectedDonor] = useState<any | null>(null);
+  const [keyValid, setKeyValid] = useState(false);
+  const [countdown, setCountdown] = useState(0);
 
   const fetchDonors = async () => {
     try {
@@ -40,8 +51,8 @@ const BloodDonors: React.FC = () => {
     } catch (error) {
       console.error('Error fetching donors:', error);
       setDonors([
-        { _id: 1, name: "Rajesh Kumar", bloodGroup: "O+", phone: "9437578310", whatsapp: "9437578310", area: "Gunupur", status: "available", verified: true },
-        { _id: 2, name: "Priya Das", bloodGroup: "A+", phone: "9876543210", whatsapp: "9876543210", area: "Rayagada", status: "available", verified: false }
+        { _id: 1, name: "Rajesh Kumar", bloodGroup: "O+", phone: "9437578310", area: "Gunupur", status: "available", verified: true, availability: ['Monday', 'Wednesday', 'Friday'], age: 28, gender: 'Male' },
+        { _id: 2, name: "Priya Das", bloodGroup: "A+", phone: "9876543210", area: "Rayagada", status: "available", verified: false, availability: ['Tuesday', 'Thursday', 'Saturday'], age: 25, gender: 'Female' }
       ]);
     } finally {
       setLoading(false);
@@ -52,11 +63,42 @@ const BloodDonors: React.FC = () => {
     fetchDonors();
   }, [bloodGroupFilter, areaFilter]);
 
+  // Countdown timer
+  useEffect(() => {
+    let timer: NodeJS.Timeout;
+    if (countdown > 0) {
+      timer = setInterval(() => setCountdown(c => c - 1), 1000);
+    } else if (countdown === 0 && selectedDonor) {
+      setKeyValid(false);
+      setSelectedDonor(null);
+    }
+    return () => clearInterval(timer);
+  }, [countdown, selectedDonor]);
+
+  const handleGetGPS = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          // Use OpenStreetMap Nominatim for reverse geocoding (free!)
+          fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${position.coords.latitude}&lon=${position.coords.longitude}`)
+            .then(res => res.json())
+            .then(data => {
+              const address = data.address;
+              const locality = address.suburb || address.village || address.town || address.city || address.state_district || '';
+              setFormData(prev => ({ ...prev, area: locality }));
+            })
+            .catch(err => console.error('Error getting address:', err));
+        },
+        (err) => console.error('Error getting location:', err)
+      );
+    }
+  };
+
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
       await axios.post(`${API_URL}/blood-donors`, formData);
-      setFormData({ name: '', bloodGroup: '', phone: '', whatsapp: '', area: '' });
+      setFormData({ name: '', bloodGroup: '', phone: '', area: '', availability: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'], age: '', gender: '' });
       setShowRegisterForm(false);
       fetchDonors();
     } catch (error) {
@@ -64,7 +106,46 @@ const BloodDonors: React.FC = () => {
     }
   };
 
+  const handleVerifyKey = () => {
+    if (!selectedDonor) return;
+    
+    // Check localStorage for active keys
+    const savedKeys = localStorage.getItem('donorAccessKeys');
+    if (savedKeys) {
+      const activeKeys = JSON.parse(savedKeys);
+      const validKey = activeKeys.find((k: any) => 
+        k.key === accessKey && 
+        k.donorId === selectedDonor._id && 
+        k.expiresAt > Date.now()
+      );
+      
+      if (validKey) {
+        setKeyValid(true);
+        // Set countdown based on remaining time
+        const remainingTime = Math.max(0, Math.ceil((validKey.expiresAt - Date.now()) / 1000));
+        setCountdown(remainingTime);
+      } else {
+        alert('Invalid or expired key! Please call 9437578310 to get a valid key.');
+      }
+    } else {
+      alert('Invalid key! Please call 9437578310 to get a valid key.');
+    }
+  };
+
+  const toggleAvailability = (day: string) => {
+    setFormData(prev => {
+      const current = prev.availability.includes(day);
+      return {
+        ...prev,
+        availability: current 
+          ? prev.availability.filter(d => d !== day)
+          : [...prev.availability, day]
+      };
+    });
+  };
+
   const bloodGroups = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'];
+  const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-red-50 to-rose-50 pb-24">
@@ -96,10 +177,33 @@ const BloodDonors: React.FC = () => {
       </motion.header>
 
       <div className="max-w-6xl mx-auto px-4 space-y-6 pt-6">
+        {/* Info Banner */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 rounded-2xl p-6"
+        >
+          <div className="flex items-start gap-4">
+            <div className="w-10 h-10 bg-amber-100 rounded-full flex items-center justify-center shrink-0">
+              <Lock className="w-5 h-5 text-amber-600" />
+            </div>
+            <div className="flex-1">
+              <h3 className="font-black text-amber-800 mb-2">To contact a donor</h3>
+              <p className="text-amber-700 text-sm mb-3">
+                Call <a href="tel:9437578310" className="font-black underline hover:text-amber-900">9437578310</a> to get a 4-digit access key.
+              </p>
+              <p className="text-amber-600 text-xs">
+                Keys are valid for 3 minutes only for security purposes.
+              </p>
+            </div>
+          </div>
+        </motion.div>
+
         {/* Hero Banner */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
           className="bg-gradient-to-br from-red-600 to-rose-600 rounded-3xl p-8 text-white shadow-2xl"
         >
           <div className="flex items-start gap-4">
@@ -125,36 +229,67 @@ const BloodDonors: React.FC = () => {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
             className="bg-white rounded-3xl p-8 shadow-xl border border-slate-100"
           >
             <h3 className="text-xl font-black text-slate-800 mb-6">Register as a Donor</h3>
-            <form onSubmit={handleRegister} className="space-y-4">
-              <div>
-                <label className="block text-sm font-semibold text-slate-700 mb-2">Full Name</label>
-                <input
-                  type="text"
-                  required
-                  value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className="w-full px-4 py-3 rounded-2xl border border-slate-200 focus:border-red-500 focus:ring-2 focus:ring-red-200 outline-none transition-all"
-                  placeholder="Enter your full name"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-semibold text-slate-700 mb-2">Blood Group</label>
-                <select
-                  required
-                  value={formData.bloodGroup}
-                  onChange={(e) => setFormData({ ...formData, bloodGroup: e.target.value })}
-                  className="w-full px-4 py-3 rounded-2xl border border-slate-200 focus:border-red-500 focus:ring-2 focus:ring-red-200 outline-none transition-all"
-                >
-                  <option value="">Select blood group</option>
-                  {bloodGroups.map((bg) => (
-                    <option key={bg} value={bg}>{bg}</option>
-                  ))}
-                </select>
-              </div>
+            <form onSubmit={handleRegister} className="space-y-5">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-semibold text-slate-700 mb-2">Full Name</label>
+                  <input
+                    type="text"
+                    required
+                    value={formData.name}
+                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    className="w-full px-4 py-3 rounded-2xl border border-slate-200 focus:border-red-500 focus:ring-2 focus:ring-red-200 outline-none transition-all"
+                    placeholder="Enter your full name"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold text-slate-700 mb-2">Blood Group</label>
+                  <select
+                    required
+                    value={formData.bloodGroup}
+                    onChange={(e) => setFormData({ ...formData, bloodGroup: e.target.value })}
+                    className="w-full px-4 py-3 rounded-2xl border border-slate-200 focus:border-red-500 focus:ring-2 focus:ring-red-200 outline-none transition-all"
+                  >
+                    <option value="">Select blood group</option>
+                    {bloodGroups.map((bg) => (
+                      <option key={bg} value={bg}>{bg}</option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div>
+                  <label className="block text-sm font-semibold text-slate-700 mb-2">Age</label>
+                  <input
+                    type="number"
+                    min="18"
+                    max="60"
+                    required
+                    value={formData.age}
+                    onChange={(e) => setFormData({ ...formData, age: e.target.value })}
+                    className="w-full px-4 py-3 rounded-2xl border border-slate-200 focus:border-red-500 focus:ring-2 focus:ring-red-200 outline-none transition-all"
+                    placeholder="Your age"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold text-slate-700 mb-2">Gender</label>
+                  <select
+                    required
+                    value={formData.gender}
+                    onChange={(e) => setFormData({ ...formData, gender: e.target.value })}
+                    className="w-full px-4 py-3 rounded-2xl border border-slate-200 focus:border-red-500 focus:ring-2 focus:ring-red-200 outline-none transition-all"
+                  >
+                    <option value="">Select gender</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </div>
                 <div>
                   <label className="block text-sm font-semibold text-slate-700 mb-2">Phone Number</label>
                   <input
@@ -166,30 +301,50 @@ const BloodDonors: React.FC = () => {
                     placeholder="Enter phone number"
                   />
                 </div>
-                <div>
-                  <label className="block text-sm font-semibold text-slate-700 mb-2">WhatsApp Number</label>
-                  <input
-                    type="tel"
-                    required
-                    value={formData.whatsapp}
-                    onChange={(e) => setFormData({ ...formData, whatsapp: e.target.value })}
-                    className="w-full px-4 py-3 rounded-2xl border border-slate-200 focus:border-red-500 focus:ring-2 focus:ring-red-200 outline-none transition-all"
-                    placeholder="Enter WhatsApp number"
-                  />
-                </div>
               </div>
+
               <div>
                 <label className="block text-sm font-semibold text-slate-700 mb-2">Area/Locality</label>
-                <input
-                  type="text"
-                  required
-                  value={formData.area}
-                  onChange={(e) => setFormData({ ...formData, area: e.target.value })}
-                  className="w-full px-4 py-3 rounded-2xl border border-slate-200 focus:border-red-500 focus:ring-2 focus:ring-red-200 outline-none transition-all"
-                  placeholder="Enter your area"
-                />
+                <div className="flex gap-2">
+                  <input
+                    type="text"
+                    required
+                    value={formData.area}
+                    onChange={(e) => setFormData({ ...formData, area: e.target.value })}
+                    className="flex-1 px-4 py-3 rounded-2xl border border-slate-200 focus:border-red-500 focus:ring-2 focus:ring-red-200 outline-none transition-all"
+                    placeholder="Enter your area"
+                  />
+                  <button
+                    type="button"
+                    onClick={handleGetGPS}
+                    className="px-4 py-3 bg-blue-50 hover:bg-blue-100 text-blue-600 rounded-2xl border border-blue-200 transition-all"
+                  >
+                    <LocateFixed className="w-5 h-5" />
+                  </button>
+                </div>
               </div>
-              <div className="flex gap-3">
+
+              <div>
+                <label className="block text-sm font-semibold text-slate-700 mb-3">Availability Days</label>
+                <div className="grid grid-cols-4 gap-2">
+                  {days.map(day => (
+                    <button
+                      key={day}
+                      type="button"
+                      onClick={() => toggleAvailability(day)}
+                      className={`py-2 px-3 rounded-xl text-xs font-bold transition-all ${
+                        formData.availability.includes(day)
+                          ? 'bg-gradient-to-r from-red-500 to-rose-600 text-white shadow-md'
+                          : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                      }`}
+                    >
+                      {day.slice(0, 3)}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div className="flex gap-3 pt-2">
                 <button
                   type="submit"
                   className="flex-1 py-3 bg-gradient-to-r from-red-500 to-rose-600 text-white font-bold rounded-2xl shadow-lg hover:shadow-xl transition-all"
@@ -212,7 +367,7 @@ const BloodDonors: React.FC = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
+          transition={{ delay: 0.3 }}
           className="bg-white rounded-3xl p-6 shadow-xl border border-slate-100"
         >
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -246,7 +401,7 @@ const BloodDonors: React.FC = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
+          transition={{ delay: 0.4 }}
         >
           <h3 className="text-xl font-black text-slate-800 mb-6">Available Donors</h3>
           {loading ? (
@@ -272,13 +427,15 @@ const BloodDonors: React.FC = () => {
                   key={donor._id}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.3 + index * 0.1 }}
+                  transition={{ delay: 0.5 + index * 0.1 }}
                   className="bg-white rounded-2xl p-6 shadow-xl border border-slate-100"
                 >
                   <div className="flex items-start justify-between flex-wrap gap-4">
                     <div className="flex-1">
-                      <div className="flex items-center gap-3 mb-2">
-                        <h4 className="font-black text-slate-800 text-lg">{donor.name}</h4>
+                      <div className="flex items-center gap-3 mb-3">
+                        <h4 className="font-black text-slate-800 text-lg">
+                          {selectedDonor?._id === donor._id && keyValid ? donor.name : `${donor.name.slice(0, 2)}***`}
+                        </h4>
                         {donor.verified && (
                           <span className="flex items-center gap-1 text-green-600 text-xs font-bold">
                             <CheckCircle2 className="w-4 h-4" />
@@ -286,7 +443,8 @@ const BloodDonors: React.FC = () => {
                           </span>
                         )}
                       </div>
-                      <div className="flex flex-wrap gap-3 mb-3">
+                      
+                      <div className="flex flex-wrap gap-3 mb-4">
                         <span className="px-4 py-2 bg-gradient-to-r from-red-500 to-rose-600 text-white font-bold rounded-xl">
                           {donor.bloodGroup}
                         </span>
@@ -297,33 +455,96 @@ const BloodDonors: React.FC = () => {
                         }`}>
                           {donor.status === 'available' ? 'Available' : 'Busy'}
                         </span>
+                        {donor.age && (
+                          <span className="px-4 py-2 bg-slate-100 text-slate-700 font-bold rounded-xl">
+                            {donor.age} yrs
+                          </span>
+                        )}
+                        {donor.gender && (
+                          <span className="px-4 py-2 bg-slate-100 text-slate-700 font-bold rounded-xl">
+                            {donor.gender}
+                          </span>
+                        )}
                       </div>
+
                       {donor.area && (
-                        <div className="flex items-center gap-2 text-slate-600 text-sm font-semibold">
+                        <div className="flex items-center gap-2 text-slate-600 text-sm font-semibold mb-3">
                           <MapPin className="w-4 h-4" />
                           {donor.area}
                         </div>
                       )}
-                    </div>
-                    <div className="flex gap-3">
-                      <a
-                        href={`tel:${donor.phone}`}
-                        className="flex items-center gap-2 px-5 py-3 bg-gradient-to-r from-red-500 to-rose-600 text-white font-bold rounded-2xl shadow-lg hover:shadow-xl transition-all"
-                      >
-                        <Phone className="w-5 h-5" />
-                        Call
-                      </a>
-                      <a
-                        href={`https://wa.me/${donor.whatsapp}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center gap-2 px-5 py-3 bg-gradient-to-r from-green-500 to-emerald-600 text-white font-bold rounded-2xl shadow-lg hover:shadow-xl transition-all"
-                      >
-                        <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
-                          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.488-.492-.67-.5h-.572c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.199 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .162 5.332.162 11.885c0 2.102.553 4.136 1.56 5.943L0 24l6.324-1.659a11.858 11.858 0 005.726 1.467c.003 0 0 0 .004 0 6.557 0 11.886-5.333 11.886-11.885 0-3.173-1.234-6.151-3.475-8.388z" />
-                        </svg>
-                        WhatsApp
-                      </a>
+
+                      {donor.availability && (
+                        <div className="flex items-center gap-2 text-slate-500 text-xs mb-3">
+                          <CalendarDays className="w-4 h-4" />
+                          <span>Available: {donor.availability.map((d: string) => d.slice(0,3)).join(', ')}</span>
+                        </div>
+                      )}
+
+                      {/* Show donor details if verified with key */}
+                      {selectedDonor?._id === donor._id && keyValid && (
+                        <motion.div
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: 'auto' }}
+                          className="pt-4 border-t border-slate-100"
+                        >
+                          <a
+                            href={`tel:${donor.phone}`}
+                            className="flex items-center gap-2 px-5 py-3 bg-gradient-to-r from-red-500 to-rose-600 text-white font-bold rounded-2xl shadow-lg hover:shadow-xl transition-all"
+                          >
+                            <Phone className="w-5 h-5" />
+                            Call {donor.phone}
+                          </a>
+                          <div className="flex items-center gap-2 text-amber-600 mt-3 text-sm">
+                            <Clock className="w-4 h-4" />
+                            <span className="font-bold">Access expires in {countdown} seconds</span>
+                          </div>
+                        </motion.div>
+                      )}
+
+                      {/* Key input if not selected or not valid */}
+                      {(!selectedDonor || selectedDonor._id !== donor._id || !keyValid) && (
+                        <div className="flex gap-2">
+                          <button
+                            onClick={() => {
+                              setSelectedDonor(donor);
+                              setAccessKey('');
+                              setKeyValid(false);
+                              setCountdown(0);
+                            }}
+                            className="flex items-center gap-2 px-5 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-2xl transition-all"
+                          >
+                            <Lock className="w-5 h-5" />
+                            Unlock Details
+                          </button>
+                        </div>
+                      )}
+
+                      {/* Key input field for selected donor */}
+                      {selectedDonor?._id === donor._id && !keyValid && (
+                        <motion.div
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          className="mt-4 pt-4 border-t border-slate-100"
+                        >
+                          <div className="flex gap-2">
+                            <input
+                              type="text"
+                              maxLength={4}
+                              placeholder="Enter 4-digit key"
+                              value={accessKey}
+                              onChange={(e) => setAccessKey(e.target.value)}
+                              className="flex-1 px-4 py-3 rounded-2xl border border-slate-200 focus:border-red-500 focus:ring-2 focus:ring-red-200 outline-none transition-all text-center font-black text-2xl"
+                            />
+                            <button
+                              onClick={handleVerifyKey}
+                              className="px-6 py-3 bg-gradient-to-r from-red-500 to-rose-600 text-white font-bold rounded-2xl shadow-lg hover:shadow-xl transition-all"
+                            >
+                              <Unlock className="w-5 h-5" />
+                            </button>
+                          </div>
+                        </motion.div>
+                      )}
                     </div>
                   </div>
                 </motion.div>
@@ -331,6 +552,46 @@ const BloodDonors: React.FC = () => {
             </div>
           )}
         </motion.div>
+
+        {/* Footer */}
+        <motion.footer
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.6 }}
+          className="bg-slate-900 rounded-3xl p-8 text-white mt-12"
+        >
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div>
+              <h3 className="font-black text-2xl mb-4">My Gunupur</h3>
+              <p className="text-slate-400 text-sm">Your one-stop platform for all services in Gunupur, Odisha.</p>
+            </div>
+            <div>
+              <h4 className="font-bold text-lg mb-4">Quick Links</h4>
+              <div className="space-y-2">
+                <button onClick={() => navigate('/about')} className="block text-sm text-slate-400 hover:text-white transition-colors">
+                  About Us
+                </button>
+                <button onClick={() => navigate('/contact')} className="block text-sm text-slate-400 hover:text-white transition-colors">
+                  Contact
+                </button>
+              </div>
+            </div>
+            <div>
+              <h4 className="font-bold text-lg mb-4">Legal</h4>
+              <div className="space-y-2">
+                <button onClick={() => navigate('/privacy-policy')} className="block text-sm text-slate-400 hover:text-white transition-colors">
+                  Privacy Policy
+                </button>
+                <button onClick={() => navigate('/terms-of-service')} className="block text-sm text-slate-400 hover:text-white transition-colors">
+                  Terms of Service
+                </button>
+              </div>
+            </div>
+          </div>
+          <div className="mt-10 pt-6 border-t border-slate-800 text-center">
+            <p className="text-slate-500 text-sm">© 2025 My Gunupur. All rights reserved.</p>
+          </div>
+        </motion.footer>
       </div>
     </div>
   );

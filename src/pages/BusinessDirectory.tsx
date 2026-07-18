@@ -65,7 +65,8 @@ const BusinessDirectory: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [loading, setLoading] = useState(true);
 
-  const categories = ['Medical Stores', 'Hardware', 'Electronics', 'Grocery', 'Salons', 'Repair Shops', 'Hotel', 'Restaurant'];
+  // Get unique categories from businesses
+  const categories = Array.from(new Set(businesses.map(b => b.category))).sort();
 
   useEffect(() => {
     const fetchBusinesses = async () => {
@@ -85,6 +86,13 @@ const BusinessDirectory: React.FC = () => {
     };
     fetchBusinesses();
   }, []);
+
+  // Set initial active category to first available category
+  useEffect(() => {
+    if (categories.length > 0 && !categories.includes(activeCategory)) {
+      setActiveCategory(categories[0]);
+    }
+  }, [categories]);
 
   const filteredBusinesses = businesses.filter(b => {
     const matchesCategory = b.category?.toLowerCase() === activeCategory.toLowerCase();
@@ -148,7 +156,7 @@ const BusinessDirectory: React.FC = () => {
         ) : filteredBusinesses.length === 0 ? (
           <div className="text-center py-12 text-slate-400">
             <Activity className="w-12 h-12 mx-auto mb-3 text-slate-300" />
-            <p className="text-sm font-semibold">No businesses found in this category.</p>
+            <p className="text-sm font-bold">No businesses found in this category.</p>
           </div>
         ) : (
           <div className="space-y-3">
@@ -164,14 +172,14 @@ const BusinessDirectory: React.FC = () => {
                   <img
                     src={b.image}
                     alt={b.name}
-                    className="w-full h-40 object-cover"
+                    className="w-full h-48 object-cover"
                   />
                 )}
                 <div className="p-5 space-y-3">
                   <div className="flex justify-between items-start">
                     <div>
                       <h4 className="font-extrabold text-slate-800 text-sm">{b.name}</h4>
-                      <p className="text-xs text-slate-400 font-semibold mt-0.5 flex items-center gap-1">
+                      <p className="text-xs text-slate-500 font-semibold mt-0.5 flex items-center gap-1">
                         <MapPin className="w-3.5 h-3.5 text-blue-500" /> {b.address}
                       </p>
                     </div>
@@ -196,16 +204,16 @@ const BusinessDirectory: React.FC = () => {
                 <div className="flex gap-2 pt-2 border-t border-slate-100">
                   <a
                     href={`tel:${b.phone}`}
-                    className="flex-1 py-2 bg-blue-50 hover:bg-blue-100 text-blue-600 rounded-xl text-xs font-bold flex items-center justify-center gap-2 transition-all duration-200"
+                    className="flex-1 py-3 bg-blue-50 hover:bg-blue-100 text-blue-600 rounded-xl text-xs font-bold flex items-center justify-center gap-2 transition-all duration-200"
                   >
-                    <Phone className="w-4 h-4" /> Call Provider
+                    <Phone className="w-5 h-5" /> Call Provider
                   </a>
                   {b.googleMap && (
                     <button
                       onClick={() => window.open(b.googleMap, '_blank')}
-                      className="py-2 px-3 bg-slate-50 hover:bg-slate-100 text-slate-600 border border-slate-200/50 rounded-xl text-xs font-bold flex items-center justify-center transition-all duration-200"
+                      className="py-3 px-4 bg-slate-50 hover:bg-slate-100 text-slate-600 border border-slate-200/50 rounded-xl text-xs font-bold flex items-center justify-center transition-all duration-200"
                     >
-                      <MapPin className="w-4 h-4" />
+                      <MapPin className="w-5 h-5" />
                     </button>
                   )}
                 </div>

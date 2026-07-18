@@ -23,7 +23,8 @@ import {
   AlertTriangle,
   MonitorPlay,
   Bell,
-  TrendingUp
+  TrendingUp,
+  XCircle
 } from 'lucide-react';
 import axios from 'axios';
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
@@ -246,7 +247,8 @@ const AdminDashboard: React.FC = () => {
                         initial={{ opacity: 0, x: -20 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ delay: index * 0.05 }}
-                        className="hover:bg-slate-50 transition-colors"
+                        className="hover:bg-slate-50 transition-colors cursor-pointer"
+                        onClick={() => navigate(enquiry.loanAmount ? '/admin/loan-enquiries' : '/admin/building-enquiries')}
                       >
                         <td className="px-8 py-6">
                           <div className="flex items-center gap-4">
@@ -272,10 +274,23 @@ const AdminDashboard: React.FC = () => {
                           </div>
                         </td>
                         <td className="px-8 py-6">
-                          <span className="flex items-center gap-2 text-yellow-700 bg-yellow-100 px-4 py-2 rounded-full text-xs font-bold">
-                            <Clock className="w-4 h-4" />
-                            Pending
-                          </span>
+                          {(() => {
+                            const status = enquiry.status || 'pending';
+                            const statusConfig = {
+                              pending: { label: 'Pending', color: 'text-yellow-700 bg-yellow-100', icon: Clock },
+                              in_progress: { label: 'In Progress', color: 'text-blue-700 bg-blue-100', icon: MonitorPlay },
+                              completed: { label: 'Completed', color: 'text-green-700 bg-green-100', icon: CheckCircle },
+                              cancelled: { label: 'Cancelled', color: 'text-red-700 bg-red-100', icon: XCircle }
+                            };
+                            const config = statusConfig[status as keyof typeof statusConfig];
+                            const Icon = config.icon;
+                            return (
+                              <span className={`flex items-center gap-2 ${config.color} px-4 py-2 rounded-full text-xs font-bold`}>
+                                <Icon className="w-4 h-4" />
+                                {config.label}
+                              </span>
+                            );
+                          })()}
                         </td>
                       </motion.tr>
                     ))
