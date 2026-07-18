@@ -25,7 +25,8 @@ import {
   TrendingUp,
   ShieldAlert,
   Wind,
-  CloudRain
+  CloudRain,
+  BookOpen
 } from 'lucide-react';
 import axios from 'axios';
 
@@ -43,14 +44,14 @@ const quickServices = [
   { id: 9, title: 'Sports Places', icon: Trophy, color: 'text-orange-600', bg: 'bg-orange-50', path: '/sports-places' },
   { id: 10, title: 'Notices', icon: FileText, color: 'text-purple-600', bg: 'bg-purple-50', path: '/notices' },
   { id: 11, title: 'Blood Donors', icon: Droplets, color: 'text-red-500', bg: 'bg-red-50', path: '/blood-donors' },
-  { id: 12, title: 'Explore', icon: MapPin, color: 'text-emerald-600', bg: 'bg-emerald-50', path: '/explore' },
-  { id: 13, title: 'Jobs', icon: Briefcase, color: 'text-indigo-600', bg: 'bg-indigo-50', path: '/jobs' }
+  { id: 12, title: 'Businesses', icon: BookOpen, color: 'text-amber-600', bg: 'bg-amber-50', path: '/directory' },
+  { id: 13, title: 'Explore', icon: MapPin, color: 'text-emerald-600', bg: 'bg-emerald-50', path: '/explore' },
+  { id: 14, title: 'Jobs', icon: Briefcase, color: 'text-indigo-600', bg: 'bg-indigo-50', path: '/jobs' }
 ];
 
 const featuredServices = [
   { id: 14, title: 'Government Schemes', icon: Building, color: 'from-cyan-600 to-blue-600', path: '/government-schemes', description: 'PMAY, Pension, Scholarships' },
-  { id: 15, title: 'Hotels', icon: HomeIcon, color: 'from-orange-500 to-red-500', path: '/hotels', description: 'Stay & Accommodation' },
-  { id: 16, title: 'Restaurants', icon: Utensils, color: 'from-pink-500 to-rose-500', path: '/restaurants', description: 'Food & Dining' },
+  { id: 15, title: 'Business Directory', icon: BookOpen, color: 'from-amber-500 to-yellow-500', path: '/directory', description: 'Hotels, Restaurants & More' },
   { id: 17, title: 'Events', icon: Calendar, color: 'from-yellow-500 to-orange-500', path: '/events', description: 'Festivals & Events' },
   { id: 18, title: 'Schools', icon: GraduationCap, color: 'from-yellow-500 to-amber-600', path: '/schools', description: 'Find Schools' },
   { id: 19, title: 'Colleges', icon: Building, color: 'from-teal-500 to-cyan-600', path: '/colleges', description: 'Higher Education' },
@@ -150,7 +151,7 @@ const Home: React.FC = () => {
             condition: { text: condition.text, icon: condition.icon },
             humidity: data.current.relative_humidity_2m,
             wind_kph: data.current.wind_speed_10m,
-            air_quality: { 'us-epa-index': 2 },
+            air_quality: { 'us-epa-index': 75 },
             precip_mm: data.current.precipitation
           }
         });
@@ -163,7 +164,7 @@ const Home: React.FC = () => {
             condition: { text: 'Sunny', icon: '☀️' }, 
             humidity: 65, 
             wind_kph: 12,
-            air_quality: { 'us-epa-index': 2 },
+            air_quality: { 'us-epa-index': 75 },
             precip_mm: 0
           }
         });
@@ -551,9 +552,9 @@ const Home: React.FC = () => {
                   transition={{ delay: 0.6 + index * 0.05 }}
                   onClick={() => {
                     if (search.text === 'Hospital') navigate('/hospitals');
-                    else if (search.text === 'Hotel') navigate('/hotels');
+                    else if (search.text === 'Hotel') navigate('/directory');
                     else if (search.text === 'Blood Donor') navigate('/blood-donors');
-                    else if (search.text === 'Restaurant') navigate('/restaurants');
+                    else if (search.text === 'Restaurant') navigate('/directory');
                     else if (search.text === 'College') navigate('/colleges');
                     else if (search.text === 'Police') navigate('/emergency');
                   }}

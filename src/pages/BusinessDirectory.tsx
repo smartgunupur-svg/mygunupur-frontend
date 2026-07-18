@@ -206,7 +206,7 @@ const BusinessDirectory: React.FC = () => {
                     href={`tel:${b.phone}`}
                     className="flex-1 py-3 bg-blue-50 hover:bg-blue-100 text-blue-600 rounded-xl text-xs font-bold flex items-center justify-center gap-2 transition-all duration-200"
                   >
-                    <Phone className="w-5 h-5" /> Call Provider
+                    <Phone className="w-5 h-5" /> Call
                   </a>
                   {b.googleMap && (
                     <button

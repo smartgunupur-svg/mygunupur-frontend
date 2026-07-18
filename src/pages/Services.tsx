@@ -46,15 +46,13 @@ const Services: React.FC = () => {
     { id: 6, title: 'Government Schemes', desc: 'Explore all central & state schemes', icon: Building, path: '/government-schemes', color: 'text-cyan-600', bg: 'bg-cyan-50 border-cyan-100' },
     { id: 7, title: 'Notices & Updates', desc: 'Latest notices & alerts', icon: FileText, path: '/notices', color: 'text-purple-600', bg: 'bg-purple-50 border-purple-100' },
     { id: 8, title: 'Explore Gunupur', desc: 'Tourist places, waterfalls & temples', icon: Compass, path: '/explore', color: 'text-emerald-600', bg: 'bg-emerald-50 border-emerald-100' },
-    { id: 9, title: 'Local Business Directory', desc: 'Medical stores, hardware, electronics', icon: BookOpen, path: '/directory', color: 'text-amber-600', bg: 'bg-amber-50 border-amber-100' },
-    { id: 10, title: 'Hotels Directory', desc: 'Best hotels and lodges', icon: MapPin, path: '/hotels', color: 'text-orange-600', bg: 'bg-orange-50 border-orange-100' },
-    { id: 11, title: 'Restaurants Directory', desc: 'Dine-in and take-away options', icon: Utensils, path: '/restaurants', color: 'text-rose-700', bg: 'bg-rose-50 border-rose-100' },
-    { id: 12, title: 'Important Contacts', desc: 'Collector, BDO, Tahasil, Police', icon: Phone, path: '/important-contacts', color: 'text-slate-600', bg: 'bg-slate-50 border-slate-200' },
-    { id: 13, title: 'Festivals & Events', desc: 'Upcoming cultural events calendar', icon: Calendar, path: '/events', color: 'text-yellow-600', bg: 'bg-yellow-50 border-yellow-100' },
-    { id: 14, title: 'Photo & Video Gallery', desc: 'Browse pictures of Gunupur', icon: Image, path: '/gallery', color: 'text-sky-600', bg: 'bg-sky-50 border-sky-100' },
-    { id: 15, title: 'Weather Forecast', desc: 'Current temperature & 5-day info', icon: CloudSun, path: '/weather', color: 'text-yellow-700', bg: 'bg-amber-50 border-yellow-200' },
-    { id: 16, title: 'Jobs & Walk-in Hirings', desc: 'Find local jobs & recruitment drives', icon: Briefcase, path: '/jobs', color: 'text-indigo-600', bg: 'bg-indigo-50 border-indigo-100' },
-    { id: 17, title: 'Feedback & Contact', desc: 'Submit complaints & suggestions', icon: MessageSquare, path: '/feedback', color: 'text-pink-600', bg: 'bg-pink-50 border-pink-100' }
+    { id: 9, title: 'Business Directory', desc: 'Hotels, restaurants, medical stores, hardware, electronics & more', icon: BookOpen, path: '/directory', color: 'text-amber-600', bg: 'bg-amber-50 border-amber-100' },
+    { id: 10, title: 'Important Contacts', desc: 'Collector, BDO, Tahasil, Police', icon: Phone, path: '/important-contacts', color: 'text-slate-600', bg: 'bg-slate-50 border-slate-200' },
+    { id: 11, title: 'Festivals & Events', desc: 'Upcoming cultural events calendar', icon: Calendar, path: '/events', color: 'text-yellow-600', bg: 'bg-yellow-50 border-yellow-100' },
+    { id: 12, title: 'Photo & Video Gallery', desc: 'Browse pictures of Gunupur', icon: Image, path: '/gallery', color: 'text-sky-600', bg: 'bg-sky-50 border-sky-100' },
+    { id: 13, title: 'Weather Forecast', desc: 'Current temperature & 5-day info', icon: CloudSun, path: '/weather', color: 'text-yellow-700', bg: 'bg-amber-50 border-yellow-200' },
+    { id: 14, title: 'Jobs & Walk-in Hirings', desc: 'Find local jobs & recruitment drives', icon: Briefcase, path: '/jobs', color: 'text-indigo-600', bg: 'bg-indigo-50 border-indigo-100' },
+    { id: 15, title: 'Feedback & Contact', desc: 'Submit complaints & suggestions', icon: MessageSquare, path: '/feedback', color: 'text-pink-600', bg: 'bg-pink-50 border-pink-100' }
   ];
 
   const filteredServices = servicesList.filter(s =>
