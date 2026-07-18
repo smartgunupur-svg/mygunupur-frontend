@@ -31,27 +31,6 @@ import axios from 'axios';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
-const heroSlides = [
-  {
-    id: 1,
-    title: "One Platform for Every Citizen Service",
-    subtitle: "All essential services, information and support, now just a click away.",
-    image: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1600&h=900&fit=crop"
-  },
-  {
-    id: 2,
-    title: "Home Loans Made Easy",
-    subtitle: "Calculate your EMI and get the best home loan options from trusted banks.",
-    image: "https://images.unsplash.com/photo-1470770841072-f978cf4d019e?w=1600&h=900&fit=crop"
-  },
-  {
-    id: 3,
-    title: "Explore the Beauty of Gunupur",
-    subtitle: "Discover amazing places, temples and waterfalls in and around Gunupur.",
-    image: "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=1600&h=900&fit=crop"
-  }
-];
-
 const quickServices = [
   { id: 1, title: 'Home Loan', icon: Banknote, color: 'text-blue-600', bg: 'bg-blue-50', path: '/home-loan' },
   { id: 2, title: 'Building Plan', icon: Building2, color: 'text-green-600', bg: 'bg-green-50', path: '/building-enquiry' },
@@ -105,13 +84,16 @@ const Home: React.FC = () => {
   const [loadingWeather, setLoadingWeather] = useState(true);
   const [notices, setNotices] = useState<any[]>([]);
   const [businesses, setBusinesses] = useState<any[]>([]);
+  const [heroSlides, setHeroSlides] = useState<any[]>([]);
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
-    }, 5000);
+      if (heroSlides.length > 0) {
+        setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
+      }
+    }, 1000);
     return () => clearInterval(timer);
-  }, []);
+  }, [heroSlides]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -124,6 +106,8 @@ const Home: React.FC = () => {
         setNotices(noticesRes.data || []);
         const businessesRes = await axios.get(`${API_URL}/businesses`);
         setBusinesses(businessesRes.data.slice(0, 3) || []);
+        const slidesRes = await axios.get(`${API_URL}/hero-slides`);
+        setHeroSlides(slidesRes.data || []);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -168,67 +152,109 @@ const Home: React.FC = () => {
         <div className="absolute top-40 -right-20 w-80 h-80 bg-purple-500/10 rounded-full blur-3xl"></div>
         <div className="absolute bottom-20 left-1/3 w-72 h-72 bg-emerald-500/10 rounded-full blur-3xl"></div>
 
+        {/* Hero Slider */}
+        {heroSlides.length > 0 && (
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="relative rounded-3xl overflow-hidden shadow-2xl h-72 md:h-96 lg:h-[500px] mb-6"
+          >
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={heroSlides[currentSlide]?._id || currentSlide}
+                initial={{ opacity: 0, scale: 1.05 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.5 }}
+                className="absolute inset-0"
+              >
+                {heroSlides[currentSlide]?.link ? (
+                  <a href={heroSlides[currentSlide].link} target="_blank" rel="noopener noreferrer" className="absolute inset-0">
+                    <img
+                      src={heroSlides[currentSlide].image}
+                      alt={heroSlides[currentSlide].title || 'Hero Slide'}
+                      className="w-full h-full object-cover"
+                    />
+                  </a>
+                ) : (
+                  <img
+                    src={heroSlides[currentSlide].image}
+                    alt={heroSlides[currentSlide].title || 'Hero Slide'}
+                    className="w-full h-full object-cover"
+                  />
+                )}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
+                {(heroSlides[currentSlide]?.title || heroSlides[currentSlide]?.subtitle) && (
+                  <div className="absolute bottom-8 left-8 right-8 z-10">
+                    {heroSlides[currentSlide]?.title && (
+                      <h3 className="text-3xl md:text-5xl font-black text-white mb-2">{heroSlides[currentSlide].title}</h3>
+                    )}
+                    {heroSlides[currentSlide]?.subtitle && (
+                      <p className="text-lg md:text-xl text-slate-200 font-semibold">{heroSlides[currentSlide].subtitle}</p>
+                    )}
+                  </div>
+                )}
+              </motion.div>
+            </AnimatePresence>
+            <div className="absolute top-6 right-6 flex gap-2 z-10">
+              {heroSlides.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentSlide(index)}
+                  className={`h-2 rounded-full transition-all duration-300 ${index === currentSlide ? 'w-8 bg-white shadow-lg' : 'w-2 bg-white/60 hover:bg-white/80'}`}
+                />
+              ))}
+            </div>
+          </motion.div>
+        )}
+
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.8, delay: heroSlides.length > 0 ? 0.2 : 0 }}
           className="relative rounded-3xl overflow-hidden shadow-2xl bg-gradient-to-br from-blue-900 via-indigo-900 to-purple-900 text-white p-8 md:p-12 mb-6"
         >
           <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl translate-x-1/2 -translate-y-1/2"></div>
           <div className="absolute bottom-0 left-0 w-64 h-64 bg-amber-400/10 rounded-full blur-3xl -translate-x-1/2 translate-y-1/2"></div>
-          <div className="flex flex-col md:flex-row items-center justify-between gap-8 relative z-10">
-            <div className="flex-1">
+          <div className="relative z-10">
+            <div className="flex flex-col items-center text-center mb-8">
               <p className="text-sm font-bold text-amber-300 uppercase tracking-wider mb-2">Welcome to</p>
               <h1 className="text-5xl md:text-6xl font-black tracking-tight leading-tight mb-4">MY GUNUPUR</h1>
-              <p className="text-xl text-blue-100 font-semibold mb-6 flex items-center gap-2">
+              <p className="text-xl text-blue-100 font-semibold mb-6 flex items-center gap-2 justify-center">
                 <MapPin className="w-5 h-5" /> Gunupur, Rayagada, Odisha
               </p>
-              
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-                <div className="bg-white/10 backdrop-blur-md p-4 rounded-2xl border border-white/20">
-                  <p className="text-xs text-blue-200 font-bold mb-1">Population</p>
-                  <p className="text-2xl font-black">80K+</p>
-                </div>
-                <div className="bg-white/10 backdrop-blur-md p-4 rounded-2xl border border-white/20">
-                  <p className="text-xs text-blue-200 font-bold mb-1">Total Services</p>
-                  <p className="text-2xl font-black">25+</p>
-                </div>
-                <div className="bg-white/10 backdrop-blur-md p-4 rounded-2xl border border-white/20">
-                  <p className="text-xs text-blue-200 font-bold mb-1">Verified Businesses</p>
-                  <p className="text-2xl font-black">350+</p>
-                </div>
-                <div className="bg-white/10 backdrop-blur-md p-4 rounded-2xl border border-white/20">
-                  <p className="text-xs text-blue-200 font-bold mb-1">Emergency</p>
-                  <p className="text-2xl font-black">24×7</p>
-                </div>
+            </div>
+            
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+              <div className="bg-white/10 backdrop-blur-md p-4 rounded-2xl border border-white/20 text-center">
+                <p className="text-xs text-blue-200 font-bold mb-1">Population</p>
+                <p className="text-2xl font-black">80K+</p>
               </div>
-
-              <div className="relative max-w-md group">
-                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 w-6 h-6 text-amber-300 group-hover:scale-110 transition-transform" />
-                <input
-                  type="text"
-                  readOnly
-                  placeholder="Search hospitals, schools, hotels, services..."
-                  onClick={() => navigate('/services')}
-                  className="w-full pl-14 pr-6 py-5 bg-white/15 backdrop-blur-md border border-white/20 rounded-2xl text-white placeholder-blue-100/90 focus:outline-none cursor-pointer hover:bg-white/25 hover:border-white/40 transition-all duration-300 font-semibold text-lg"
-                />
+              <div className="bg-white/10 backdrop-blur-md p-4 rounded-2xl border border-white/20 text-center">
+                <p className="text-xs text-blue-200 font-bold mb-1">Total Services</p>
+                <p className="text-2xl font-black">25+</p>
+              </div>
+              <div className="bg-white/10 backdrop-blur-md p-4 rounded-2xl border border-white/20 text-center">
+                <p className="text-xs text-blue-200 font-bold mb-1">Verified Businesses</p>
+                <p className="text-2xl font-black">350+</p>
+              </div>
+              <div className="bg-white/10 backdrop-blur-md p-4 rounded-2xl border border-white/20 text-center">
+                <p className="text-xs text-blue-200 font-bold mb-1">Emergency</p>
+                <p className="text-2xl font-black">24×7</p>
               </div>
             </div>
 
-            <motion.div 
-              className="w-full md:w-1/3"
-              animate={{ 
-                y: [0, -10, 0], 
-                rotate: [0, 1, 0, -1, 0] 
-              }}
-              transition={{ 
-                duration: 4, 
-                repeat: Infinity, 
-                ease: "easeInOut" 
-              }}
-            >
-              <img src="/layoutlogo.png" alt="My Gunupur" className="w-full h-96 object-contain drop-shadow-[0_20px_60px_rgba(0,0,0,0.3)]" />
-            </motion.div>
+            <div className="relative max-w-2xl mx-auto group">
+              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 w-6 h-6 text-amber-300 group-hover:scale-110 transition-transform" />
+              <input
+                type="text"
+                readOnly
+                placeholder="Search hospitals, schools, hotels, services..."
+                onClick={() => navigate('/services')}
+                className="w-full pl-14 pr-6 py-5 bg-white/15 backdrop-blur-md border border-white/20 rounded-2xl text-white placeholder-blue-100/90 focus:outline-none cursor-pointer hover:bg-white/25 hover:border-white/40 transition-all duration-300 font-semibold text-lg"
+              />
+            </div>
           </div>
         </motion.div>
 
@@ -534,43 +560,7 @@ const Home: React.FC = () => {
           </motion.div>
         )}
 
-        {/* Image Slider */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.7, duration: 0.6 }}
-          className="mb-10"
-        >
-          <div className="relative rounded-3xl overflow-hidden shadow-2xl h-72 md:h-96 lg:h-[450px]">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={heroSlides[currentSlide].id}
-                initial={{ opacity: 0, scale: 1.1 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.8 }}
-                className="absolute inset-0"
-              >
-                <img
-                  src={heroSlides[currentSlide].image} alt={heroSlides[currentSlide].title} className="w-full h-full object-cover" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent" />
-                <div className="absolute bottom-10 left-10 right-10">
-                  <h3 className="text-4xl md:text-5xl font-black text-white mb-3">{heroSlides[currentSlide].title}</h3>
-                  <p className="text-xl text-slate-200 font-semibold">{heroSlides[currentSlide].subtitle}</p>
-                </div>
-              </motion.div>
-            </AnimatePresence>
-            <div className="absolute top-8 right-8 flex gap-3 z-10">
-              {heroSlides.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => setCurrentSlide(index)}
-                  className={`h-3 rounded-full transition-all duration-300 ${index === currentSlide ? 'w-10 bg-white shadow-lg' : 'w-3 bg-white/60 hover:bg-white/80'}`}
-                />
-              ))}
-            </div>
-          </div>
-        </motion.div>
+
 
         {/* Top Rated Businesses */}
         {businesses.length > 0 && (

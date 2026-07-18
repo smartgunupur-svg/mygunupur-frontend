@@ -28,7 +28,8 @@ import {
   Phone,
   GraduationCap,
   TreePine,
-  Trophy
+  Trophy,
+  Slideshow
 } from 'lucide-react';
 
 const AdminLayout: React.FC = () => {
@@ -45,6 +46,7 @@ const AdminLayout: React.FC = () => {
 
   const navItems = [
     { title: 'Dashboard', icon: LayoutDashboard, path: '/admin/dashboard', color: 'text-blue-600', bg: 'bg-blue-50' },
+    { title: 'Hero Slides', icon: Slideshow, path: '/admin/hero-slides', color: 'text-purple-600', bg: 'bg-purple-50' },
     { title: 'Loan Enquiries', icon: FileText, path: '/admin/loan-enquiries', color: 'text-blue-500', bg: 'bg-blue-50' },
     { title: 'Building Enquiries', icon: Building2, path: '/admin/building-enquiries', color: 'text-green-500', bg: 'bg-green-50' },
     { title: 'Banks', icon: Banknote, path: '/admin/banks', color: 'text-indigo-500', bg: 'bg-indigo-50' },

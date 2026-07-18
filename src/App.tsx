@@ -59,6 +59,7 @@ import AdminColleges from './pages/AdminColleges';
 import AdminGovtOffices from './pages/AdminGovtOffices';
 import AdminParks from './pages/AdminParks';
 import AdminSportsPlaces from './pages/AdminSportsPlaces';
+import AdminHeroSlides from './pages/AdminHeroSlides';
 
 function App() {
   return (
@@ -123,6 +124,7 @@ function App() {
           <Route path="/admin/govt-offices" element={<AdminGovtOffices />} />
           <Route path="/admin/parks" element={<AdminParks />} />
           <Route path="/admin/sports-places" element={<AdminSportsPlaces />} />
+          <Route path="/admin/hero-slides" element={<AdminHeroSlides />} />
         </Route>
       </Routes>
     </Router>
