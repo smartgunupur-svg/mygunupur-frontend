@@ -11,7 +11,6 @@ import {
   Plus,
   Lock,
   Unlock,
-  Clock,
   CalendarDays,
   LocateFixed
 } from 'lucide-react';
