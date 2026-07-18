@@ -75,6 +75,7 @@ const AdminBusinesses: React.FC = () => {
     const token = localStorage.getItem('adminToken');
     const data = {
       ...formData,
+      category: formData.category === 'Other' ? formData.customCategory : formData.category,
       rating: parseFloat(formData.rating),
       isVeg: formData.isVeg === 'true',
       features: formData.features.split(',').map(f => f.trim()).filter(f => f)
@@ -117,6 +118,7 @@ const AdminBusinesses: React.FC = () => {
     setFormData({
       name: business.name,
       category: business.category || 'Medical Stores',
+      customCategory: business.customCategory || '',
       phone: business.phone,
       address: business.address || '',
       googleMap: business.googleMap || '',
