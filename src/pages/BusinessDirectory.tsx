@@ -13,7 +13,8 @@ const categoryIcons: { [key: string]: any } = {
   'Salons': Sparkles,
   'Repair Shops': Wrench,
   'Hotel': HomeIcon,
-  'Restaurant': Utensils
+  'Restaurant': Utensils,
+  'Construction Material': ShieldAlert
 };
 
 const fallbackBusinesses = [
@@ -195,6 +196,17 @@ const BusinessDirectory: React.FC = () => {
                     {b.features.map((f: string, i: number) => (
                       <span key={i} className="px-2 py-0.5 bg-slate-100 text-slate-600 text-[9px] font-bold rounded-md">
                         {f}
+                      </span>
+                    ))}
+                  </div>
+                )}
+
+                {/* Materials Badges for Construction Material */}
+                {b.materials && b.materials.length > 0 && (
+                  <div className="flex flex-wrap gap-1.5">
+                    {b.materials.map((m: string, i: number) => (
+                      <span key={i} className="px-2 py-0.5 bg-orange-50 text-orange-700 text-[9px] font-bold rounded-md">
+                        {m}
                       </span>
                     ))}
                   </div>

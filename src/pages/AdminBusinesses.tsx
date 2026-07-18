@@ -25,6 +25,7 @@ const AdminBusinesses: React.FC = () => {
     priceRange: '₹₹',
     isVeg: 'false',
     features: '',
+    materials: '',
     image: ''
   });
 
@@ -78,7 +79,8 @@ const AdminBusinesses: React.FC = () => {
       category: formData.category === 'Other' ? formData.customCategory : formData.category,
       rating: parseFloat(formData.rating),
       isVeg: formData.isVeg === 'true',
-      features: formData.features.split(',').map(f => f.trim()).filter(f => f)
+      features: formData.features.split(',').map(f => f.trim()).filter(f => f),
+      materials: formData.materials.split(',').map(m => m.trim()).filter(m => m)
     };
     try {
       if (editingBusiness) {
@@ -127,6 +129,7 @@ const AdminBusinesses: React.FC = () => {
       priceRange: business.priceRange || '₹₹',
       isVeg: business.isVeg ? 'true' : 'false',
       features: business.features?.join(', ') || '',
+      materials: business.materials?.join(', ') || '',
       image: business.image || ''
     });
     setShowForm(true);
@@ -192,6 +195,7 @@ const AdminBusinesses: React.FC = () => {
                     <option value="Repair Shops">Repair Shops</option>
                     <option value="Hotel">Hotel</option>
                     <option value="Restaurant">Restaurant</option>
+                    <option value="Construction Material">Construction Material</option>
                     <option value="Other">Other</option>
                   </select>
                 </div>
@@ -208,6 +212,20 @@ const AdminBusinesses: React.FC = () => {
                     className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:border-amber-500"
                     placeholder="Enter custom category name"
                     required
+                  />
+                </div>
+              )}
+              
+              {/* Materials Input for Construction Material */}
+              {formData.category === 'Construction Material' && (
+                <div>
+                  <label className="block text-sm font-bold text-slate-700 mb-2">Materials (comma separated)</label>
+                  <input
+                    type="text"
+                    value={formData.materials}
+                    onChange={(e) => setFormData({ ...formData, materials: e.target.value })}
+                    className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:border-amber-500"
+                    placeholder="Cement, Sand, Bricks"
                   />
                 </div>
               )}
@@ -354,6 +372,15 @@ const AdminBusinesses: React.FC = () => {
                     <h3 className="text-base font-bold text-slate-800 mt-1">{business.name}</h3>
                     <p className="text-xs text-slate-500 font-bold">Phone: {business.phone}</p>
                     <p className="text-xs text-slate-500 font-medium">Address: {business.address || 'Gunupur'}</p>
+                    {business.materials?.length > 0 && (
+                      <div className="mt-3 flex flex-wrap gap-2">
+                        {business.materials.map((material: string, i: number) => (
+                          <span key={i} className="px-3 py-1 bg-orange-50 text-orange-700 text-xs font-semibold rounded-full">
+                            {material}
+                          </span>
+                        ))}
+                      </div>
+                    )}
                   </div>
                   <div className="flex gap-2">
                     <button
