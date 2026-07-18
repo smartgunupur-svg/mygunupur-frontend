@@ -31,7 +31,6 @@ const AdminDashboard: React.FC = () => {
   const [loanEnquiries, setLoanEnquiries] = useState<any[]>([]);
   const [buildingEnquiries, setBuildingEnquiries] = useState<any[]>([]);
   const [banks, setBanks] = useState<any[]>([]);
-  const [shops, setShops] = useState<any[]>([]);
   const [hospitals, setHospitals] = useState<any[]>([]);
   const [touristPlaces, setTouristPlaces] = useState<any[]>([]);
   const [emergencyContacts, setEmergencyContacts] = useState<any[]>([]);
@@ -42,8 +41,6 @@ const AdminDashboard: React.FC = () => {
   const [jobs, setJobs] = useState<any[]>([]);
   const [schemes, setSchemes] = useState<any[]>([]);
   const [businesses, setBusinesses] = useState<any[]>([]);
-  const [hotels, setHotels] = useState<any[]>([]);
-  const [restaurants, setRestaurants] = useState<any[]>([]);
   const [heroSlides, setHeroSlides] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -60,7 +57,6 @@ const AdminDashboard: React.FC = () => {
           loanRes, 
           buildingRes, 
           banksRes, 
-          shopsRes, 
           hospitalsRes, 
           touristRes, 
           emergencyRes,
@@ -71,8 +67,6 @@ const AdminDashboard: React.FC = () => {
           jobsRes,
           schemesRes,
           businessesRes,
-          hotelsRes,
-          restaurantsRes,
           heroSlidesRes
         ] = await Promise.all([
           axios.get(`${API_URL}/loan-enquiries`, {
@@ -82,7 +76,6 @@ const AdminDashboard: React.FC = () => {
             headers: { Authorization: `Bearer ${token}` }
           }),
           axios.get(`${API_URL}/banks`),
-          axios.get(`${API_URL}/construction-material-shops`),
           axios.get(`${API_URL}/hospitals`),
           axios.get(`${API_URL}/tourist-places`),
           axios.get(`${API_URL}/emergency-contacts`),
@@ -93,14 +86,11 @@ const AdminDashboard: React.FC = () => {
           axios.get(`${API_URL}/jobs`),
           axios.get(`${API_URL}/government-schemes`),
           axios.get(`${API_URL}/businesses`),
-          axios.get(`${API_URL}/hotels`),
-          axios.get(`${API_URL}/restaurants`),
           axios.get(`${API_URL}/hero-slides/admin`)
         ]);
         setLoanEnquiries(loanRes.data);
         setBuildingEnquiries(buildingRes.data);
         setBanks(banksRes.data);
-        setShops(shopsRes.data);
         setHospitals(hospitalsRes.data);
         setTouristPlaces(touristRes.data);
         setEmergencyContacts(emergencyRes.data);
@@ -111,8 +101,6 @@ const AdminDashboard: React.FC = () => {
         setJobs(jobsRes.data);
         setSchemes(schemesRes.data);
         setBusinesses(businessesRes.data);
-        setHotels(hotelsRes.data);
-        setRestaurants(restaurantsRes.data);
         setHeroSlides(heroSlidesRes.data);
       } catch (error) {
         console.error('Error fetching data:', error);
