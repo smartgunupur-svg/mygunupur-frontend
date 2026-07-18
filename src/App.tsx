@@ -8,6 +8,7 @@ import BuildingEnquiry from './pages/BuildingEnquiry';
 import ConstructionMaterial from './pages/ConstructionMaterial';
 import Hospitals from './pages/Hospitals';
 import BloodDonors from './pages/BloodDonors';
+import DonorDetail from './pages/DonorDetail';
 
 // New super app pages
 import BottomNavLayout from './components/BottomNavLayout';
@@ -82,6 +83,7 @@ function App() {
           <Route path="/construction-material" element={<ConstructionMaterial />} />
           <Route path="/hospitals" element={<Hospitals />} />
           <Route path="/blood-donors" element={<BloodDonors />} />
+          <Route path="/donor-detail" element={<DonorDetail />} />
           <Route path="/government-schemes" element={<GovernmentSchemes />} />
           <Route path="/notices" element={<Notices />} />
           <Route path="/hotels" element={<Hotels />} />

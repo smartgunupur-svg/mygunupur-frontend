@@ -541,12 +541,29 @@ const BloodDonors: React.FC = () => {
           )}
         </motion.div>
 
+        {/* Donated By / Tribute Banner */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5 }}
+          className="bg-gradient-to-r from-red-600 to-rose-600 rounded-3xl p-8 text-white shadow-xl mt-12"
+        >
+          <div className="text-center">
+            <h3 className="text-2xl font-black mb-3">Donated By</h3>
+            <p className="text-lg mb-2">Late Teacher & Well-Wisher of Gunupur</p>
+            <p className="text-red-100">Passed Away on 14th February 2023</p>
+            <p className="text-sm mt-4 text-red-100 opacity-90">
+              Your kindness and dedication to our community will always be remembered.
+            </p>
+          </div>
+        </motion.div>
+
         {/* Footer */}
         <motion.footer
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.6 }}
-          className="bg-slate-900 rounded-3xl p-8 text-white mt-12"
+          className="bg-slate-900 rounded-3xl p-8 text-white mt-6"
         >
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div>
