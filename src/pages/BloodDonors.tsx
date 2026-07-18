@@ -106,29 +106,21 @@ const BloodDonors: React.FC = () => {
     }
   };
 
-  const handleVerifyKey = () => {
+  const handleVerifyKey = async () => {
     if (!selectedDonor) return;
-    
-    // Check localStorage for active keys
-    const savedKeys = localStorage.getItem('donorAccessKeys');
-    if (savedKeys) {
-      const activeKeys = JSON.parse(savedKeys);
-      const validKey = activeKeys.find((k: any) => 
-        k.key === accessKey && 
-        k.donorId === selectedDonor._id && 
-        k.expiresAt > Date.now()
-      );
-      
-      if (validKey) {
+    try {
+      const response = await axios.post(`${API_URL}/blood-donors/verify-key`, {
+        key: accessKey,
+        donorId: selectedDonor._id
+      });
+      if (response.data.valid) {
         setKeyValid(true);
-        // Set countdown based on remaining time
-        const remainingTime = Math.max(0, Math.ceil((validKey.expiresAt - Date.now()) / 1000));
-        setCountdown(remainingTime);
+        setCountdown(180); // 3 minutes fallback
       } else {
         alert('Invalid or expired key! Please call 9437578310 to get a valid key.');
       }
-    } else {
-      alert('Invalid key! Please call 9437578310 to get a valid key.');
+    } catch (error) {
+      alert('Invalid or expired key! Please call 9437578310 to get a valid key.');
     }
   };
 

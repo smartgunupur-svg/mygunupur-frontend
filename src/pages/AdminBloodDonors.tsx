@@ -17,13 +17,22 @@ import {
 import axios from 'axios';
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
+interface AccessKey {
+  _id: string;
+  key: string;
+  donorId: string;
+  donorName: string;
+  expiresAt: string;
+  createdAt: string;
+}
+
 const AdminBloodDonors: React.FC = () => {
   const navigate = useNavigate();
   const [donors, setDonors] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
   const [editingDonor, setEditingDonor] = useState<any | null>(null);
-  const [activeKeys, setActiveKeys] = useState<{key: string; donorId: string; donorName: string; expiresAt: number}[]>([]);
+  const [activeKeys, setActiveKeys] = useState<AccessKey[]>([]);
   const [formData, setFormData] = useState({
     name: '',
     bloodGroup: '',
@@ -31,7 +40,7 @@ const AdminBloodDonors: React.FC = () => {
     area: '',
     status: 'available',
     verified: false,
-    availability: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Friday', 'Saturday', 'Sunday'],
+    availability: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
     age: '',
     gender: ''
   });
@@ -57,26 +66,31 @@ const AdminBloodDonors: React.FC = () => {
       }
     };
 
+    const fetchActiveKeys = async () => {
+      try {
+        const response = await axios.get(`${API_URL}/blood-donors/access-keys/active`);
+        setActiveKeys(response.data);
+      } catch (error) {
+        console.error('Error fetching active keys:', error);
+      }
+    };
+
     fetchDonors();
-    // Load active keys from localStorage
-    const savedKeys = localStorage.getItem('donorAccessKeys');
-    if (savedKeys) {
-      setActiveKeys(JSON.parse(savedKeys));
-    }
+    fetchActiveKeys();
   }, [navigate]);
 
-  // Clean up expired keys
+  // Refresh active keys every 10 seconds
   useEffect(() => {
-    const timer = setInterval(() => {
-      const now = Date.now();
-      const validKeys = activeKeys.filter(key => key.expiresAt > now);
-      if (validKeys.length !== activeKeys.length) {
-        setActiveKeys(validKeys);
-        localStorage.setItem('donorAccessKeys', JSON.stringify(validKeys));
+    const timer = setInterval(async () => {
+      try {
+        const response = await axios.get(`${API_URL}/blood-donors/access-keys/active`);
+        setActiveKeys(response.data);
+      } catch (error) {
+        console.error('Error refreshing active keys:', error);
       }
-    }, 1000);
+    }, 10000);
     return () => clearInterval(timer);
-  }, [activeKeys]);
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -140,19 +154,36 @@ const AdminBloodDonors: React.FC = () => {
     }
   };
 
-  const generateKey = (donor: any) => {
-    const newKey = Math.floor(1000 + Math.random() * 9000).toString(); // 4-digit key
-    const expiresAt = Date.now() + 3 * 60 * 1000; // 3 minutes
-    const newAccessKey = {
-      key: newKey,
-      donorId: donor._id,
-      donorName: donor.name,
-      expiresAt
-    };
-    const updatedKeys = [...activeKeys, newAccessKey];
-    setActiveKeys(updatedKeys);
-    localStorage.setItem('donorAccessKeys', JSON.stringify(updatedKeys));
-    alert(`Generated key for ${donor.name}: ${newKey}`);
+  const generateKey = async (donor: any) => {
+    try {
+      const token = localStorage.getItem('adminToken');
+      const response = await axios.post(
+        `${API_URL}/blood-donors/${donor._id}/generate-key`,
+        {},
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      alert(`Generated key for ${donor.name}: ${response.data.key}`);
+      // Refresh active keys
+      const keysResponse = await axios.get(`${API_URL}/blood-donors/access-keys/active`);
+      setActiveKeys(keysResponse.data);
+    } catch (error) {
+      console.error('Error generating key:', error);
+      alert('Failed to generate key');
+    }
+  };
+
+  const deleteKey = async (keyId: string) => {
+    try {
+      const token = localStorage.getItem('adminToken');
+      await axios.delete(`${API_URL}/blood-donors/access-keys/${keyId}`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      // Refresh active keys
+      const response = await axios.get(`${API_URL}/blood-donors/access-keys/active`);
+      setActiveKeys(response.data);
+    } catch (error) {
+      console.error('Error deleting key:', error);
+    }
   };
 
   const toggleAvailability = (day: string) => {
@@ -194,11 +225,11 @@ const AdminBloodDonors: React.FC = () => {
             <h3 className="text-xl font-black text-amber-800">Active Access Keys</h3>
           </div>
           <div className="space-y-3">
-            {activeKeys.map((accessKey, index) => {
-              const timeLeft = Math.max(0, Math.ceil((accessKey.expiresAt - Date.now()) / 1000));
+            {activeKeys.map((accessKey) => {
+              const timeLeft = Math.max(0, Math.ceil((new Date(accessKey.expiresAt).getTime() - Date.now()) / 1000));
               return (
                 <div
-                  key={index}
+                  key={accessKey._id}
                   className="bg-white rounded-2xl p-4 border border-amber-200 flex items-center justify-between"
                 >
                   <div className="flex items-center gap-4">
@@ -214,11 +245,7 @@ const AdminBloodDonors: React.FC = () => {
                     </div>
                   </div>
                   <button
-                    onClick={() => {
-                      const updatedKeys = activeKeys.filter((_, i) => i !== index);
-                      setActiveKeys(updatedKeys);
-                      localStorage.setItem('donorAccessKeys', JSON.stringify(updatedKeys));
-                    }}
+                    onClick={() => deleteKey(accessKey._id)}
                     className="p-2 text-red-600 hover:bg-red-100 rounded-xl"
                   >
                     <Trash2 className="w-5 h-5" />
