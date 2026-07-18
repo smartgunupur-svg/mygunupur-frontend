@@ -65,6 +65,7 @@ const BusinessDirectory: React.FC = () => {
   const [activeCategory, setActiveCategory] = useState('Medical Stores');
   const [searchQuery, setSearchQuery] = useState('');
   const [loading, setLoading] = useState(true);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   // Get unique categories from businesses
   const categories = Array.from(new Set(businesses.map(b => b.category))).sort();
@@ -173,7 +174,8 @@ const BusinessDirectory: React.FC = () => {
                   <img
                     src={b.image}
                     alt={b.name}
-                    className="w-full h-48 object-cover"
+                    className="w-full h-48 object-cover cursor-pointer hover:opacity-90 transition-opacity"
+                    onClick={() => setSelectedImage(b.image)}
                   />
                 )}
                 <div className="p-5 space-y-3">
@@ -235,6 +237,25 @@ const BusinessDirectory: React.FC = () => {
           </div>
         )}
       </div>
+
+      {/* Full Screen Image Preview */}
+      {selectedImage && (
+        <div 
+          className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-4"
+          onClick={() => setSelectedImage(null)}
+        >
+          <div 
+            className="max-w-5xl max-h-[90vh] overflow-auto"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <img 
+              src={selectedImage} 
+              alt="Preview" 
+              className="w-full h-auto object-contain rounded-xl"
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 };

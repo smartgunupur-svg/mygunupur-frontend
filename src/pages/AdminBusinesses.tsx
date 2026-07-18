@@ -257,7 +257,7 @@ const AdminBusinesses: React.FC = () => {
                 </label>
               </div>
               
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-bold text-slate-700 mb-2">Phone</label>
                   <input
@@ -270,31 +270,6 @@ const AdminBusinesses: React.FC = () => {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-bold text-slate-700 mb-2">Price Range</label>
-                  <select
-                    value={formData.priceRange}
-                    onChange={(e) => setFormData({ ...formData, priceRange: e.target.value })}
-                    className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:border-amber-500"
-                  >
-                    <option value="₹">₹ (Budget)</option>
-                    <option value="₹₹">₹₹ (Medium)</option>
-                    <option value="₹₹₹">₹₹₹ (Premium)</option>
-                  </select>
-                </div>
-                <div>
-                  <label className="block text-sm font-bold text-slate-700 mb-2">Is Veg? (For Restaurants)</label>
-                  <select
-                    value={formData.isVeg}
-                    onChange={(e) => setFormData({ ...formData, isVeg: e.target.value })}
-                    className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:border-amber-500"
-                  >
-                    <option value="false">No / Mix</option>
-                    <option value="true">Yes (100% Veg)</option>
-                  </select>
-                </div>
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
                   <label className="block text-sm font-bold text-slate-700 mb-2">Rating</label>
                   <input
                     type="number"
@@ -306,16 +281,16 @@ const AdminBusinesses: React.FC = () => {
                     className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:border-amber-500"
                   />
                 </div>
-                <div>
-                  <label className="block text-sm font-bold text-slate-700 mb-2">Features (comma separated)</label>
-                  <input
-                    type="text"
-                    value={formData.features}
-                    onChange={(e) => setFormData({ ...formData, features: e.target.value })}
-                    className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:border-amber-500"
-                    placeholder="24x7, Free Wifi, A/C, Home Delivery"
-                  />
-                </div>
+              </div>
+              <div>
+                <label className="block text-sm font-bold text-slate-700 mb-2">Features (comma separated)</label>
+                <input
+                  type="text"
+                  value={formData.features}
+                  onChange={(e) => setFormData({ ...formData, features: e.target.value })}
+                  className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:border-amber-500"
+                  placeholder="24x7, Free Wifi, A/C, Home Delivery"
+                />
               </div>
               <div>
                 <label className="block text-sm font-bold text-slate-700 mb-2">Address</label>

@@ -7,7 +7,6 @@ import {
   Users, 
   ArrowRight,
   Banknote,
-  ShoppingCart,
   HeartPulse,
   MapPin,
   CheckCircle,
@@ -18,8 +17,6 @@ import {
   Image,
   Calendar,
   BookOpen,
-  Home,
-  Utensils,
   AlertTriangle,
   MonitorPlay,
   Bell,
@@ -132,11 +129,8 @@ const AdminDashboard: React.FC = () => {
     { title: 'Building Enquiries', value: buildingEnquiries.length, icon: Building2, color: 'from-green-500 to-emerald-600', path: '/admin/building-enquiries' },
     { title: 'Hero Slides', value: heroSlides.length, icon: MonitorPlay, color: 'from-purple-500 to-indigo-600', path: '/admin/hero-slides' },
     { title: 'Total Banks', value: banks.length, icon: Banknote, color: 'from-indigo-500 to-purple-600', path: '/admin/banks' },
-    { title: 'Material Shops', value: shops.length, icon: ShoppingCart, color: 'from-orange-500 to-red-600', path: '/admin/construction-material' },
     { title: 'Hospitals', value: hospitals.length, icon: HeartPulse, color: 'from-pink-500 to-rose-600', path: '/admin/hospitals' },
     { title: 'Blood Donors', value: bloodDonors.length, icon: Droplets, color: 'from-red-500 to-rose-600', path: '/admin/blood-donors' },
-    { title: 'Hotels', value: hotels.length, icon: Home, color: 'from-orange-600 to-red-600', path: '/admin/hotels' },
-    { title: 'Restaurants', value: restaurants.length, icon: Utensils, color: 'from-rose-600 to-pink-600', path: '/admin/restaurants' },
     { title: 'Tourist Places', value: touristPlaces.length, icon: MapPin, color: 'from-teal-500 to-cyan-600', path: '/admin/tourist-places' },
     { title: 'Notices', value: notices.length, icon: FileText, color: 'from-purple-500 to-purple-600', path: '/admin/notices' },
     { title: 'Gallery Media', value: gallery.length, icon: Image, color: 'from-sky-500 to-blue-600', path: '/admin/gallery' },
@@ -153,7 +147,7 @@ const AdminDashboard: React.FC = () => {
   const quickActions = [
     { title: 'Add New Bank', icon: Banknote, color: 'from-blue-50 to-indigo-50', iconColor: 'text-blue-600', border: 'border-blue-100', path: '/admin/banks' },
     { title: 'Add Hero Slide', icon: MonitorPlay, color: 'from-purple-50 to-indigo-50', iconColor: 'text-purple-600', border: 'border-purple-100', path: '/admin/hero-slides' },
-    { title: 'Add Shop', icon: ShoppingCart, color: 'from-orange-50 to-red-50', iconColor: 'text-orange-600', border: 'border-orange-100', path: '/admin/construction-material' },
+    { title: 'Add Business', icon: BookOpen, color: 'from-amber-50 to-orange-50', iconColor: 'text-amber-600', border: 'border-amber-100', path: '/admin/businesses' },
     { title: 'Add Emergency Contact', icon: AlertTriangle, color: 'from-red-50 to-orange-50', iconColor: 'text-red-600', border: 'border-red-100', path: '/admin/emergency-contacts' },
   ];
 
