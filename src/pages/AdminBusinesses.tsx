@@ -97,19 +97,20 @@ const AdminBusinesses: React.FC = () => {
       setShowForm(false);
       setEditingBusiness(null);
       setFormData({
-        name: '',
-        category: 'Medical Stores',
-        customCategory: '',
-        phone: '',
-        address: '',
-        googleMap: '',
-        description: '',
-        rating: '4.5',
-        priceRange: '₹₹',
-        isVeg: 'false',
-        features: '',
-        image: ''
-      });
+      name: '',
+      category: 'Medical Stores',
+      customCategory: '',
+      phone: '',
+      address: '',
+      googleMap: '',
+      description: '',
+      rating: '4.5',
+      priceRange: '₹₹',
+      isVeg: 'false',
+      features: '',
+      materials: '',
+      image: ''
+    });
     } catch (error) {
       console.error('Error saving business:', error);
     }
