@@ -36,9 +36,8 @@ const BloodDonors: React.FC = () => {
     gender: ''
   });
   const [accessKey, setAccessKey] = useState('');
-  const [selectedDonor, setSelectedDonor] = useState<any | null>(null);
   const [keyValid, setKeyValid] = useState(false);
-  const [countdown, setCountdown] = useState(0);
+  const [isLifetimeKey, setIsLifetimeKey] = useState(false);
 
   const fetchDonors = async () => {
     try {
@@ -62,20 +61,6 @@ const BloodDonors: React.FC = () => {
   useEffect(() => {
     fetchDonors();
   }, [bloodGroupFilter, areaFilter]);
-
-  // Countdown timer
-  useEffect(() => {
-    let timer: number | undefined;
-    if (countdown > 0) {
-      timer = window.setInterval(() => setCountdown(c => c - 1), 1000);
-    } else if (countdown === 0 && selectedDonor) {
-      setKeyValid(false);
-      setSelectedDonor(null);
-    }
-    return () => {
-      if (timer) window.clearInterval(timer);
-    };
-  }, [countdown, selectedDonor]);
 
   const handleGetGPS = () => {
     if (navigator.geolocation) {
@@ -109,15 +94,13 @@ const BloodDonors: React.FC = () => {
   };
 
   const handleVerifyKey = async () => {
-    if (!selectedDonor) return;
     try {
       const response = await axios.post(`${API_URL}/blood-donors/verify-key`, {
-        key: accessKey,
-        donorId: selectedDonor._id
+        key: accessKey
       });
       if (response.data.valid) {
         setKeyValid(true);
-        setCountdown(180); // 3 minutes fallback
+        setIsLifetimeKey(response.data.isLifetime || false);
       } else {
         alert('Invalid or expired key! Please call 9437578310 to get a valid key.');
       }
@@ -186,12 +169,62 @@ const BloodDonors: React.FC = () => {
               <p className="text-amber-700 text-sm mb-3">
                 Call <a href="tel:9437578310" className="font-black underline hover:text-amber-900">9437578310</a> to get a 4-digit access key.
               </p>
-              <p className="text-amber-600 text-xs">
-                Keys are valid for 3 minutes only for security purposes.
-              </p>
             </div>
           </div>
         </motion.div>
+
+        {/* Access Key Input */}
+        {!keyValid && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="bg-white rounded-3xl p-6 shadow-xl border border-slate-100"
+          >
+            <h3 className="font-black text-slate-800 mb-4 text-lg">Enter Access Key</h3>
+            <div className="flex gap-3">
+              <input
+                type="text"
+                maxLength={4}
+                placeholder="Enter 4-digit key"
+                value={accessKey}
+                onChange={(e) => setAccessKey(e.target.value)}
+                className="flex-1 px-4 py-3 rounded-2xl border border-slate-200 focus:border-amber-500 focus:ring-2 focus:ring-amber-200 outline-none transition-all text-center font-black text-2xl"
+              />
+              <button
+                onClick={handleVerifyKey}
+                className="px-6 py-3 bg-gradient-to-r from-amber-500 to-orange-600 text-white font-bold rounded-2xl shadow-lg hover:shadow-xl transition-all"
+              >
+                <Unlock className="w-5 h-5" />
+              </button>
+            </div>
+          </motion.div>
+        )}
+
+        {/* Valid Key Banner */}
+        {keyValid && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-2xl p-4"
+          >
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center shrink-0">
+                <CheckCircle2 className="w-5 h-5 text-green-600" />
+              </div>
+              <div className="flex-1">
+                <p className="font-bold text-green-800">
+                  {isLifetimeKey ? 'Lifetime access activated!' : 'Access activated!'}
+                </p>
+              </div>
+              <button
+                onClick={() => setKeyValid(false)}
+                className="px-4 py-2 bg-red-100 text-red-700 font-bold rounded-xl hover:bg-red-200 transition-all"
+              >
+                Logout
+              </button>
+            </div>
+          </motion.div>
+        )}
 
         {/* Hero Banner */}
         <motion.div
@@ -428,7 +461,7 @@ const BloodDonors: React.FC = () => {
                     <div className="flex-1">
                       <div className="flex items-center gap-3 mb-3">
                         <h4 className="font-black text-slate-800 text-lg">
-                          {selectedDonor?._id === donor._id && keyValid ? donor.name : `${donor.name.slice(0, 2)}***`}
+                          {keyValid ? donor.name : `${donor.name.slice(0, 2)}***`}
                         </h4>
                         {donor.verified && (
                           <span className="flex items-center gap-1 text-green-600 text-xs font-bold">
@@ -475,8 +508,8 @@ const BloodDonors: React.FC = () => {
                         </div>
                       )}
 
-                      {/* Show donor details if verified with key */}
-                      {selectedDonor?._id === donor._id && keyValid && (
+                      {/* Show donor details if key is valid */}
+                      {keyValid && (
                         <motion.div
                           initial={{ opacity: 0, height: 0 }}
                           animate={{ opacity: 1, height: 'auto' }}
@@ -489,55 +522,17 @@ const BloodDonors: React.FC = () => {
                             <Phone className="w-5 h-5" />
                             Call {donor.phone}
                           </a>
-                          <div className="flex items-center gap-2 text-amber-600 mt-3 text-sm">
-                            <Clock className="w-4 h-4" />
-                            <span className="font-bold">Access expires in {countdown} seconds</span>
-                          </div>
                         </motion.div>
                       )}
 
-                      {/* Key input if not selected or not valid */}
-                      {(!selectedDonor || selectedDonor._id !== donor._id || !keyValid) && (
+                      {/* Locked message if key not valid */}
+                      {!keyValid && (
                         <div className="flex gap-2">
-                          <button
-                            onClick={() => {
-                              setSelectedDonor(donor);
-                              setAccessKey('');
-                              setKeyValid(false);
-                              setCountdown(0);
-                            }}
-                            className="flex items-center gap-2 px-5 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-2xl transition-all"
-                          >
+                          <div className="flex items-center gap-2 px-5 py-3 bg-slate-100 text-slate-500 font-bold rounded-2xl">
                             <Lock className="w-5 h-5" />
-                            Unlock Details
-                          </button>
-                        </div>
-                      )}
-
-                      {/* Key input field for selected donor */}
-                      {selectedDonor?._id === donor._id && !keyValid && (
-                        <motion.div
-                          initial={{ opacity: 0, y: 10 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          className="mt-4 pt-4 border-t border-slate-100"
-                        >
-                          <div className="flex gap-2">
-                            <input
-                              type="text"
-                              maxLength={4}
-                              placeholder="Enter 4-digit key"
-                              value={accessKey}
-                              onChange={(e) => setAccessKey(e.target.value)}
-                              className="flex-1 px-4 py-3 rounded-2xl border border-slate-200 focus:border-red-500 focus:ring-2 focus:ring-red-200 outline-none transition-all text-center font-black text-2xl"
-                            />
-                            <button
-                              onClick={handleVerifyKey}
-                              className="px-6 py-3 bg-gradient-to-r from-red-500 to-rose-600 text-white font-bold rounded-2xl shadow-lg hover:shadow-xl transition-all"
-                            >
-                              <Unlock className="w-5 h-5" />
-                            </button>
+                            Enter access key to view details
                           </div>
-                        </motion.div>
+                        </div>
                       )}
                     </div>
                   </div>

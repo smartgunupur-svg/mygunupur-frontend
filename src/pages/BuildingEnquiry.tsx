@@ -344,28 +344,7 @@ const BuildingEnquiry: React.FC = () => {
         </motion.a>
       </div>
 
-      {/* Bottom Nav */}
-      <motion.div
-        initial={{ y: 100 }} animate={{ y: 0 }} transition={{ delay: 0.4, type: 'spring' }}
-        className="fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-slate-200"
-      >
-        <div className="max-w-5xl mx-auto px-4">
-          <div className="flex items-center justify-around py-2.5">
-            <button onClick={() => navigate('/')} className="flex flex-col items-center gap-1 px-4 py-1.5 text-slate-400">
-              <HomeIcon className="w-5 h-5" />
-              <span className="text-[0.68rem] font-semibold">Home</span>
-            </button>
-            <button onClick={() => navigate('/home-loan')} className="flex flex-col items-center gap-1 px-4 py-1.5 text-slate-400">
-              <HomeIcon className="w-5 h-5" />
-              <span className="text-[0.68rem] font-semibold">Loan</span>
-            </button>
-            <button onClick={() => navigate('/building-enquiry')} className="flex flex-col items-center gap-1 px-4 py-1.5" style={{ color: BLUE }}>
-              <Building2 className="w-5 h-5" />
-              <span className="text-[0.68rem] font-semibold">Building</span>
-            </button>
-          </div>
-        </div>
-      </motion.div>
+
     </div>
   );
 };

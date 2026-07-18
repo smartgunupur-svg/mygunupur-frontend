@@ -19,10 +19,11 @@ const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 interface AccessKey {
   _id: string;
   key: string;
-  donorId: string;
-  donorName: string;
-  expiresAt: string;
+  expiresAt: string | null;
   createdAt: string;
+  durationType: 'minutes' | 'hours' | 'lifetime';
+  durationValue: number;
+  isLifetime: boolean;
 }
 
 const AdminBloodDonors: React.FC = () => {
@@ -30,8 +31,13 @@ const AdminBloodDonors: React.FC = () => {
   const [donors, setDonors] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
+  const [showKeyForm, setShowKeyForm] = useState(false);
   const [editingDonor, setEditingDonor] = useState<any | null>(null);
   const [activeKeys, setActiveKeys] = useState<AccessKey[]>([]);
+  const [keyFormData, setKeyFormData] = useState({
+    durationType: 'minutes' as 'minutes' | 'hours' | 'lifetime',
+    durationValue: 3
+  });
   const [formData, setFormData] = useState({
     name: '',
     bloodGroup: '',
@@ -153,15 +159,16 @@ const AdminBloodDonors: React.FC = () => {
     }
   };
 
-  const generateKey = async (donor: any) => {
+  const generateKeyWithDuration = async () => {
     try {
       const token = localStorage.getItem('adminToken');
       const response = await axios.post(
-        `${API_URL}/blood-donors/${donor._id}/generate-key`,
-        {},
+        `${API_URL}/blood-donors/generate-key`,
+        keyFormData,
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      alert(`Generated key for ${donor.name}: ${response.data.key}`);
+      alert(`Generated key: ${response.data.key}`);
+      setShowKeyForm(false);
       // Refresh active keys
       const keysResponse = await axios.get(`${API_URL}/blood-donors/access-keys/active`);
       setActiveKeys(keysResponse.data);
@@ -201,7 +208,7 @@ const AdminBloodDonors: React.FC = () => {
     <div className="max-w-6xl mx-auto px-4 space-y-4 pt-6">
       <div className="flex flex-col md:flex-row gap-4 items-start md:items-center justify-between">
         <h2 className="text-3xl font-black text-slate-800">Blood Donors Management</h2>
-        <div className="flex gap-2">
+        <div className="flex gap-2 flex-wrap">
           <button
             onClick={() => setShowForm(!showForm)}
             className="flex items-center gap-2 px-6 py-3 bg-gradient-to-br from-red-600 to-rose-600 text-white font-bold rounded-2xl shadow-lg hover:shadow-xl transition-all"
@@ -209,8 +216,60 @@ const AdminBloodDonors: React.FC = () => {
             <Plus className="w-5 h-5" />
             {showForm ? 'Cancel' : 'Add New Donor'}
           </button>
+          <button
+            onClick={() => setShowKeyForm(!showKeyForm)}
+            className="flex items-center gap-2 px-6 py-3 bg-gradient-to-br from-amber-500 to-orange-600 text-white font-bold rounded-2xl shadow-lg hover:shadow-xl transition-all"
+          >
+            <Key className="w-5 h-5" />
+            {showKeyForm ? 'Cancel' : 'Generate Access Key'}
+          </button>
         </div>
       </div>
+
+      {/* Key Generation Form */}
+      {showKeyForm && (
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="bg-white rounded-2xl p-6 shadow-lg border border-slate-100"
+        >
+          <h3 className="text-xl font-black text-slate-800 mb-6">Generate Access Key</h3>
+          <div className="space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-semibold text-slate-700 mb-2">Duration Type</label>
+                <select
+                  value={keyFormData.durationType}
+                  onChange={(e) => setKeyFormData({ ...keyFormData, durationType: e.target.value as any })}
+                  className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:border-amber-500"
+                >
+                  <option value="minutes">Minutes</option>
+                  <option value="hours">Hours</option>
+                  <option value="lifetime">Lifetime</option>
+                </select>
+              </div>
+              {keyFormData.durationType !== 'lifetime' && (
+                <div>
+                  <label className="block text-sm font-semibold text-slate-700 mb-2">Duration Value</label>
+                  <input
+                    type="number"
+                    min="1"
+                    value={keyFormData.durationValue}
+                    onChange={(e) => setKeyFormData({ ...keyFormData, durationValue: parseInt(e.target.value) || 1 })}
+                    className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:border-amber-500"
+                  />
+                </div>
+              )}
+            </div>
+            <button
+              onClick={generateKeyWithDuration}
+              className="w-full py-3 bg-gradient-to-br from-amber-500 to-orange-600 text-white font-bold rounded-xl"
+            >
+              Generate Key
+            </button>
+          </div>
+        </motion.div>
+      )}
 
       {/* Active Access Keys */}
       {activeKeys.length > 0 && (
@@ -225,7 +284,17 @@ const AdminBloodDonors: React.FC = () => {
           </div>
           <div className="space-y-3">
             {activeKeys.map((accessKey) => {
-              const timeLeft = Math.max(0, Math.ceil((new Date(accessKey.expiresAt).getTime() - Date.now()) / 1000));
+              let timeLeft: string | number = '';
+              if (accessKey.isLifetime) {
+                timeLeft = 'Lifetime';
+              } else if (accessKey.expiresAt) {
+                const secondsLeft = Math.max(0, Math.ceil((new Date(accessKey.expiresAt).getTime() - Date.now()) / 1000));
+                if (accessKey.durationType === 'minutes') {
+                  timeLeft = `${Math.ceil(secondsLeft / 60)}m remaining`;
+                } else if (accessKey.durationType === 'hours') {
+                  timeLeft = `${Math.ceil(secondsLeft / 3600)}h remaining`;
+                }
+              }
               return (
                 <div
                   key={accessKey._id}
@@ -236,11 +305,15 @@ const AdminBloodDonors: React.FC = () => {
                       <span className="text-2xl font-black text-amber-800">{accessKey.key}</span>
                     </div>
                     <div>
-                      <p className="font-bold text-slate-800">{accessKey.donorName}</p>
-                      <div className="flex items-center gap-2 text-amber-700 text-sm">
-                        <Clock className="w-4 h-4" />
-                        <span className="font-semibold">{timeLeft}s remaining</span>
-                      </div>
+                      <p className="font-bold text-slate-800">
+                        {accessKey.durationType === 'lifetime' ? 'Lifetime Key' : `${accessKey.durationValue} ${accessKey.durationType}`}
+                      </p>
+                      {timeLeft && (
+                        <div className="flex items-center gap-2 text-amber-700 text-sm">
+                          <Clock className="w-4 h-4" />
+                          <span className="font-semibold">{timeLeft}</span>
+                        </div>
+                      )}
                     </div>
                   </div>
                   <button
@@ -482,13 +555,6 @@ const AdminBloodDonors: React.FC = () => {
                 </div>
 
                 <div className="flex items-center gap-2">
-                  <button
-                    onClick={() => generateKey(donor)}
-                    className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-amber-500 to-orange-600 text-white font-bold rounded-xl shadow-lg hover:shadow-xl transition-all"
-                  >
-                    <Key className="w-4 h-4" />
-                    Generate Key
-                  </button>
                   <button
                     onClick={() => handleEdit(donor)}
                     className="p-2 text-amber-600 hover:bg-amber-100 rounded-xl"

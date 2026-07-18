@@ -187,27 +187,79 @@ const BottomNavLayout: React.FC = () => {
 
       {/* Footer - Only on Home */}
       {isHome && (
-        <footer className="bg-white border-t border-slate-100 py-8 px-4">
-          <div className="max-w-6xl mx-auto">
-            {settings?.donatedBy?.name && (
-              <div className="flex flex-col items-center justify-center gap-4 mb-6">
-                <p className="text-sm font-semibold text-slate-600">Donated By</p>
-                <div className="flex items-center gap-3">
-                  {settings.donatedBy.photo && (
-                    <img
-                      src={settings.donatedBy.photo}
-                      alt={settings.donatedBy.name}
-                      className="w-12 h-12 object-cover rounded-full border-2 border-blue-100 shadow-sm"
-                    />
-                  )}
-                  <span className="text-lg font-bold text-slate-800">{settings.donatedBy.name}</span>
+        <footer className="bg-white border-t border-slate-100 py-12 px-6">
+          <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
+            
+            {/* Column 1: App Branding & Info */}
+            <div className="space-y-4 text-center md:text-left">
+              <div className="flex items-center justify-center md:justify-start gap-3">
+                <img src="/logo.png" alt="Logo" className="h-10 w-10 object-contain rounded-xl shadow-md" />
+                <h3 className="text-lg font-black text-blue-900 tracking-tight">MY GUNUPUR</h3>
+              </div>
+              <p className="text-xs text-slate-500 font-semibold leading-relaxed max-w-sm">
+                Your one-stop citizen super app for all services, businesses, loans, clearances, and emergency hotlines in Gunupur, Rayagada, Odisha.
+              </p>
+            </div>
+
+            {/* Column 2: Quick & Legal Links */}
+            <div className="flex flex-col md:flex-row justify-center md:justify-around gap-6 text-center md:text-left">
+              <div>
+                <h4 className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-3">Quick Links</h4>
+                <div className="space-y-2">
+                  <button onClick={() => navigate('/about')} className="block w-full md:w-auto text-xs text-slate-600 hover:text-blue-600 font-bold transition-colors">
+                    About Us
+                  </button>
+                  <button onClick={() => navigate('/services')} className="block w-full md:w-auto text-xs text-slate-600 hover:text-blue-600 font-bold transition-colors">
+                    All Services
+                  </button>
+                  <button onClick={() => navigate('/contact')} className="block w-full md:w-auto text-xs text-slate-600 hover:text-blue-600 font-bold transition-colors">
+                    Contact Us
+                  </button>
                 </div>
               </div>
-            )}
-            <div className="text-center">
-              <p className="text-xs text-slate-500 font-semibold">© 2026 My Gunupur Initiative</p>
-              <p className="text-[10px] text-slate-400 mt-1">Everything You Need, All In One Place</p>
+              <div>
+                <h4 className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-3">Legal & Terms</h4>
+                <div className="space-y-2">
+                  <button onClick={() => navigate('/privacy-policy')} className="block w-full md:w-auto text-xs text-slate-600 hover:text-blue-600 font-bold transition-colors">
+                    Privacy Policy
+                  </button>
+                  <button onClick={() => navigate('/terms-of-service')} className="block w-full md:w-auto text-xs text-slate-600 hover:text-blue-600 font-bold transition-colors">
+                    Terms of Service
+                  </button>
+                </div>
+              </div>
             </div>
+
+            {/* Column 3: Donated By */}
+            <div className="flex flex-col items-center md:items-end justify-center h-full">
+              {settings?.donatedBy?.name ? (
+                <div className="flex flex-col items-center md:items-end gap-3 text-center md:text-right">
+                  <p className="text-[10px] font-black text-slate-450 uppercase tracking-widest">Donated By</p>
+                  <div className="flex items-center gap-3 bg-slate-50 border border-slate-100 rounded-2xl p-2 px-3">
+                    {settings.donatedBy.photo && (
+                      <img
+                        src={settings.donatedBy.photo}
+                        alt={settings.donatedBy.name}
+                        className="w-10 h-10 object-cover rounded-full border border-blue-100 shadow-sm"
+                      />
+                    )}
+                    <span className="text-sm font-extrabold text-slate-800">{settings.donatedBy.name}</span>
+                  </div>
+                </div>
+              ) : (
+                <div className="text-center md:text-right">
+                  <p className="text-xs text-slate-500 font-semibold">© 2026 My Gunupur Initiative</p>
+                  <p className="text-[10px] text-slate-400 mt-1">Everything You Need, All In One Place</p>
+                </div>
+              )}
+            </div>
+
+          </div>
+
+          {/* Bottom Copyright Row */}
+          <div className="max-w-6xl mx-auto mt-10 pt-6 border-t border-slate-100 flex flex-col md:flex-row items-center justify-between text-[11px] text-slate-400 font-bold gap-4">
+            <p>© 2026 My Gunupur Initiative. All rights reserved.</p>
+            <p>Everything You Need, All In One Place</p>
           </div>
         </footer>
       )}

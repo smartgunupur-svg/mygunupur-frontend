@@ -29,6 +29,9 @@ import Colleges from './pages/Colleges';
 import GovtOffices from './pages/GovtOffices';
 import Parks from './pages/Parks';
 import SportsPlaces from './pages/SportsPlaces';
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import TermsOfService from './pages/TermsOfService';
+
 
 // Admin pages
 import AdminLogin from './pages/AdminLogin';
@@ -94,6 +97,8 @@ function App() {
           <Route path="/govt-offices" element={<GovtOffices />} />
           <Route path="/parks" element={<Parks />} />
           <Route path="/sports-places" element={<SportsPlaces />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/terms-of-service" element={<TermsOfService />} />
         </Route>
 
         {/* Admin panel routes */}

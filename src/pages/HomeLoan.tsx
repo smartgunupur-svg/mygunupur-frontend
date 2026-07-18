@@ -364,57 +364,71 @@ const HomeLoan: React.FC = () => {
             <div className="text-center py-12 text-slate-500">Loading banks...</div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {banks.map((bank, index) => (
-                <motion.button
-                  key={bank._id || index}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.6 + index * 0.08 }}
-                  whileHover={{ y: -4 }}
-                  onClick={() => setSelectedBank(bank._id)}
-                  className={`p-6 rounded-2xl shadow-lg border-2xl transition-all duration-300 text-center ${
-                    selectedBank === bank._id
-                      ? 'bg-gradient-to-br from-emerald-50 to-teal-50 border-emerald-300 shadow-2xl shadow-emerald-500/20'
-                      : 'bg-white border-slate-100 hover:shadow-xl'
-                  }`}
-                >
-                  <div className="w-16 h-16 bg-white border border-slate-200 rounded-2xl flex items-center justify-center mx-auto mb-4 overflow-hidden">
-                    {bank.image ? (
-                      <img
-                        src={bank.image}
-                        alt={bank.name}
-                        className="w-full h-full object-contain"
-                        onError={(e) => {
-                          (e.target as HTMLImageElement).style.display = 'none';
-                          const fallback = (e.target as HTMLImageElement).parentElement?.querySelector('.bank-fallback');
-                          if (fallback) fallback.classList.remove('hidden');
-                        }}
-                      />
-                    ) : null}
-                    <span className={`text-2xl ${bank.image ? 'hidden' : ''} bank-fallback`}>🏦</span>
-                  </div>
-                  <h4 className="text-lg font-black text-slate-800 mb-2">
-                    {bank.name}
-                  </h4>
-                  {bank.ifsc && (
-                    <p className="text-sm text-slate-600 mb-2">
-                      IFSC: {bank.ifsc}
-                    </p>
-                  )}
-                  {bank.services && bank.services.length > 0 && (
-                    <div className="flex flex-wrap gap-2 justify-center">
-                      {bank.services.slice(0, 4).map((service: string, idx: number) => (
-                        <span
-                          key={idx}
-                          className="px-3 py-1 bg-slate-100 text-slate-600 rounded-full text-xs font-semibold"
-                        >
-                          {service}
-                        </span>
-                      ))}
+              {banks.map((bank, index) => {
+                const isSelected = selectedBank === bank._id;
+                return (
+                  <motion.button
+                    key={bank._id || index}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.6 + index * 0.08 }}
+                    whileHover={{ y: -4 }}
+                    type="button"
+                    onClick={() => setSelectedBank(isSelected ? null : bank._id)}
+                    className={`p-6 rounded-3xl border-2 transition-all duration-300 text-center relative flex flex-col items-center justify-center cursor-pointer w-full ${
+                      isSelected
+                        ? 'bg-gradient-to-br from-emerald-50/40 via-teal-50/20 to-emerald-50/5 border-emerald-400 shadow-xl shadow-emerald-500/5'
+                        : 'bg-white border-slate-100 hover:border-slate-200 shadow-md hover:shadow-lg'
+                    }`}
+                  >
+                    {isSelected && (
+                      <motion.div 
+                        initial={{ scale: 0 }}
+                        animate={{ scale: 1 }}
+                        className="absolute top-4 right-4 bg-emerald-500 text-white rounded-full p-1 shadow-md z-10"
+                      >
+                        <CheckCircle2 className="w-4 h-4" />
+                      </motion.div>
+                    )}
+
+                    <div className="w-16 h-16 bg-white border border-slate-200 rounded-2xl flex items-center justify-center mx-auto mb-4 overflow-hidden shadow-inner">
+                      {bank.image ? (
+                        <img
+                          src={bank.image}
+                          alt={bank.name}
+                          className="w-full h-full object-contain"
+                          onError={(e) => {
+                            (e.target as HTMLImageElement).style.display = 'none';
+                            const fallback = (e.target as HTMLImageElement).parentElement?.querySelector('.bank-fallback');
+                            if (fallback) fallback.classList.remove('hidden');
+                          }}
+                        />
+                      ) : null}
+                      <span className={`text-2xl ${bank.image ? 'hidden' : ''} bank-fallback`}>🏦</span>
                     </div>
-                  )}
-                </motion.button>
-              ))}
+                    <h4 className="text-lg font-black text-slate-800 mb-2">
+                      {bank.name}
+                    </h4>
+                    {bank.ifsc && (
+                      <p className="text-sm text-slate-600 mb-2">
+                        IFSC: {bank.ifsc}
+                      </p>
+                    )}
+                    {bank.services && bank.services.length > 0 && (
+                      <div className="flex flex-wrap gap-2 justify-center mt-2">
+                        {bank.services.slice(0, 4).map((service: string, idx: number) => (
+                          <span
+                            key={idx}
+                            className="px-3 py-1 bg-slate-50 text-slate-500 rounded-full text-xs font-semibold border border-slate-100"
+                          >
+                            {service}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                  </motion.button>
+                );
+              })}
             </div>
           )}
         </motion.div>
@@ -608,41 +622,7 @@ const HomeLoan: React.FC = () => {
         </motion.a>
       </div>
 
-      {/* Bottom Nav */}
-      <motion.div
-        initial={{ y: 100 }}
-        animate={{ y: 0 }}
-        transition={{ delay: 0.8, type: "spring" }}
-        className="fixed bottom-0 left-0 right-0 z-50"
-      >
-        <div className="max-w-6xl mx-auto px-4">
-          <div className="bg-white/95 backdrop-blur-2xl rounded-t-3xl shadow-2xl border-t border-l border-r border-white/50 px-6 py-4">
-            <div className="flex items-center justify-around gap-4">
-              <button
-                onClick={() => navigate('/')}
-                className="flex flex-col items-center gap-2 px-4 py-2 text-slate-500 hover:bg-slate-100 rounded-2xl transition-all"
-              >
-                <HomeIcon className="w-7 h-7" />
-                <span className="text-xs font-bold">Home</span>
-              </button>
-              <button
-                onClick={() => navigate('/home-loan')}
-                className="flex flex-col items-center gap-2 px-4 py-2 bg-gradient-to-br from-blue-50 to-emerald-50 text-blue-700 rounded-2xl transition-all"
-              >
-                <HomeIcon className="w-7 h-7" />
-                <span className="text-xs font-black">Loan</span>
-              </button>
-              <button
-                onClick={() => navigate('/building-enquiry')}
-                className="flex flex-col items-center gap-2 px-4 py-2 text-slate-500 hover:bg-slate-100 rounded-2xl transition-all"
-              >
-                <FileText className="w-7 h-7" />
-                <span className="text-xs font-bold">Building</span>
-              </button>
-            </div>
-          </div>
-        </div>
-      </motion.div>
+
     </div>
   );
 };
