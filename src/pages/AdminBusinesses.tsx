@@ -210,7 +210,7 @@ const AdminBusinesses: React.FC = () => {
                     required
                   />
                 </div>
-              </div>
+              )}
               
               <div>
                 <label className="block text-sm font-bold text-slate-700 mb-2">Business Image</label>
