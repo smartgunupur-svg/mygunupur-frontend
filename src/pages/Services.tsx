@@ -12,15 +12,13 @@ import {
   BookOpen,
   FileText,
   Compass,
-  MapPin,
   Calendar,
   Image,
   CloudSun,
   Briefcase,
   MessageSquare,
   Building,
-  Phone,
-  Utensils
+  Phone
 } from 'lucide-react';
 
 interface ServiceItem {
