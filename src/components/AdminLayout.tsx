@@ -29,7 +29,7 @@ import {
   GraduationCap,
   TreePine,
   Trophy,
-  Slideshow
+  MonitorPlay
 } from 'lucide-react';
 
 const AdminLayout: React.FC = () => {
@@ -46,7 +46,7 @@ const AdminLayout: React.FC = () => {
 
   const navItems = [
     { title: 'Dashboard', icon: LayoutDashboard, path: '/admin/dashboard', color: 'text-blue-600', bg: 'bg-blue-50' },
-    { title: 'Hero Slides', icon: Slideshow, path: '/admin/hero-slides', color: 'text-purple-600', bg: 'bg-purple-50' },
+    { title: 'Hero Slides', icon: MonitorPlay, path: '/admin/hero-slides', color: 'text-purple-600', bg: 'bg-purple-50' },
     { title: 'Loan Enquiries', icon: FileText, path: '/admin/loan-enquiries', color: 'text-blue-500', bg: 'bg-blue-50' },
     { title: 'Building Enquiries', icon: Building2, path: '/admin/building-enquiries', color: 'text-green-500', bg: 'bg-green-50' },
     { title: 'Banks', icon: Banknote, path: '/admin/banks', color: 'text-indigo-500', bg: 'bg-indigo-50' },
@@ -87,10 +87,13 @@ const AdminLayout: React.FC = () => {
       )}
 
       {/* Sidebar */}
-      <motion.aside
-        initial={false}
-        animate={{ x: sidebarOpen ? 0 : -300 }}
-        className={`fixed left-0 top-0 h-full w-72 bg-white border-r border-slate-200 z-50 shadow-xl lg:static lg:translate-x-0 transition-transform duration-300 flex-shrink-0 flex flex-col`}
+      <aside
+        className={`
+          fixed left-0 top-0 h-full w-72 bg-white border-r border-slate-200 z-50 shadow-xl 
+          lg:static lg:translate-x-0 lg:shadow-none
+          transition-transform duration-300 flex-shrink-0 flex flex-col
+          ${sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
+        `}
       >
         <div className="p-6 border-b border-slate-100">
           <div className="flex items-center gap-3">

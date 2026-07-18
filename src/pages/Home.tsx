@@ -258,35 +258,6 @@ const Home: React.FC = () => {
           </div>
         </motion.div>
 
-        {/* Counters */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1, duration: 0.6 }}
-          className="mb-10"
-        >
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {counters.map((counter, index) => {
-              const Icon = counter.icon;
-              return (
-                <motion.div
-                  key={counter.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.2 + index * 0.1 }}
-                  className="bg-white rounded-3xl p-7 shadow-xl border border-slate-100 text-center"
-                >
-                  <div className={`w-16 h-16 bg-gradient-to-br ${counter.color} rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg`}>
-                    <Icon className="w-8 h-8 text-white" />
-                  </div>
-                  <p className="text-3xl font-black text-slate-800 mb-1">{counter.value}</p>
-                  <p className="text-sm font-bold text-slate-500">{counter.label}</p>
-                </motion.div>
-              );
-            })}
-          </div>
-        </motion.div>
-
         {/* Swarga Ratha */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -309,7 +280,7 @@ const Home: React.FC = () => {
                   <p className="text-3xl md:text-4xl font-bold text-yellow-100 mb-4">ସ୍ୱର୍ଗ ରଥ</p>
                   <div className="inline-flex items-center gap-3 bg-white/40 backdrop-blur-xl px-8 py-3 rounded-full border border-white/50 shadow-[0_8px_32px_rgba(0,0,0,0.15)]">
                     <span className="text-3xl">✨</span>
-                    <span className="text-2xl font-black tracking-wide">FREE PREMIUM SERVICE</span>
+                    <span className="text-2xl font-black tracking-wide">FREE SERVICE</span>
                   </div>
                 </div>
               </div>
@@ -318,22 +289,22 @@ const Home: React.FC = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <a
                 href="tel:7735706860"
-                className="group relative flex items-center justify-center gap-4 px-10 py-7 bg-white text-orange-700 font-black text-3xl rounded-3xl shadow-2xl hover:shadow-[0_25px_50px_rgba(0,0,0,0.25)] hover:scale-105 transition-all duration-300 overflow-hidden"
+                className="group relative flex items-center justify-center gap-4 px-10 py-7 bg-white text-orange-700 font-black text-2xl rounded-3xl shadow-2xl hover:shadow-[0_25px_50px_rgba(0,0,0,0.25)] hover:scale-105 transition-all duration-300 overflow-hidden"
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-orange-100 to-amber-100 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 <div className="relative z-10 flex items-center gap-4">
                   <Phone className="w-10 h-10" />
-                  7735706860
+                  +91 77357 06860
                 </div>
               </a>
               <a
                 href="tel:8895186071"
-                className="group relative flex items-center justify-center gap-4 px-10 py-7 bg-white text-orange-700 font-black text-3xl rounded-3xl shadow-2xl hover:shadow-[0_25px_50px_rgba(0,0,0,0.25)] hover:scale-105 transition-all duration-300 overflow-hidden"
+                className="group relative flex items-center justify-center gap-4 px-10 py-7 bg-white text-orange-700 font-black text-2xl rounded-3xl shadow-2xl hover:shadow-[0_25px_50px_rgba(0,0,0,0.25)] hover:scale-105 transition-all duration-300 overflow-hidden"
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-orange-100 to-amber-100 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 <div className="relative z-10 flex items-center gap-4">
                   <Phone className="w-10 h-10" />
-                  8895186071
+                  +91 88951 86071
                 </div>
               </a>
             </div>

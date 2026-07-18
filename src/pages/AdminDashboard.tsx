@@ -20,7 +20,10 @@ import {
   BookOpen,
   Home,
   Utensils,
-  AlertTriangle
+  AlertTriangle,
+  MonitorPlay,
+  Bell,
+  TrendingUp
 } from 'lucide-react';
 import axios from 'axios';
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
@@ -43,6 +46,7 @@ const AdminDashboard: React.FC = () => {
   const [businesses, setBusinesses] = useState<any[]>([]);
   const [hotels, setHotels] = useState<any[]>([]);
   const [restaurants, setRestaurants] = useState<any[]>([]);
+  const [heroSlides, setHeroSlides] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -70,7 +74,8 @@ const AdminDashboard: React.FC = () => {
           schemesRes,
           businessesRes,
           hotelsRes,
-          restaurantsRes
+          restaurantsRes,
+          heroSlidesRes
         ] = await Promise.all([
           axios.get(`${API_URL}/loan-enquiries`, {
             headers: { Authorization: `Bearer ${token}` }
@@ -91,7 +96,8 @@ const AdminDashboard: React.FC = () => {
           axios.get(`${API_URL}/government-schemes`),
           axios.get(`${API_URL}/businesses`),
           axios.get(`${API_URL}/hotels`),
-          axios.get(`${API_URL}/restaurants`)
+          axios.get(`${API_URL}/restaurants`),
+          axios.get(`${API_URL}/hero-slides/admin`)
         ]);
         setLoanEnquiries(loanRes.data);
         setBuildingEnquiries(buildingRes.data);
@@ -109,6 +115,7 @@ const AdminDashboard: React.FC = () => {
         setBusinesses(businessesRes.data);
         setHotels(hotelsRes.data);
         setRestaurants(restaurantsRes.data);
+        setHeroSlides(heroSlidesRes.data);
       } catch (error) {
         console.error('Error fetching data:', error);
       } finally {
@@ -120,207 +127,232 @@ const AdminDashboard: React.FC = () => {
   }, [navigate]);
 
   const stats = [
-    { title: 'Loan Enquiries', value: loanEnquiries.length, icon: FileText, color: 'from-blue-500 to-blue-600' },
-    { title: 'Building Enquiries', value: buildingEnquiries.length, icon: Building2, color: 'from-green-500 to-emerald-600' },
-    { title: 'Total Banks', value: banks.length, icon: Banknote, color: 'from-indigo-500 to-purple-600' },
-    { title: 'Material Shops', value: shops.length, icon: ShoppingCart, color: 'from-orange-500 to-red-600' },
-    { title: 'Hospitals', value: hospitals.length, icon: HeartPulse, color: 'from-pink-500 to-rose-600' },
-    { title: 'Blood Donors', value: bloodDonors.length, icon: Droplets, color: 'from-red-500 to-rose-600' },
-    { title: 'Hotels', value: hotels.length, icon: Home, color: 'from-orange-600 to-red-600' },
-    { title: 'Restaurants', value: restaurants.length, icon: Utensils, color: 'from-rose-600 to-pink-600' },
-    { title: 'Tourist Places', value: touristPlaces.length, icon: MapPin, color: 'from-teal-500 to-cyan-600' },
-    { title: 'Notices', value: notices.length, icon: FileText, color: 'from-purple-500 to-purple-600' },
-    { title: 'Gallery Media', value: gallery.length, icon: Image, color: 'from-sky-500 to-blue-600' },
-    { title: 'Events Scheduled', value: events.length, icon: Calendar, color: 'from-yellow-500 to-amber-600' },
-    { title: 'Jobs Posted', value: jobs.length, icon: Briefcase, color: 'from-indigo-500 to-indigo-600' },
-    { title: 'Govt Schemes', value: schemes.length, icon: Award, color: 'from-cyan-500 to-blue-600' },
-    { title: 'Businesses & Shops', value: businesses.length, icon: BookOpen, color: 'from-amber-500 to-orange-600' },
+    { title: 'Loan Enquiries', value: loanEnquiries.length, icon: FileText, color: 'from-blue-500 to-blue-600', path: '/admin/loan-enquiries' },
+    { title: 'Building Enquiries', value: buildingEnquiries.length, icon: Building2, color: 'from-green-500 to-emerald-600', path: '/admin/building-enquiries' },
+    { title: 'Hero Slides', value: heroSlides.length, icon: MonitorPlay, color: 'from-purple-500 to-indigo-600', path: '/admin/hero-slides' },
+    { title: 'Total Banks', value: banks.length, icon: Banknote, color: 'from-indigo-500 to-purple-600', path: '/admin/banks' },
+    { title: 'Material Shops', value: shops.length, icon: ShoppingCart, color: 'from-orange-500 to-red-600', path: '/admin/construction-material' },
+    { title: 'Hospitals', value: hospitals.length, icon: HeartPulse, color: 'from-pink-500 to-rose-600', path: '/admin/hospitals' },
+    { title: 'Blood Donors', value: bloodDonors.length, icon: Droplets, color: 'from-red-500 to-rose-600', path: '/admin/blood-donors' },
+    { title: 'Hotels', value: hotels.length, icon: Home, color: 'from-orange-600 to-red-600', path: '/admin/hotels' },
+    { title: 'Restaurants', value: restaurants.length, icon: Utensils, color: 'from-rose-600 to-pink-600', path: '/admin/restaurants' },
+    { title: 'Tourist Places', value: touristPlaces.length, icon: MapPin, color: 'from-teal-500 to-cyan-600', path: '/admin/tourist-places' },
+    { title: 'Notices', value: notices.length, icon: FileText, color: 'from-purple-500 to-purple-600', path: '/admin/notices' },
+    { title: 'Gallery Media', value: gallery.length, icon: Image, color: 'from-sky-500 to-blue-600', path: '/admin/gallery' },
+    { title: 'Events Scheduled', value: events.length, icon: Calendar, color: 'from-yellow-500 to-amber-600', path: '/admin/events' },
+    { title: 'Jobs Posted', value: jobs.length, icon: Briefcase, color: 'from-indigo-500 to-indigo-600', path: '/admin/jobs' },
+    { title: 'Govt Schemes', value: schemes.length, icon: Award, color: 'from-cyan-500 to-blue-600', path: '/admin/schemes' },
+    { title: 'Businesses & Shops', value: businesses.length, icon: BookOpen, color: 'from-amber-500 to-orange-600', path: '/admin/businesses' },
   ];
 
   const recentEnquiries = [...loanEnquiries, ...buildingEnquiries]
     .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
     .slice(0, 8);
 
+  const quickActions = [
+    { title: 'Add New Bank', icon: Banknote, color: 'from-blue-50 to-indigo-50', iconColor: 'text-blue-600', border: 'border-blue-100', path: '/admin/banks' },
+    { title: 'Add Hero Slide', icon: Slideshow, color: 'from-purple-50 to-indigo-50', iconColor: 'text-purple-600', border: 'border-purple-100', path: '/admin/hero-slides' },
+    { title: 'Add Shop', icon: ShoppingCart, color: 'from-orange-50 to-red-50', iconColor: 'text-orange-600', border: 'border-orange-100', path: '/admin/construction-material' },
+    { title: 'Add Emergency Contact', icon: AlertTriangle, color: 'from-red-50 to-orange-50', iconColor: 'text-red-600', border: 'border-red-100', path: '/admin/emergency-contacts' },
+  ];
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
-        {/* Stats Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6">
-          {stats.map((stat, index) => (
-            <motion.div
-              key={stat.title}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1 }}
-              whileHover={{ y: -4 }}
-              className="bg-white rounded-2xl p-6 shadow-lg border border-slate-100"
-            >
-              <div className="flex items-center justify-between mb-4">
-                <div className={`w-12 h-12 bg-gradient-to-br ${stat.color} rounded-xl flex items-center justify-center shadow-md`}>
-                  <stat.icon className="w-6 h-6 text-white" />
-                </div>
+      {/* Welcome Section */}
+      <motion.div 
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 rounded-3xl p-8 text-white shadow-2xl"
+      >
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between">
+          <div>
+            <h1 className="text-3xl md:text-4xl font-black mb-2">Welcome back, Admin!</h1>
+            <p className="text-blue-100 text-lg font-semibold">Here's what's happening in your city today.</p>
+          </div>
+          <div className="mt-6 md:mt-0 flex items-center gap-4">
+            <div className="bg-white/20 backdrop-blur-md px-6 py-3 rounded-2xl">
+              <p className="text-sm font-semibold text-blue-100">Total Active Slides</p>
+              <p className="text-2xl font-black">{heroSlides.filter(s => s.active).length}</p>
+            </div>
+          </div>
+        </div>
+      </motion.div>
+
+      {/* Stats Grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-6 gap-6">
+        {stats.map((stat, index) => (
+          <motion.button
+            key={stat.title}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: index * 0.05 }}
+            whileHover={{ y: -6, scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            onClick={() => navigate(stat.path)}
+            className="bg-white rounded-2xl p-6 shadow-lg border border-slate-100 hover:shadow-2xl transition-all duration-300 text-left"
+          >
+            <div className="flex items-center justify-between mb-4">
+              <div className={`w-14 h-14 bg-gradient-to-br ${stat.color} rounded-xl flex items-center justify-center shadow-md`}>
+                <stat.icon className="w-7 h-7 text-white" />
               </div>
-              <p className="text-3xl font-black text-slate-800 mb-1">{loading ? '...' : stat.value}</p>
-              <p className="text-sm text-slate-500 font-semibold">{stat.title}</p>
-            </motion.div>
-          ))}
+              <TrendingUp className="w-5 h-5 text-slate-300" />
+            </div>
+            <p className="text-4xl font-black text-slate-800 mb-1">{loading ? '...' : stat.value}</p>
+            <p className="text-sm font-semibold text-slate-500">{stat.title}</p>
+          </motion.button>
+        ))}
+      </div>
+
+      {/* Main Grid */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        {/* Recent Enquiries */}
+        <div className="lg:col-span-2">
+          <div className="flex items-center justify-between mb-6">
+            <h3 className="text-2xl font-black text-slate-800 flex items-center gap-3">
+              <Clock className="w-7 h-7 text-blue-600" />
+              Recent Enquiries
+            </h3>
+            <button
+              onClick={() => navigate('/admin/loan-enquiries')}
+              className="px-5 py-2.5 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-bold rounded-xl hover:shadow-xl transition-all flex items-center gap-2"
+            >
+              View All <ArrowRight className="w-4 h-4" />
+            </button>
+          </div>
+          <div className="bg-white rounded-3xl shadow-xl border border-slate-100 overflow-hidden">
+            <div className="overflow-x-auto">
+              <table className="w-full">
+                <thead className="bg-gradient-to-r from-slate-50 to-blue-50 border-b border-slate-200">
+                  <tr>
+                    <th className="px-8 py-5 text-left text-xs font-bold text-slate-600 uppercase tracking-wider">Name</th>
+                    <th className="px-8 py-5 text-left text-xs font-bold text-slate-600 uppercase tracking-wider">Type</th>
+                    <th className="px-8 py-5 text-left text-xs font-bold text-slate-600 uppercase tracking-wider">Date</th>
+                    <th className="px-8 py-5 text-left text-xs font-bold text-slate-600 uppercase tracking-wider">Status</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-100">
+                  {loading ? (
+                    <tr>
+                      <td colSpan={4} className="px-8 py-16 text-center text-slate-500 font-semibold">Loading...</td>
+                    </tr>
+                  ) : recentEnquiries.length === 0 ? (
+                    <tr>
+                      <td colSpan={4} className="px-8 py-16 text-center text-slate-500 font-semibold">No enquiries yet</td>
+                    </tr>
+                  ) : (
+                    recentEnquiries.map((enquiry, index) => (
+                      <motion.tr
+                        key={index}
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: index * 0.05 }}
+                        className="hover:bg-slate-50 transition-colors"
+                      >
+                        <td className="px-8 py-6">
+                          <div className="flex items-center gap-4">
+                            <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-green-500 rounded-full flex items-center justify-center shadow-md">
+                              <Users className="w-6 h-6 text-white" />
+                            </div>
+                            <span className="font-bold text-lg text-slate-800">{enquiry.name}</span>
+                          </div>
+                        </td>
+                        <td className="px-8 py-6">
+                          <span className={`px-4 py-2 rounded-full text-xs font-bold ${
+                            enquiry.loanAmount ? 'bg-blue-100 text-blue-700' : 'bg-green-100 text-green-700'
+                          }`}>
+                            {enquiry.loanAmount ? 'Loan' : 'Building'}
+                          </span>
+                        </td>
+                        <td className="px-8 py-6">
+                          <div className="text-sm font-semibold text-slate-700">
+                            {new Date(enquiry.createdAt).toLocaleDateString()}
+                          </div>
+                          <div className="text-xs text-slate-500 font-medium">
+                            {new Date(enquiry.createdAt).toLocaleTimeString()}
+                          </div>
+                        </td>
+                        <td className="px-8 py-6">
+                          <span className="flex items-center gap-2 text-yellow-700 bg-yellow-100 px-4 py-2 rounded-full text-xs font-bold">
+                            <Clock className="w-4 h-4" />
+                            Pending
+                          </span>
+                        </td>
+                      </motion.tr>
+                    ))
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
 
-        {/* Main Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Recent Enquiries */}
-          <div className="lg:col-span-2">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-xl font-bold text-slate-800">Recent Enquiries</h3>
-              <button
-                onClick={() => navigate('/admin/loan-enquiries')}
-                className="text-blue-600 font-semibold text-sm hover:text-blue-700 flex items-center gap-1"
-              >
-                View All <ArrowRight className="w-4 h-4" />
-              </button>
-            </div>
-            <div className="bg-white rounded-2xl shadow-lg border border-slate-100 overflow-hidden">
-              <div className="overflow-x-auto">
-                <table className="w-full">
-                  <thead className="bg-slate-50 border-b border-slate-200">
-                    <tr>
-                      <th className="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">Name</th>
-                      <th className="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">Type</th>
-                      <th className="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">Date</th>
-                      <th className="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">Status</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-slate-100">
-                    {loading ? (
-                      <tr>
-                        <td colSpan={4} className="px-6 py-12 text-center text-slate-500">Loading...</td>
-                      </tr>
-                    ) : recentEnquiries.length === 0 ? (
-                      <tr>
-                        <td colSpan={4} className="px-6 py-12 text-center text-slate-500">No enquiries yet</td>
-                      </tr>
-                    ) : (
-                      recentEnquiries.map((enquiry, index) => (
-                        <motion.tr
-                          key={index}
-                          initial={{ opacity: 0, x: -20 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          transition={{ delay: index * 0.05 }}
-                          className="hover:bg-slate-50 transition-colors"
-                        >
-                          <td className="px-6 py-4">
-                            <div className="flex items-center gap-3">
-                              <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-green-500 rounded-full flex items-center justify-center">
-                                <Users className="w-5 h-5 text-white" />
-                              </div>
-                              <span className="font-semibold text-slate-800">{enquiry.name}</span>
-                            </div>
-                          </td>
-                          <td className="px-6 py-4">
-                            <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                              enquiry.loanAmount ? 'bg-blue-50 text-blue-600' : 'bg-green-50 text-green-600'
-                            }`}>
-                              {enquiry.loanAmount ? 'Loan' : 'Building'}
-                            </span>
-                          </td>
-                          <td className="px-6 py-4">
-                            <div className="text-sm text-slate-600">
-                              {new Date(enquiry.createdAt).toLocaleDateString()}
-                            </div>
-                            <div className="text-xs text-slate-400">
-                              {new Date(enquiry.createdAt).toLocaleTimeString()}
-                            </div>
-                          </td>
-                          <td className="px-6 py-4">
-                            <span className="flex items-center gap-1 text-yellow-600 bg-yellow-50 px-3 py-1 rounded-full text-xs font-semibold">
-                              <Clock className="w-3.5 h-3.5" />
-                              Pending
-                            </span>
-                          </td>
-                        </motion.tr>
-                      ))
-                    )}
-                  </tbody>
-                </table>
-              </div>
+        {/* Quick Actions & Stats */}
+        <div className="space-y-8">
+          {/* Quick Actions */}
+          <div>
+            <h3 className="text-2xl font-black text-slate-800 mb-6 flex items-center gap-3">
+              <Bell className="w-7 h-7 text-orange-600" />
+              Quick Actions
+            </h3>
+            <div className="bg-white rounded-3xl shadow-xl border border-slate-100 p-6 space-y-4">
+              {quickActions.map((action, index) => (
+                <motion.button
+                  key={action.title}
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                  whileHover={{ x: 4, scale: 1.01 }}
+                  onClick={() => navigate(action.path)}
+                  className={`w-full flex items-center justify-between p-5 bg-gradient-to-r ${action.color} hover:opacity-90 rounded-2xl transition-all border ${action.border}`}
+                >
+                  <div className="flex items-center gap-4">
+                    <div className={`w-12 h-12 bg-white rounded-xl flex items-center justify-center shadow-md`}>
+                      <action.icon className={`w-6 h-6 ${action.iconColor}`} />
+                    </div>
+                    <span className="font-bold text-lg text-slate-800">{action.title}</span>
+                  </div>
+                  <ArrowRight className={`w-5 h-5 ${action.iconColor}`} />
+                </motion.button>
+              ))}
             </div>
           </div>
 
-          {/* Quick Actions & Stats */}
-          <div className="space-y-6">
-            {/* Quick Actions */}
-            <div>
-              <h3 className="text-xl font-bold text-slate-800 mb-4">Quick Actions</h3>
-              <div className="bg-white rounded-2xl shadow-lg border border-slate-100 p-6">
-                <div className="space-y-3">
-                  <button
-                    onClick={() => navigate('/admin/banks')}
-                    className="w-full flex items-center justify-between p-4 bg-gradient-to-r from-blue-50 to-indigo-50 hover:from-blue-100 hover:to-indigo-100 rounded-xl transition-all border border-blue-100"
-                  >
-                    <div className="flex items-center gap-3">
-                      <Banknote className="w-5 h-5 text-blue-600" />
-                      <span className="font-semibold text-slate-800">Add New Bank</span>
-                    </div>
-                    <ArrowRight className="w-5 h-5 text-blue-600" />
-                  </button>
-                  <button
-                    onClick={() => navigate('/admin/construction-material')}
-                    className="w-full flex items-center justify-between p-4 bg-gradient-to-r from-orange-50 to-red-50 hover:from-orange-100 hover:to-red-100 rounded-xl transition-all border border-orange-100"
-                  >
-                    <div className="flex items-center gap-3">
-                      <ShoppingCart className="w-5 h-5 text-orange-600" />
-                      <span className="font-semibold text-slate-800">Add Shop</span>
-                    </div>
-                    <ArrowRight className="w-5 h-5 text-orange-600" />
-                  </button>
-                  <button
-                    onClick={() => navigate('/admin/emergency-contacts')}
-                    className="w-full flex items-center justify-between p-4 bg-gradient-to-r from-red-50 to-orange-50 hover:from-red-100 hover:to-orange-100 rounded-xl transition-all border border-red-100"
-                  >
-                    <div className="flex items-center gap-3">
-                      <AlertTriangle className="w-5 h-5 text-red-600" />
-                      <span className="font-semibold text-slate-800">Add Emergency Contact</span>
-                    </div>
-                    <ArrowRight className="w-5 h-5 text-red-600" />
-                  </button>
+          {/* System Stats */}
+          <div>
+            <h3 className="text-2xl font-black text-slate-800 mb-6 flex items-center gap-3">
+              <CheckCircle className="w-7 h-7 text-green-600" />
+              System Stats
+            </h3>
+            <div className="bg-white rounded-3xl shadow-xl border border-slate-100 p-6">
+              <div className="space-y-5">
+                <div className="flex items-center justify-between p-4 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl">
+                  <div className="flex items-center gap-4">
+                    <CheckCircle className="w-6 h-6 text-blue-600" />
+                    <span className="font-bold text-lg text-slate-800">Emergency Contacts</span>
+                  </div>
+                  <span className="font-black text-2xl text-slate-800">{emergencyContacts.length}</span>
                 </div>
-              </div>
-            </div>
-
-            {/* System Stats */}
-            <div>
-              <h3 className="text-xl font-bold text-slate-800 mb-4">System Stats</h3>
-              <div className="bg-white rounded-2xl shadow-lg border border-slate-100 p-6">
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <CheckCircle className="w-5 h-5 text-green-600" />
-                      <span className="font-medium text-slate-700">Emergency Contacts</span>
-                    </div>
-                    <span className="font-bold text-slate-800">{emergencyContacts.length}</span>
+                <div className="flex items-center justify-between p-4 bg-gradient-to-r from-teal-50 to-cyan-50 rounded-2xl">
+                  <div className="flex items-center gap-4">
+                    <MapPin className="w-6 h-6 text-teal-600" />
+                    <span className="font-bold text-lg text-slate-800">Tourist Places</span>
                   </div>
-                  <div className="h-px bg-slate-100" />
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <MapPin className="w-5 h-5 text-teal-600" />
-                      <span className="font-medium text-slate-700">Tourist Places</span>
-                    </div>
-                    <span className="font-bold text-slate-800">{touristPlaces.length}</span>
+                  <span className="font-black text-2xl text-slate-800">{touristPlaces.length}</span>
+                </div>
+                <div className="flex items-center justify-between p-4 bg-gradient-to-r from-pink-50 to-rose-50 rounded-2xl">
+                  <div className="flex items-center gap-4">
+                    <HeartPulse className="w-6 h-6 text-pink-600" />
+                    <span className="font-bold text-lg text-slate-800">Hospitals</span>
                   </div>
-                  <div className="h-px bg-slate-100" />
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <HeartPulse className="w-5 h-5 text-pink-600" />
-                      <span className="font-medium text-slate-700">Hospitals</span>
-                    </div>
-                    <span className="font-bold text-slate-800">{hospitals.length}</span>
-                  </div>
+                  <span className="font-black text-2xl text-slate-800">{hospitals.length}</span>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-  );;
+    </div>
+  );
 };
 
 export default AdminDashboard;
