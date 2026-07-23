@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import { Phone, MapPin, Star, Activity, ShoppingBag, Radio, Sparkles, Wrench, ShieldAlert, Home as HomeIcon, Utensils, ArrowLeft, MessageCircle } from 'lucide-react';
+import { Phone, MapPin, Star, Activity, ShoppingBag, Radio, Sparkles, Wrench, ShieldAlert, Home as HomeIcon, Utensils, ArrowLeft, MessageCircle, CheckCircle2 } from 'lucide-react';
 import axios from 'axios';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
@@ -95,12 +95,19 @@ const BusinessDetail: React.FC = () => {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="rounded-3xl overflow-hidden shadow-lg"
+            className="rounded-3xl overflow-hidden shadow-lg bg-slate-950 relative h-64 md:h-80 flex items-center justify-center border border-slate-100/50"
           >
+            {/* Blurred background photo */}
+            <img
+              src={business.image}
+              alt=""
+              className="absolute inset-0 w-full h-full object-cover blur-xl opacity-35 scale-110 pointer-events-none select-none"
+            />
+            {/* Main fully-visible contain photo */}
             <img
               src={business.image}
               alt={business.name}
-              className="w-full h-64 object-cover cursor-pointer hover:scale-105 transition-transform duration-300"
+              className="relative z-10 max-w-full max-h-full object-contain cursor-pointer transition-transform duration-500 hover:scale-[1.01]"
               onClick={() => setSelectedImage(business.image)}
             />
           </motion.div>
@@ -178,25 +185,28 @@ const BusinessDetail: React.FC = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="bg-white rounded-3xl p-6 shadow-lg border border-slate-100"
+          className="bg-white rounded-3xl p-6 shadow-lg border border-slate-100 space-y-4"
         >
-          <h3 className="text-lg font-black text-slate-800 mb-4">Contact</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <h3 className="text-lg font-black text-slate-800 flex items-center gap-2">
+            <CheckCircle2 className="w-5 h-5 text-blue-500" />
+            <span>Contact & Location</span>
+          </h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <a
               href={`tel:${business.phone}`}
-              className="flex items-center justify-center gap-3 py-4 bg-blue-50 hover:bg-blue-100 text-blue-600 rounded-2xl font-bold transition-all"
+              className="flex items-center justify-center gap-3 py-4 bg-gradient-to-r from-blue-600 to-indigo-650 hover:from-blue-700 hover:to-indigo-700 active:scale-98 text-white rounded-2xl font-bold shadow-md shadow-blue-500/10 hover:shadow-lg transition-all duration-200"
             >
-              <Phone className="w-6 h-6" />
+              <Phone className="w-5 h-5" />
               <span>Call: {business.phone}</span>
             </a>
 
             {business.alternatePhone && (
               <a
                 href={`tel:${business.alternatePhone}`}
-                className="flex items-center justify-center gap-3 py-4 bg-slate-50 hover:bg-slate-100 text-slate-700 rounded-2xl font-bold transition-all"
+                className="flex items-center justify-center gap-3 py-4 bg-slate-50 hover:bg-slate-100 active:scale-98 text-slate-700 rounded-2xl border border-slate-200/50 font-bold transition-all duration-200"
               >
-                <Phone className="w-6 h-6" />
-                <span>Alt: {business.alternatePhone}</span>
+                <Phone className="w-5 h-5" />
+                <span>Alt Call: {business.alternatePhone}</span>
               </a>
             )}
 
@@ -205,9 +215,9 @@ const BusinessDetail: React.FC = () => {
                 href={`https://wa.me/${business.whatsappNumber.replace(/\D/g, '')}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center gap-3 py-4 bg-green-50 hover:bg-green-100 text-green-600 rounded-2xl font-bold transition-all"
+                className="flex items-center justify-center gap-3 py-4 bg-emerald-500 hover:bg-emerald-600 active:scale-98 text-white rounded-2xl font-bold shadow-md shadow-emerald-500/10 hover:shadow-lg transition-all duration-200"
               >
-                <MessageCircle className="w-6 h-6" />
+                <MessageCircle className="w-5 h-5" />
                 <span>WhatsApp: {business.whatsappNumber}</span>
               </a>
             )}
@@ -217,31 +227,37 @@ const BusinessDetail: React.FC = () => {
                 href={business.googleMap}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center gap-3 py-4 bg-slate-50 hover:bg-slate-100 text-slate-700 rounded-2xl font-bold transition-all"
+                className="flex items-center justify-center gap-3 py-4 bg-slate-100 hover:bg-slate-200 active:scale-98 text-slate-800 rounded-2xl border border-slate-350/20 font-bold transition-all duration-200"
               >
-                <MapPin className="w-6 h-6" />
-                <span>View on Map</span>
+                <MapPin className="w-5 h-5 text-red-500" />
+                <span>View on Google Maps</span>
               </a>
             )}
           </div>
         </motion.div>
       </div>
 
-      {/* Full Screen Image Preview */}
+      {/* Full Screen Image Preview Modal */}
       {selectedImage && (
         <div 
-          className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-4"
+          className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center p-4 backdrop-blur-sm"
           onClick={() => setSelectedImage(null)}
         >
           <div 
-            className="max-w-5xl max-h-[90vh] overflow-auto"
+            className="max-w-4xl max-h-[90vh] relative overflow-hidden"
             onClick={(e) => e.stopPropagation()}
           >
             <img 
               src={selectedImage} 
               alt="Preview" 
-              className="w-full h-auto object-contain rounded-xl"
+              className="w-full h-auto max-h-[85vh] object-contain rounded-2xl shadow-2xl border border-white/10"
             />
+            <button 
+              onClick={() => setSelectedImage(null)}
+              className="absolute top-4 right-4 bg-black/60 hover:bg-black/85 text-white px-3 py-1.5 rounded-full text-xs font-black border border-white/20 transition-colors"
+            >
+              Close
+            </button>
           </div>
         </div>
       )}
