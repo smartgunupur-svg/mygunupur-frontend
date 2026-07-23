@@ -109,6 +109,8 @@ const fallbackBusinesses = [
     name: 'Arogya Medical Store',
     category: 'Medical Stores',
     phone: '9437578310',
+    alternatePhone: '9437578311',
+    whatsappNumber: '9437578310',
     address: 'Main Road, Near Old Hospital, Gunupur',
     rating: 4.8,
     features: ['24x7 Open', 'Home Delivery'],
@@ -119,6 +121,7 @@ const fallbackBusinesses = [
     name: 'Sardar Hardware & Electricals',
     category: 'Hardware',
     phone: '9876543210',
+    whatsappNumber: '9876543210',
     address: 'Cinema Hall Road, Gunupur',
     rating: 4.5,
     features: ['Best Price', 'All brands'],
@@ -129,6 +132,7 @@ const fallbackBusinesses = [
     name: 'Gupta Grocery Store',
     category: 'Grocery',
     phone: '9988776655',
+    alternatePhone: '9988776644',
     address: 'Daily Market, Gunupur',
     rating: 4.6,
     features: ['Fresh Veggies', 'Home Delivery'],
@@ -139,6 +143,7 @@ const fallbackBusinesses = [
     name: 'Smart Repair & Electronics',
     category: 'Repair Shops',
     phone: '7766554433',
+    whatsappNumber: '7766554433',
     address: 'Bus Stand Complex, Gunupur',
     rating: 4.2,
     features: ['Mobile Repair', 'TV Repair'],
@@ -386,10 +391,22 @@ const BusinessDirectory: React.FC = () => {
                       <a
                         href={`tel:${b.phone}`}
                         onClick={(e) => e.stopPropagation()}
+                        title={`Call: ${b.phone}`}
                         className="flex-1 py-2.5 bg-blue-600 hover:bg-blue-700 active:scale-98 text-white rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 shadow-sm transition-all duration-200"
                       >
                         <Phone className="w-4 h-4" /> Call
                       </a>
+
+                      {b.alternatePhone && (
+                        <a
+                          href={`tel:${b.alternatePhone}`}
+                          onClick={(e) => e.stopPropagation()}
+                          title={`Alternate Call: ${b.alternatePhone}`}
+                          className="py-2.5 px-3.5 bg-sky-50 hover:bg-sky-100 text-sky-600 border border-sky-100/50 rounded-xl text-xs font-bold flex items-center justify-center transition-all duration-200"
+                        >
+                          <Phone className="w-4 h-4" />
+                        </a>
+                      )}
                       
                       {b.whatsappNumber && (
                         <a
@@ -397,6 +414,7 @@ const BusinessDirectory: React.FC = () => {
                           target="_blank"
                           rel="noopener noreferrer"
                           onClick={(e) => e.stopPropagation()}
+                          title={`WhatsApp: ${b.whatsappNumber}`}
                           className="py-2.5 px-3.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-600 border border-emerald-100/50 rounded-xl text-xs font-bold flex items-center justify-center transition-all duration-200"
                         >
                           <MessageCircle className="w-4 h-4" />
@@ -409,7 +427,8 @@ const BusinessDirectory: React.FC = () => {
                             e.stopPropagation();
                             window.open(b.googleMap, '_blank');
                           }}
-                          className="py-2.5 px-3.5 bg-slate-50 hover:bg-slate-100 text-slate-500 border border-slate-200/50 rounded-xl text-xs font-bold flex items-center justify-center transition-all duration-200"
+                          title="View on Map"
+                          className="py-2.5 px-3.5 bg-slate-50 hover:bg-slate-100 text-slate-550 border border-slate-200/50 rounded-xl text-xs font-bold flex items-center justify-center transition-all duration-200"
                         >
                           <MapPin className="w-4 h-4" />
                         </button>
