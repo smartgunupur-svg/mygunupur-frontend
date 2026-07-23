@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { MapPin, Calendar, Clock, Compass } from 'lucide-react';
+import { Helmet } from 'react-helmet-async';
 import axios from 'axios';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
@@ -34,6 +35,11 @@ const Explore: React.FC = () => {
 
   return (
     <div className="p-4 space-y-6">
+      <Helmet>
+        <title>Explore Gunupur - Tourist Places & Attractions</title>
+        <meta name="description" content="Discover the best tourist places, temples, waterfalls, and attractions in Gunupur, Odisha. Plan your visit with our complete guide." />
+        <meta name="keywords" content="Gunupur, Odisha, tourist places, temples, waterfalls, explore Gunupur" />
+      </Helmet>
       {/* Category Tabs */}
       <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-none">
         {tabs.map((tab) => (
@@ -72,7 +78,7 @@ const Explore: React.FC = () => {
         </div>
       ) : (
         <div className="space-y-6">
-          {filteredPlaces.map((place) => (
+          {filteredPlaces.map((place, index) => (
             <motion.div
               key={place._id || place.id}
               initial={{ opacity: 0, y: 15 }}
@@ -87,9 +93,16 @@ const Explore: React.FC = () => {
                   alt={place.title}
                   className="w-full h-full object-cover"
                 />
-                <span className="absolute top-4 left-4 bg-white/90 backdrop-blur-md px-3 py-1 rounded-full text-[10px] font-bold text-blue-900 border border-slate-200/50 shadow-sm">
-                  {place.category}
-                </span>
+                <div className="absolute top-4 left-4 flex items-center gap-2">
+                  <span className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-3 py-1 rounded-full text-xs font-black shadow-lg">
+                    #{index + 1}
+                  </span>
+                  {place.category && (
+                    <span className="bg-white/90 backdrop-blur-md px-3 py-1 rounded-full text-[10px] font-bold text-blue-900 border border-slate-200/50 shadow-sm">
+                      {place.category}
+                    </span>
+                  )}
+                </div>
               </div>
 
               {/* Info Container */}

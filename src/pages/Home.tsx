@@ -178,8 +178,15 @@ const Home: React.FC = () => {
   return (
     <div className="space-y-8 py-6 px-4 md:px-0 overflow-hidden">
       <Helmet>
-        <title>My Gunupur - Your Gateway to Citizen Services</title>
-        <meta name="description" content="My Gunupur - Your one-stop platform for all citizen services in Gunupur, Odisha." />
+        <title>My Gunupur - Citizen Super App | Gunupur, Odisha</title>
+        <meta name="description" content="My Gunupur - Your one-stop citizen super app for Gunupur, Odisha. Find local businesses, schools, colleges, hospitals, emergency contacts, tourist places, jobs, and more. One place for everything about Gunupur." />
+        <meta name="keywords" content="My Gunupur, MyGunupur, Gunupur, Gunupur Odisha, Gunupur services, Gunupur businesses, Gunupur schools, Gunupur colleges, Gunupur hospitals, Gunupur tourist places, Gunupur jobs, Gunupur hotels, Gunupur emergency, Gunupur local, GIET, GIET University, GIET Gunupur" />
+        <meta property="og:title" content="My Gunupur - Citizen Super App | Everything about Gunupur" />
+        <meta property="og:description" content="My Gunupur - Your one-stop citizen super app for Gunupur, Odisha. Find local businesses, schools, colleges, hospitals, emergency contacts, tourist places, jobs, and more." />
+        <meta property="og:url" content="https://mygunupur.in" />
+        <meta property="og:image" content="https://mygunupur.in/logo.png" />
+        <meta name="twitter:title" content="My Gunupur - Citizen Super App" />
+        <meta name="twitter:description" content="My Gunupur - Your one-stop citizen super app for Gunupur, Odisha. Find local businesses, schools, colleges, hospitals, emergency contacts, tourist places, jobs, and more." />
       </Helmet>
 
       <div className="max-w-6xl mx-auto relative">
@@ -311,7 +318,7 @@ const Home: React.FC = () => {
             <span className="w-3 h-12 bg-gradient-to-b from-blue-600 to-indigo-600 rounded-full shadow-lg shadow-blue-500/20"></span>
             Live City Hub & Hotline
           </h2>
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             
             {/* Live Weather Card */}
             <motion.div
@@ -404,7 +411,7 @@ const Home: React.FC = () => {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-3 gap-2">
+                <div className="grid grid-cols-2 gap-2">
                   <a
                     href="tel:100"
                     className="flex flex-col items-center justify-center p-3 bg-red-50/50 hover:bg-red-500/10 border border-red-100/50 hover:border-red-500/20 text-red-700 rounded-2xl transition-all duration-300 group/btn hover:scale-105"
@@ -429,6 +436,14 @@ const Home: React.FC = () => {
                     <span className="text-xs font-black text-slate-800 mt-1.5">Fire</span>
                     <span className="text-[10px] font-bold text-slate-500 mt-0.5">101</span>
                   </a>
+                  <a
+                    href="tel:7735706860"
+                    className="flex flex-col items-center justify-center p-3 bg-amber-50/50 hover:bg-amber-500/10 border border-amber-100/50 hover:border-amber-500/20 text-amber-700 rounded-2xl transition-all duration-300 group/btn hover:scale-105"
+                  >
+                    <Phone className="w-5 h-5 text-amber-650 group-hover/btn:scale-115 transition-transform" />
+                    <span className="text-xs font-black text-slate-800 mt-1.5">Swarga Ratha</span>
+                    <span className="text-[10px] font-bold text-slate-500 mt-0.5">7735706860</span>
+                  </a>
                 </div>
               </div>
 
@@ -440,58 +455,6 @@ const Home: React.FC = () => {
                 <ChevronRight className="w-3.5 h-3.5 group-hover/all:translate-x-0.5 transition-transform" />
               </button>
             </motion.div>
-
-            {/* Swarga Ratha Card */}
-            <motion.div
-              whileHover={{ y: -6, scale: 1.01 }}
-              className="bg-white border border-slate-150/80 rounded-3xl p-6 shadow-lg relative overflow-hidden flex flex-col justify-between group hover:shadow-amber-500/5 hover:border-amber-300 transition-all duration-300 min-h-[220px]"
-            >
-              <div className="absolute -right-10 -top-10 w-32 h-32 bg-amber-500/5 rounded-full blur-2xl group-hover:bg-amber-500/10 transition-all"></div>
-              
-              <div className="relative z-10 space-y-4">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <span className="relative flex h-2 w-2">
-                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
-                      <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-500"></span>
-                    </span>
-                    <span className="text-[10px] font-black text-slate-400 tracking-widest uppercase">FREE HEARSE SERVICE</span>
-                  </div>
-                </div>
-
-                <div className="flex items-center justify-between">
-                  <div className="space-y-1">
-                    <h3 className="text-xl font-black text-slate-800 flex items-center gap-2">
-                      Swarga Ratha
-                    </h3>
-                    <p className="text-xs font-semibold text-slate-500">ସ୍ୱର୍ଗ ରଥ (Free 24x7 service)</p>
-                  </div>
-                  <img src="/logo.png" alt="My Gunupur Logo" className="w-10 h-10 object-contain drop-shadow" />
-                </div>
-                
-                <p className="text-[11px] text-slate-550 font-medium leading-relaxed">
-                  Dignified hearse van services provided for the citizens of Gunupur. Free service dialers below:
-                </p>
-              </div>
-
-              <div className="grid grid-cols-2 gap-2 mt-5 relative z-10">
-                <a
-                  href="tel:7735706860"
-                  className="flex items-center justify-center gap-2 py-3 bg-amber-50/60 hover:bg-amber-100/80 border border-amber-100/50 hover:border-amber-200 rounded-2xl transition-all duration-300 text-amber-800 hover:scale-103 font-bold text-xs"
-                >
-                  <Phone className="w-3.5 h-3.5" />
-                  7735706860
-                </a>
-                <a
-                  href="tel:8895186071"
-                  className="flex items-center justify-center gap-2 py-3 bg-amber-50/60 hover:bg-amber-100/80 border border-amber-100/50 hover:border-amber-200 rounded-2xl transition-all duration-300 text-amber-800 hover:scale-103 font-bold text-xs"
-                >
-                  <Phone className="w-3.5 h-3.5" />
-                  8895186071
-                </a>
-              </div>
-            </motion.div>
-
           </div>
         </motion.div>
 

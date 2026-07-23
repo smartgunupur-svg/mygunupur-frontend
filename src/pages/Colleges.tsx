@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Search, Phone, MapPin, BookOpen } from 'lucide-react';
+import { Helmet } from 'react-helmet-async';
 import axios from 'axios';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
@@ -59,6 +60,11 @@ const Colleges: React.FC = () => {
 
   return (
     <div className="p-4 space-y-6">
+      <Helmet>
+        <title>Colleges in Gunupur | GIET University | My Gunupur</title>
+        <meta name="description" content="Find all colleges in Gunupur, Odisha including GIET University, Govt Polytechnic Gunupur, and more with contact details, addresses, courses, and locations." />
+        <meta name="keywords" content="Gunupur colleges, colleges in Gunupur, GIET University, GIET Gunupur, Govt Polytechnic Gunupur, engineering colleges Gunupur, degree colleges Gunupur, B.Tech Gunupur" />
+      </Helmet>
       {/* Search Input */}
       <div className="relative">
         <Search className="absolute left-3.5 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />

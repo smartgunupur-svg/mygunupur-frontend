@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Search, Phone, MapPin, GraduationCap } from 'lucide-react';
+import { Helmet } from 'react-helmet-async';
 import axios from 'axios';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
@@ -69,6 +70,11 @@ const Schools: React.FC = () => {
 
   return (
     <div className="p-4 space-y-6">
+      <Helmet>
+        <title>Schools in Gunupur | My Gunupur</title>
+        <meta name="description" content="Find all schools in Gunupur, Odisha - Government, private, CBSE, CHSE schools with contact details, addresses, and locations." />
+        <meta name="keywords" content="Gunupur schools, schools in Gunupur, CBSE schools Gunupur, CHSE schools Gunupur, Govt schools Gunupur, private schools Gunupur" />
+      </Helmet>
       {/* Search Input */}
       <div className="relative">
         <Search className="absolute left-3.5 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />

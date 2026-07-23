@@ -246,7 +246,7 @@ const BottomNavLayout: React.FC = () => {
                     />
                   </div>
                   <div className="text-left">
-                    <span className="text-sm font-extrabold text-slate-800">Voona Mallikarjun</span>
+                    <span className="text-sm font-extrabold text-slate-800">Late Voona Mallikarjun</span>
                     <p className="text-[10px] text-slate-500 font-bold">Tribute Page →</p>
                   </div>
                 </div>

@@ -15,6 +15,7 @@ import BottomNavLayout from './components/BottomNavLayout';
 import Services from './pages/Services';
 import Explore from './pages/Explore';
 import BusinessDirectory from './pages/BusinessDirectory';
+import BusinessDetail from './pages/BusinessDetail';
 import GovernmentSchemes from './pages/GovernmentSchemes';
 import Notices from './pages/Notices';
 import Hotels from './pages/Hotels';
@@ -75,6 +76,7 @@ function App() {
           <Route path="/services" element={<Services />} />
           <Route path="/explore" element={<Explore />} />
           <Route path="/directory" element={<BusinessDirectory />} />
+          <Route path="/directory/:id" element={<BusinessDetail />} />
           <Route path="/about" element={<About />} />
           <Route path="/home-loan" element={<HomeLoan />} />
           <Route path="/building-enquiry" element={<BuildingEnquiry />} />

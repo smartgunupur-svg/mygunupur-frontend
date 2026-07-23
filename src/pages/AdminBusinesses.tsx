@@ -18,6 +18,8 @@ const AdminBusinesses: React.FC = () => {
     category: 'Medical Stores',
     customCategory: '',
     phone: '',
+    alternatePhone: '',
+    whatsappNumber: '',
     address: '',
     googleMap: '',
     description: '',
@@ -101,6 +103,8 @@ const AdminBusinesses: React.FC = () => {
       category: 'Medical Stores',
       customCategory: '',
       phone: '',
+      alternatePhone: '',
+      whatsappNumber: '',
       address: '',
       googleMap: '',
       description: '',
@@ -123,6 +127,8 @@ const AdminBusinesses: React.FC = () => {
       category: business.category || 'Medical Stores',
       customCategory: business.customCategory || '',
       phone: business.phone,
+      alternatePhone: business.alternatePhone || '',
+      whatsappNumber: business.whatsappNumber || '',
       address: business.address || '',
       googleMap: business.googleMap || '',
       description: business.description || '',
@@ -257,7 +263,7 @@ const AdminBusinesses: React.FC = () => {
                 </label>
               </div>
               
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
                   <label className="block text-sm font-bold text-slate-700 mb-2">Phone</label>
                   <input
@@ -269,6 +275,28 @@ const AdminBusinesses: React.FC = () => {
                     placeholder="Mobile number"
                   />
                 </div>
+                <div>
+                  <label className="block text-sm font-bold text-slate-700 mb-2">Alternate Phone</label>
+                  <input
+                    type="text"
+                    value={formData.alternatePhone}
+                    onChange={(e) => setFormData({ ...formData, alternatePhone: e.target.value })}
+                    className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:border-amber-500"
+                    placeholder="Alternate mobile number"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-bold text-slate-700 mb-2">WhatsApp Number</label>
+                  <input
+                    type="text"
+                    value={formData.whatsappNumber}
+                    onChange={(e) => setFormData({ ...formData, whatsappNumber: e.target.value })}
+                    className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:border-amber-500"
+                    placeholder="WhatsApp number (with country code)"
+                  />
+                </div>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-bold text-slate-700 mb-2">Rating</label>
                   <input
