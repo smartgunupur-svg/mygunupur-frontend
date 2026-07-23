@@ -28,7 +28,8 @@ const AdminBusinesses: React.FC = () => {
     isVeg: 'false',
     features: '',
     materials: '',
-    image: ''
+    image: '',
+    index: '0'
   });
 
   useEffect(() => {
@@ -81,6 +82,7 @@ const AdminBusinesses: React.FC = () => {
       category: formData.category === 'Other' ? formData.customCategory : formData.category,
       rating: parseFloat(formData.rating),
       isVeg: formData.isVeg === 'true',
+      index: parseInt(formData.index) || 0,
       features: formData.features.split(',').map(f => f.trim()).filter(f => f),
       materials: formData.materials.split(',').map(m => m.trim()).filter(m => m)
     };
@@ -99,22 +101,23 @@ const AdminBusinesses: React.FC = () => {
       setShowForm(false);
       setEditingBusiness(null);
       setFormData({
-      name: '',
-      category: 'Medical Stores',
-      customCategory: '',
-      phone: '',
-      alternatePhone: '',
-      whatsappNumber: '',
-      address: '',
-      googleMap: '',
-      description: '',
-      rating: '4.5',
-      priceRange: '₹₹',
-      isVeg: 'false',
-      features: '',
-      materials: '',
-      image: ''
-    });
+        name: '',
+        category: 'Medical Stores',
+        customCategory: '',
+        phone: '',
+        alternatePhone: '',
+        whatsappNumber: '',
+        address: '',
+        googleMap: '',
+        description: '',
+        rating: '4.5',
+        priceRange: '₹₹',
+        isVeg: 'false',
+        features: '',
+        materials: '',
+        image: '',
+        index: '0'
+      });
     } catch (error) {
       console.error('Error saving business:', error);
     }
@@ -137,7 +140,8 @@ const AdminBusinesses: React.FC = () => {
       isVeg: business.isVeg ? 'true' : 'false',
       features: business.features?.join(', ') || '',
       materials: business.materials?.join(', ') || '',
-      image: business.image || ''
+      image: business.image || '',
+      index: String(business.index !== undefined ? business.index : 0)
     });
     setShowForm(true);
   };
@@ -309,6 +313,16 @@ const AdminBusinesses: React.FC = () => {
                     className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:border-amber-500"
                   />
                 </div>
+                <div>
+                  <label className="block text-sm font-bold text-slate-700 mb-2">Display Index (Sorting Order)</label>
+                  <input
+                    type="number"
+                    value={formData.index}
+                    onChange={(e) => setFormData({ ...formData, index: e.target.value })}
+                    className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:border-amber-500"
+                    placeholder="Enter display index (0, 1, 2...)"
+                  />
+                </div>
               </div>
               <div>
                 <label className="block text-sm font-bold text-slate-700 mb-2">Features (comma separated)</label>
@@ -370,10 +384,15 @@ const AdminBusinesses: React.FC = () => {
               >
                 <div className="flex items-start justify-between">
                   <div>
-                    <span className="px-2.5 py-0.5 bg-amber-50 border border-amber-100 text-amber-600 text-[10px] font-bold rounded-full uppercase">
-                      {business.category}
-                    </span>
-                    <h3 className="text-base font-bold text-slate-800 mt-1">{business.name}</h3>
+                    <div className="flex gap-2 items-center flex-wrap">
+                      <span className="px-2.5 py-0.5 bg-amber-50 border border-amber-100 text-amber-600 text-[10px] font-bold rounded-full uppercase">
+                        {business.category}
+                      </span>
+                      <span className="px-2.5 py-0.5 bg-slate-100 text-slate-650 text-[10px] font-bold rounded-full">
+                        Index: {business.index !== undefined ? business.index : 0}
+                      </span>
+                    </div>
+                    <h3 className="text-base font-bold text-slate-800 mt-1.5">{business.name}</h3>
                     <p className="text-xs text-slate-500 font-bold">Phone: {business.phone}</p>
                     <p className="text-xs text-slate-500 font-medium">Address: {business.address || 'Gunupur'}</p>
                     {business.materials?.length > 0 && (

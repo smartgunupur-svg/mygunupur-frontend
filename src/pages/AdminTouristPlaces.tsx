@@ -20,7 +20,9 @@ const AdminTouristPlaces: React.FC = () => {
     title: '',
     description: '',
     image: '',
-    googleMap: ''
+    googleMap: '',
+    category: 'Tourist Places',
+    index: 0
   });
   const [uploading, setUploading] = useState(false);
 
@@ -87,7 +89,7 @@ const AdminTouristPlaces: React.FC = () => {
       }
       setShowForm(false);
       setEditingPlace(null);
-      setFormData({ title: '', description: '', image: '', googleMap: '' });
+      setFormData({ title: '', description: '', image: '', googleMap: '', category: 'Tourist Places', index: 0 });
     } catch (error) {
       console.error('Error saving place:', error);
     }
@@ -99,7 +101,9 @@ const AdminTouristPlaces: React.FC = () => {
       title: place.title,
       description: place.description || '',
       image: place.image || '',
-      googleMap: place.googleMap || ''
+      googleMap: place.googleMap || '',
+      category: place.category || 'Tourist Places',
+      index: place.index !== undefined ? place.index : 0
     });
     setShowForm(true);
   };
@@ -201,6 +205,30 @@ const AdminTouristPlaces: React.FC = () => {
                   placeholder="Google Maps URL"
                 />
               </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-bold text-slate-700 mb-2">Category</label>
+                  <input
+                    type="text"
+                    required
+                    value={formData.category}
+                    onChange={(e) => setFormData({ ...formData, category: e.target.value })}
+                    className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:border-teal-500"
+                    placeholder="e.g. Tourist Places, Nature, Temples"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-bold text-slate-700 mb-2">Display Index (Sorting Order)</label>
+                  <input
+                    type="number"
+                    required
+                    value={formData.index}
+                    onChange={(e) => setFormData({ ...formData, index: parseInt(e.target.value) || 0 })}
+                    className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:border-teal-500"
+                    placeholder="Enter display index (0, 1, 2...)"
+                  />
+                </div>
+              </div>
               <button
                 type="submit"
                 className="w-full py-3 bg-gradient-to-br from-teal-600 to-cyan-600 text-white font-bold rounded-xl"
@@ -236,8 +264,16 @@ const AdminTouristPlaces: React.FC = () => {
                 <div className="flex items-start justify-between">
                   <div>
                     <h3 className="text-lg font-bold text-slate-800">{place.title}</h3>
+                    <div className="flex gap-2 mt-1 flex-wrap">
+                      <span className="text-[10px] bg-teal-50 text-teal-700 px-2 py-0.5 rounded-md font-extrabold uppercase tracking-wide">
+                        {place.category || 'Tourist Places'}
+                      </span>
+                      <span className="text-[10px] bg-slate-100 text-slate-600 px-2 py-0.5 rounded-md font-extrabold">
+                        Index: {place.index !== undefined ? place.index : 0}
+                      </span>
+                    </div>
                     {place.description && (
-                      <p className="text-slate-600 text-sm mt-2">{place.description}</p>
+                      <p className="text-slate-600 text-sm mt-2.5">{place.description}</p>
                     )}
                   </div>
                   <div className="flex gap-2">
