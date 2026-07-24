@@ -294,17 +294,6 @@ const BusinessDirectory: React.FC = () => {
                 >
                   {/* Card Visual Header (Photo or Category placeholder) */}
                   <div className="relative h-52 w-full bg-slate-950 overflow-hidden flex items-center justify-center">
-                    {/* Overlay Badges */}
-                    <span className="absolute top-3.5 left-3.5 z-20 px-2.5 py-1 text-[10px] font-extrabold tracking-wider bg-white/90 backdrop-blur-md text-slate-800 rounded-full shadow-sm flex items-center gap-1 border border-white/20">
-                      <Icon className={`w-3 h-3 ${theme.text}`} />
-                      {b.category}
-                    </span>
-
-                    <span className="absolute top-3.5 right-3.5 z-20 px-2.5 py-1 text-[10px] font-black bg-amber-400 text-slate-900 rounded-full shadow-sm flex items-center gap-0.5 border border-amber-300/20">
-                      <Star className="w-3 h-3 fill-slate-900 text-slate-900" />
-                      {b.rating || 4.5}
-                    </span>
-
                     {b.isVeg && (
                       <span className="absolute bottom-3.5 right-3.5 z-20 px-2.5 py-1 text-[9px] font-black bg-emerald-500 text-white rounded-full shadow-sm flex items-center gap-1 border border-emerald-400/20">
                         <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
@@ -342,7 +331,6 @@ const BusinessDirectory: React.FC = () => {
                       <div className={`absolute inset-0 bg-gradient-to-br ${theme.gradient} flex flex-col items-center justify-center p-6 text-center text-white/95`}>
                         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-white/10 via-transparent to-transparent pointer-events-none" />
                         <Icon className="w-12 h-12 text-white/80 mb-2 drop-shadow-md transition-transform duration-500 group-hover:scale-110" />
-                        <span className="text-[10px] font-black tracking-widest text-white/60 uppercase">{b.category}</span>
                       </div>
                     )}
                   </div>
@@ -350,6 +338,16 @@ const BusinessDirectory: React.FC = () => {
                   {/* Card Content body */}
                   <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
                     <div className="space-y-2">
+                      <div className="flex items-center justify-between gap-2">
+                        <span className="inline-flex items-center gap-1 text-[10px] font-extrabold tracking-wider text-slate-600">
+                          <Icon className={`w-3 h-3 ${theme.text}`} />
+                          {b.category}
+                        </span>
+                        <span className="inline-flex items-center gap-0.5 shrink-0 px-2 py-0.5 text-[10px] font-black bg-amber-50 text-amber-700 rounded-md">
+                          <Star className="w-3 h-3 fill-amber-500 text-amber-500" />
+                          {b.rating || 4.5}
+                        </span>
+                      </div>
                       <h4 className="font-extrabold text-slate-800 text-sm group-hover:text-blue-600 transition-colors line-clamp-1">
                         {b.name}
                       </h4>
@@ -416,6 +414,19 @@ const BusinessDirectory: React.FC = () => {
                           onClick={(e) => e.stopPropagation()}
                           title={`WhatsApp: ${b.whatsappNumber}`}
                           className="py-2.5 px-3.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-600 border border-emerald-100/50 rounded-xl text-xs font-bold flex items-center justify-center transition-all duration-200"
+                        >
+                          <MessageCircle className="w-4 h-4" />
+                        </a>
+                      )}
+
+                      {b.alternateWhatsappNumber && (
+                        <a
+                          href={`https://wa.me/${b.alternateWhatsappNumber.replace(/\D/g, '')}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={(e) => e.stopPropagation()}
+                          title={`Alt WhatsApp: ${b.alternateWhatsappNumber}`}
+                          className="py-2.5 px-3.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-100/50 rounded-xl text-xs font-bold flex items-center justify-center transition-all duration-200"
                         >
                           <MessageCircle className="w-4 h-4" />
                         </a>

@@ -222,6 +222,18 @@ const BusinessDetail: React.FC = () => {
               </a>
             )}
 
+            {business.alternateWhatsappNumber && (
+              <a
+                href={`https://wa.me/${business.alternateWhatsappNumber.replace(/\D/g, '')}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center gap-3 py-4 bg-emerald-50 hover:bg-emerald-100 active:scale-98 text-emerald-700 rounded-2xl border border-emerald-200/60 font-bold transition-all duration-200"
+              >
+                <MessageCircle className="w-5 h-5" />
+                <span>Alt WhatsApp: {business.alternateWhatsappNumber}</span>
+              </a>
+            )}
+
             {business.googleMap && (
               <a
                 href={business.googleMap}

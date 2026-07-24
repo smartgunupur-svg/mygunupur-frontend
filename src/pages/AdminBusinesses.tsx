@@ -20,6 +20,7 @@ const AdminBusinesses: React.FC = () => {
     phone: '',
     alternatePhone: '',
     whatsappNumber: '',
+    alternateWhatsappNumber: '',
     address: '',
     googleMap: '',
     description: '',
@@ -107,6 +108,7 @@ const AdminBusinesses: React.FC = () => {
         phone: '',
         alternatePhone: '',
         whatsappNumber: '',
+        alternateWhatsappNumber: '',
         address: '',
         googleMap: '',
         description: '',
@@ -132,6 +134,7 @@ const AdminBusinesses: React.FC = () => {
       phone: business.phone,
       alternatePhone: business.alternatePhone || '',
       whatsappNumber: business.whatsappNumber || '',
+      alternateWhatsappNumber: business.alternateWhatsappNumber || '',
       address: business.address || '',
       googleMap: business.googleMap || '',
       description: business.description || '',
@@ -267,7 +270,7 @@ const AdminBusinesses: React.FC = () => {
                 </label>
               </div>
               
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-bold text-slate-700 mb-2">Phone</label>
                   <input
@@ -297,6 +300,16 @@ const AdminBusinesses: React.FC = () => {
                     onChange={(e) => setFormData({ ...formData, whatsappNumber: e.target.value })}
                     className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:border-amber-500"
                     placeholder="WhatsApp number (with country code)"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-bold text-slate-700 mb-2">Alternate WhatsApp Number</label>
+                  <input
+                    type="text"
+                    value={formData.alternateWhatsappNumber}
+                    onChange={(e) => setFormData({ ...formData, alternateWhatsappNumber: e.target.value })}
+                    className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:border-amber-500"
+                    placeholder="Alt WhatsApp number (with country code)"
                   />
                 </div>
               </div>
