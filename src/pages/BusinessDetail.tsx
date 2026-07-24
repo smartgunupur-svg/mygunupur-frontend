@@ -142,7 +142,10 @@ const BusinessDetail: React.FC = () => {
           </div>
 
           {business.description && (
-            <p className="text-slate-600 leading-relaxed mt-4">{business.description}</p>
+            <div className="mt-5 pt-5 border-t border-slate-100">
+              <h3 className="text-sm font-bold text-slate-800 mb-2">About</h3>
+              <p className="text-slate-600 leading-relaxed whitespace-pre-line">{business.description}</p>
+            </div>
           )}
 
           {/* Features */}

@@ -6,6 +6,39 @@ import axios from 'axios';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
+const DEFAULT_CATEGORIES = [
+  'Medical Stores',
+  'Hardware',
+  'Electronics',
+  'Grocery',
+  'Salons',
+  'Repair Shops',
+  'Hotel',
+  'Restaurant',
+  'Construction Material',
+];
+
+const emptyForm = {
+  name: '',
+  category: 'Medical Stores',
+  customCategory: '',
+  phone: '',
+  alternatePhone: '',
+  whatsappNumber: '',
+  alternateWhatsappNumber: '',
+  address: '',
+  googleMap: '',
+  description: '',
+  rating: '4.5',
+  isTopRated: 'false',
+  priceRange: '₹₹',
+  isVeg: 'false',
+  features: '',
+  materials: '',
+  image: '',
+  index: '0'
+};
+
 const AdminBusinesses: React.FC = () => {
   const navigate = useNavigate();
   const [businesses, setBusinesses] = useState<any[]>([]);
@@ -13,26 +46,18 @@ const AdminBusinesses: React.FC = () => {
   const [showForm, setShowForm] = useState(false);
   const [editingBusiness, setEditingBusiness] = useState<any | null>(null);
   const [uploadingImage, setUploadingImage] = useState(false);
-  const [formData, setFormData] = useState({
-    name: '',
-    category: 'Medical Stores',
-    customCategory: '',
-    phone: '',
-    alternatePhone: '',
-    whatsappNumber: '',
-    alternateWhatsappNumber: '',
-    address: '',
-    googleMap: '',
-    description: '',
-    rating: '4.5',
-    isTopRated: 'false',
-    priceRange: '₹₹',
-    isVeg: 'false',
-    features: '',
-    materials: '',
-    image: '',
-    index: '0'
-  });
+  const [formData, setFormData] = useState({ ...emptyForm });
+
+  // Previously added "Other" categories — reuse in dropdown
+  const customCategories = Array.from(
+    new Set(
+      businesses
+        .map((b) => b.category)
+        .filter((cat): cat is string => Boolean(cat) && !DEFAULT_CATEGORIES.includes(cat))
+    )
+  ).sort();
+
+  const categoryOptions = [...DEFAULT_CATEGORIES, ...customCategories];
 
   useEffect(() => {
     const token = localStorage.getItem('adminToken');
@@ -79,9 +104,20 @@ const AdminBusinesses: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const token = localStorage.getItem('adminToken');
+    const resolvedCategory =
+      formData.category === 'Other'
+        ? formData.customCategory.trim()
+        : formData.category;
+
+    if (!resolvedCategory) {
+      alert('Please enter a category name');
+      return;
+    }
+
+    const { customCategory, ...rest } = formData;
     const data = {
-      ...formData,
-      category: formData.category === 'Other' ? formData.customCategory : formData.category,
+      ...rest,
+      category: resolvedCategory,
       rating: parseFloat(formData.rating),
       isTopRated: formData.isTopRated === 'true',
       isVeg: formData.isVeg === 'true',
@@ -103,26 +139,7 @@ const AdminBusinesses: React.FC = () => {
       }
       setShowForm(false);
       setEditingBusiness(null);
-      setFormData({
-        name: '',
-        category: 'Medical Stores',
-        customCategory: '',
-        phone: '',
-        alternatePhone: '',
-        whatsappNumber: '',
-        alternateWhatsappNumber: '',
-        address: '',
-        googleMap: '',
-        description: '',
-        rating: '4.5',
-        isTopRated: 'false',
-        priceRange: '₹₹',
-        isVeg: 'false',
-        features: '',
-        materials: '',
-        image: '',
-        index: '0'
-      });
+      setFormData({ ...emptyForm });
     } catch (error) {
       console.error('Error saving business:', error);
     }
@@ -130,10 +147,12 @@ const AdminBusinesses: React.FC = () => {
 
   const handleEdit = (business: any) => {
     setEditingBusiness(business);
+    const cat = business.category || 'Medical Stores';
+    const isKnownCategory = categoryOptions.includes(cat);
     setFormData({
       name: business.name,
-      category: business.category || 'Medical Stores',
-      customCategory: business.customCategory || '',
+      category: isKnownCategory ? cat : 'Other',
+      customCategory: isKnownCategory ? '' : cat,
       phone: business.phone,
       alternatePhone: business.alternatePhone || '',
       whatsappNumber: business.whatsappNumber || '',
@@ -202,19 +221,20 @@ const AdminBusinesses: React.FC = () => {
                   <label className="block text-sm font-bold text-slate-700 mb-2">Category</label>
                   <select
                     value={formData.category}
-                    onChange={(e) => setFormData({ ...formData, category: e.target.value })}
+                    onChange={(e) => setFormData({ ...formData, category: e.target.value, customCategory: e.target.value === 'Other' ? formData.customCategory : '' })}
                     className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:border-amber-500"
                   >
-                    <option value="Medical Stores">Medical Stores</option>
-                    <option value="Hardware">Hardware</option>
-                    <option value="Electronics">Electronics</option>
-                    <option value="Grocery">Grocery</option>
-                    <option value="Salons">Salons</option>
-                    <option value="Repair Shops">Repair Shops</option>
-                    <option value="Hotel">Hotel</option>
-                    <option value="Restaurant">Restaurant</option>
-                    <option value="Construction Material">Construction Material</option>
-                    <option value="Other">Other</option>
+                    {DEFAULT_CATEGORIES.map((cat) => (
+                      <option key={cat} value={cat}>{cat}</option>
+                    ))}
+                    {customCategories.length > 0 && (
+                      <optgroup label="Added Categories">
+                        {customCategories.map((cat) => (
+                          <option key={cat} value={cat}>{cat}</option>
+                        ))}
+                      </optgroup>
+                    )}
+                    <option value="Other">Other (Add new category)</option>
                   </select>
                 </div>
               </div>
@@ -222,17 +242,28 @@ const AdminBusinesses: React.FC = () => {
               {/* Custom Category Input */}
               {formData.category === 'Other' && (
                 <div>
-                  <label className="block text-sm font-bold text-slate-700 mb-2">Custom Category</label>
+                  <label className="block text-sm font-bold text-slate-700 mb-2">New Category Name</label>
                   <input
                     type="text"
                     value={formData.customCategory}
                     onChange={(e) => setFormData({ ...formData, customCategory: e.target.value })}
                     className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:border-amber-500"
-                    placeholder="Enter custom category name"
+                    placeholder="Enter new category name"
                     required
                   />
                 </div>
               )}
+
+              <div>
+                <label className="block text-sm font-bold text-slate-700 mb-2">Description / About Business</label>
+                <textarea
+                  value={formData.description}
+                  onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                  rows={4}
+                  className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:border-amber-500 resize-y"
+                  placeholder="Write about this business — services, specialties, timings, etc."
+                />
+              </div>
               
               {/* Materials Input for Construction Material */}
               {formData.category === 'Construction Material' && (

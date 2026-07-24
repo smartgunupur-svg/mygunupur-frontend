@@ -160,7 +160,7 @@ const BusinessDirectory: React.FC = () => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   // Get unique categories from businesses and add "All" at the beginning
-  const categories = ['All', ...Array.from(new Set(businesses.map(b => b.category))).sort()];
+  const categories = ['All', ...Array.from(new Set(businesses.map(b => b.category).filter(Boolean))).sort()];
 
   useEffect(() => {
     const fetchBusinesses = async () => {
@@ -298,12 +298,6 @@ const BusinessDirectory: React.FC = () => {
                       <span className="absolute bottom-3.5 right-3.5 z-20 px-2.5 py-1 text-[9px] font-black bg-emerald-500 text-white rounded-full shadow-sm flex items-center gap-1 border border-emerald-400/20">
                         <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
                         PURE VEG
-                      </span>
-                    )}
-
-                    {b.priceRange && (
-                      <span className="absolute bottom-3.5 left-3.5 z-20 px-2.5 py-1 text-[9px] font-black bg-slate-900/60 backdrop-blur-md text-white rounded-full shadow-sm border border-white/10">
-                        Price: {b.priceRange}
                       </span>
                     )}
 
