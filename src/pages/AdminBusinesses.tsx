@@ -25,6 +25,7 @@ const AdminBusinesses: React.FC = () => {
     googleMap: '',
     description: '',
     rating: '4.5',
+    isTopRated: 'false',
     priceRange: '₹₹',
     isVeg: 'false',
     features: '',
@@ -82,6 +83,7 @@ const AdminBusinesses: React.FC = () => {
       ...formData,
       category: formData.category === 'Other' ? formData.customCategory : formData.category,
       rating: parseFloat(formData.rating),
+      isTopRated: formData.isTopRated === 'true',
       isVeg: formData.isVeg === 'true',
       index: parseInt(formData.index) || 0,
       features: formData.features.split(',').map(f => f.trim()).filter(f => f),
@@ -113,6 +115,7 @@ const AdminBusinesses: React.FC = () => {
         googleMap: '',
         description: '',
         rating: '4.5',
+        isTopRated: 'false',
         priceRange: '₹₹',
         isVeg: 'false',
         features: '',
@@ -139,6 +142,7 @@ const AdminBusinesses: React.FC = () => {
       googleMap: business.googleMap || '',
       description: business.description || '',
       rating: String(business.rating || 4.5),
+      isTopRated: business.isTopRated ? 'true' : 'false',
       priceRange: business.priceRange || '₹₹',
       isVeg: business.isVeg ? 'true' : 'false',
       features: business.features?.join(', ') || '',
@@ -337,6 +341,18 @@ const AdminBusinesses: React.FC = () => {
                   />
                 </div>
               </div>
+              <label className="flex items-center gap-3 p-4 bg-amber-50 border border-amber-100 rounded-xl cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={formData.isTopRated === 'true'}
+                  onChange={(e) => setFormData({ ...formData, isTopRated: e.target.checked ? 'true' : 'false' })}
+                  className="w-5 h-5 rounded border-amber-300 text-amber-600 focus:ring-amber-500"
+                />
+                <div>
+                  <span className="block text-sm font-bold text-slate-800">Show in Top Rated (Home Page)</span>
+                  <span className="block text-xs text-slate-500">Enable to display this business in Home → Top Rated Businesses</span>
+                </div>
+              </label>
               <div>
                 <label className="block text-sm font-bold text-slate-700 mb-2">Features (comma separated)</label>
                 <input
@@ -404,6 +420,11 @@ const AdminBusinesses: React.FC = () => {
                       <span className="px-2.5 py-0.5 bg-slate-100 text-slate-650 text-[10px] font-bold rounded-full">
                         Index: {business.index !== undefined ? business.index : 0}
                       </span>
+                      {business.isTopRated && (
+                        <span className="px-2.5 py-0.5 bg-yellow-50 border border-yellow-200 text-yellow-700 text-[10px] font-bold rounded-full uppercase">
+                          Top Rated
+                        </span>
+                      )}
                     </div>
                     <h3 className="text-base font-bold text-slate-800 mt-1.5">{business.name}</h3>
                     <p className="text-xs text-slate-500 font-bold">Phone: {business.phone}</p>
