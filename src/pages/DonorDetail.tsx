@@ -1,13 +1,22 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import { ArrowLeft, MapPin, Heart, Sparkles, Flame } from 'lucide-react';
 
 const DonorDetail: React.FC = () => {
   const navigate = useNavigate();
   
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-amber-50 to-rose-50">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-amber-50 to-rose-50 pb-24">
+      <Helmet>
+        <title>In Loving Memory - Late Voona Mallikarjun | My Gunupur</title>
+        <meta name="description" content="A tribute to Late Voona Mallikarjun, a dedicated teacher and beloved well-wisher of Gunupur who passed away on 14th February 2023." />
+        <meta property="og:title" content="In Loving Memory - Late Voona Mallikarjun" />
+        <meta property="og:description" content="A tribute to Late Voona Mallikarjun, Teacher & Well-Wisher of Gunupur." />
+        <meta property="og:url" content="https://mygunupur.in/donor-detail" />
+      </Helmet>
+
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -15,18 +24,19 @@ const DonorDetail: React.FC = () => {
       >
         <div className="max-w-6xl mx-auto px-4 h-full flex items-center gap-4 py-4">
           <button
-            onClick={() => navigate('/')}
+            onClick={() => navigate('/blood-donors')}
             className="p-2.5 hover:bg-slate-100 rounded-2xl transition-all group"
           >
             <ArrowLeft className="w-6 h-6 text-slate-600 group-hover:text-rose-600" />
           </button>
           <div>
             <h1 className="text-xl font-black bg-gradient-to-r from-rose-600 to-amber-600 bg-clip-text text-transparent">A Tribute</h1>
+            <p className="text-xs font-semibold text-slate-500">In Loving Memory</p>
           </div>
         </div>
       </motion.div>
 
-      <div className="max-w-5xl mx-auto px-4 space-y-8 pt-8 pb-24">
+      <div className="max-w-5xl mx-auto px-4 space-y-8 pt-8">
         {/* Hero Section */}
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
@@ -34,7 +44,6 @@ const DonorDetail: React.FC = () => {
           transition={{ duration: 0.5 }}
           className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-rose-600 via-amber-500 to-rose-600 text-white shadow-2xl"
         >
-          {/* Decorative glows */}
           <div className="absolute top-0 left-0 w-48 h-48 bg-rose-300/20 rounded-full blur-3xl"></div>
           <div className="absolute bottom-0 right-0 w-64 h-64 bg-amber-200/20 rounded-full blur-3xl"></div>
           
@@ -48,7 +57,7 @@ const DonorDetail: React.FC = () => {
               <div className="w-40 h-40 md:w-52 md:h-52 rounded-full overflow-hidden mx-auto border-4 border-white/30 shadow-xl">
                 <img
                   src="https://res.cloudinary.com/cfs0kcdh/image/upload/v1783889491/my-gunupur/acp8dg8jcervtlxm6b8z.jpg"
-                  alt="Voona Mallikarjun"
+                  alt="Late Voona Mallikarjun"
                   className="w-full h-full object-cover"
                 />
               </div>
@@ -67,18 +76,18 @@ const DonorDetail: React.FC = () => {
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 0.4 }}
-              className="text-2xl md:text-3xl font-bold text-rose-100 mb-2"
+              className="text-3xl md:text-5xl font-black text-white mb-2"
             >
-              Voona Mallikarjun
+              Late Voona Mallikarjun
             </motion.p>
             
             <motion.p 
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 0.45 }}
-              className="text-xl font-semibold text-rose-100 mb-6"
+              className="text-xl md:text-2xl font-semibold text-rose-100 mb-6"
             >
-              Late Teacher & Well-Wisher of Gunupur
+              Teacher & Well-Wisher of Gunupur
             </motion.p>
             
             <motion.div 
@@ -108,13 +117,13 @@ const DonorDetail: React.FC = () => {
           <div className="space-y-6 text-slate-700">
             <p className="text-lg leading-relaxed">
               A dedicated teacher, a compassionate mentor, and a beloved well-wisher of Gunupur, who touched countless lives with 
-              kindness, wisdom, and selfless service. Their legacy of compassion and commitment to the community continues to 
-              inspire everyone who knew them.
+              kindness, wisdom, and selfless service. His legacy of compassion and commitment to the community continues to 
+              inspire everyone who knew him.
             </p>
             
             <p className="text-lg leading-relaxed">
-              Through their tireless efforts, they helped shape the future of many young minds in our town. Their generosity 
-              knew no bounds, and their dedication to the betterment of Gunupur will be remembered for generations to come.
+              Through his tireless efforts, he helped shape the future of many young minds in our town. His generosity 
+              knew no bounds, and his dedication to the betterment of Gunupur will be remembered for generations to come.
             </p>
           </div>
         </motion.div>
@@ -149,10 +158,53 @@ const DonorDetail: React.FC = () => {
           <Flame className="w-12 h-12 mx-auto mb-6 text-amber-400" />
           <h3 className="text-3xl font-black mb-4">Forever in Our Hearts</h3>
           <p className="text-lg text-slate-300 max-w-2xl mx-auto leading-relaxed">
-            Your kindness, your wisdom, and your love for our community will never be forgotten. 
+            His kindness, his wisdom, and his love for our community will never be forgotten. 
             Thank you for everything you did for Gunupur. You will always be with us in spirit.
           </p>
         </motion.div>
+
+        {/* Footer */}
+        <motion.footer
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.9 }}
+          className="bg-slate-900 rounded-3xl p-8 text-white mt-6"
+        >
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div>
+              <h3 className="font-black text-2xl mb-4">My Gunupur</h3>
+              <p className="text-slate-400 text-sm">Your one-stop platform for all services in Gunupur, Odisha.</p>
+            </div>
+            <div>
+              <h4 className="font-bold text-lg mb-4">Quick Links</h4>
+              <div className="space-y-2">
+                <button onClick={() => navigate('/about')} className="block text-sm text-slate-400 hover:text-white transition-colors">
+                  About Us
+                </button>
+                <button onClick={() => navigate('/contact')} className="block text-sm text-slate-400 hover:text-white transition-colors">
+                  Contact
+                </button>
+                <button onClick={() => navigate('/blood-donors')} className="block text-sm text-slate-400 hover:text-white transition-colors">
+                  Blood Donors
+                </button>
+              </div>
+            </div>
+            <div>
+              <h4 className="font-bold text-lg mb-4">Legal</h4>
+              <div className="space-y-2">
+                <button onClick={() => navigate('/privacy-policy')} className="block text-sm text-slate-400 hover:text-white transition-colors">
+                  Privacy Policy
+                </button>
+                <button onClick={() => navigate('/terms-of-service')} className="block text-sm text-slate-400 hover:text-white transition-colors">
+                  Terms of Service
+                </button>
+              </div>
+            </div>
+          </div>
+          <div className="mt-10 pt-6 border-t border-slate-800 text-center">
+            <p className="text-slate-500 text-sm">© 2025 My Gunupur. All rights reserved.</p>
+          </div>
+        </motion.footer>
       </div>
     </div>
   );
