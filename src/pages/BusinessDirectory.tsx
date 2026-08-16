@@ -151,6 +151,85 @@ const fallbackBusinesses = [
   }
 ];
 
+const BusinessImageSlider: React.FC<{
+  images: string[];
+  name: string;
+  onImageClick?: (url: string) => void;
+}> = ({ images, name, onImageClick }) => {
+  const [currentIdx, setCurrentIdx] = useState(0);
+
+  if (!images || images.length === 0) return null;
+
+  const handlePrev = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setCurrentIdx((prev) => (prev === 0 ? images.length - 1 : prev - 1));
+  };
+
+  const handleNext = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setCurrentIdx((prev) => (prev === images.length - 1 ? 0 : prev + 1));
+  };
+
+  const currentImage = images[currentIdx];
+
+  return (
+    <div className="relative w-full h-full group/slider overflow-hidden flex items-center justify-center bg-slate-950">
+      {/* 1. Blurred backdrop image */}
+      <img
+        src={currentImage}
+        alt=""
+        className="absolute inset-0 w-full h-full object-cover blur-xl opacity-35 scale-110 pointer-events-none select-none"
+      />
+      {/* 2. Contain foreground image */}
+      <img
+        src={currentImage}
+        alt={name}
+        className="relative z-10 max-w-full max-h-full object-contain select-none transition-transform duration-500 hover:scale-105"
+        onClick={(e) => {
+          if (onImageClick) {
+            e.stopPropagation();
+            onImageClick(currentImage);
+          }
+        }}
+      />
+
+      {images.length > 1 && (
+        <>
+          {/* Navigation Arrows */}
+          <button
+            onClick={handlePrev}
+            className="absolute left-2 top-1/2 -translate-y-1/2 z-20 w-8 h-8 rounded-full bg-black/60 hover:bg-black/85 flex items-center justify-center text-white text-sm font-bold opacity-0 group-hover/slider:opacity-100 transition-all border border-white/10"
+          >
+            ‹
+          </button>
+          <button
+            onClick={handleNext}
+            className="absolute right-2 top-1/2 -translate-y-1/2 z-20 w-8 h-8 rounded-full bg-black/60 hover:bg-black/85 flex items-center justify-center text-white text-sm font-bold opacity-0 group-hover/slider:opacity-100 transition-all border border-white/10"
+          >
+            ›
+          </button>
+
+          {/* Dots/Indicators */}
+          <div className="absolute bottom-2 left-1/2 -translate-x-1/2 z-20 flex gap-1 bg-black/40 px-2 py-1 rounded-full border border-white/5 backdrop-blur-sm">
+            {images.map((_, i) => (
+              <button
+                key={i}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setCurrentIdx(i);
+                }}
+                className={`w-1.5 h-1.5 rounded-full transition-all ${
+                  i === currentIdx ? 'bg-white scale-125' : 'bg-white/50'
+                }`}
+              />
+            ))}
+          </div>
+        </>
+      )}
+    </div>
+  );
+};
+
 const BusinessDirectory: React.FC = () => {
   const navigate = useNavigate();
   const [businesses, setBusinesses] = useState<any[]>([]);
@@ -301,25 +380,18 @@ const BusinessDirectory: React.FC = () => {
                       </span>
                     )}
 
-                    {b.image ? (
-                      <>
-                        {/* 1. Blurred backdrop image (prevents empty layout letterboxes) */}
-                        <img
-                          src={b.image}
-                          alt=""
-                          className="absolute inset-0 w-full h-full object-cover blur-xl opacity-35 scale-110 pointer-events-none select-none"
-                        />
-                        {/* 2. Contain foreground image (never crops business cards or text) */}
-                        <img
-                          src={b.image}
-                          alt={b.name}
-                          className="relative z-10 max-w-full max-h-full object-contain select-none transition-transform duration-500 group-hover:scale-105"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setSelectedImage(b.image);
-                          }}
-                        />
-                      </>
+                    {b.images && b.images.length > 0 ? (
+                      <BusinessImageSlider
+                        images={b.images}
+                        name={b.name}
+                        onImageClick={setSelectedImage}
+                      />
+                    ) : b.image ? (
+                      <BusinessImageSlider
+                        images={[b.image]}
+                        name={b.name}
+                        onImageClick={setSelectedImage}
+                      />
                     ) : (
                       /* Placeholder Premium Layout */
                       <div className={`absolute inset-0 bg-gradient-to-br ${theme.gradient} flex flex-col items-center justify-center p-6 text-center text-white/95`}>

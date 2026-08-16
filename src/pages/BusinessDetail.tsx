@@ -25,6 +25,7 @@ const BusinessDetail: React.FC = () => {
   const [business, setBusiness] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [currentImgIdx, setCurrentImgIdx] = useState(0);
 
   useEffect(() => {
     const fetchBusiness = async () => {
@@ -64,6 +65,9 @@ const BusinessDetail: React.FC = () => {
   }
 
   const Icon = categoryIcons[business.category] || Activity;
+  const sliderImages = business.images && business.images.length > 0
+    ? business.images
+    : (business.image ? [business.image] : []);
 
   return (
     <div className="min-h-screen bg-slate-50">
@@ -90,26 +94,57 @@ const BusinessDetail: React.FC = () => {
 
       {/* Content */}
       <div className="max-w-4xl mx-auto px-4 py-6 space-y-6">
-        {/* Business Image */}
-        {business.image && (
+        {/* Business Image(s) Slider */}
+        {sliderImages.length > 0 && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="rounded-3xl overflow-hidden shadow-lg bg-slate-950 relative h-64 md:h-80 flex items-center justify-center border border-slate-100/50"
+            className="rounded-3xl overflow-hidden shadow-lg bg-slate-950 relative h-64 md:h-80 flex items-center justify-center border border-slate-100/50 group/slider"
           >
             {/* Blurred background photo */}
             <img
-              src={business.image}
+              src={sliderImages[currentImgIdx]}
               alt=""
               className="absolute inset-0 w-full h-full object-cover blur-xl opacity-35 scale-110 pointer-events-none select-none"
             />
             {/* Main fully-visible contain photo */}
             <img
-              src={business.image}
+              src={sliderImages[currentImgIdx]}
               alt={business.name}
               className="relative z-10 max-w-full max-h-full object-contain cursor-pointer transition-transform duration-500 hover:scale-[1.01]"
-              onClick={() => setSelectedImage(business.image)}
+              onClick={() => setSelectedImage(sliderImages[currentImgIdx])}
             />
+
+            {sliderImages.length > 1 && (
+              <>
+                {/* Navigation Arrows */}
+                <button
+                  onClick={() => setCurrentImgIdx(prev => (prev === 0 ? sliderImages.length - 1 : prev - 1))}
+                  className="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-black/60 hover:bg-black/85 flex items-center justify-center text-white text-xl font-bold transition-all border border-white/10"
+                >
+                  ‹
+                </button>
+                <button
+                  onClick={() => setCurrentImgIdx(prev => (prev === sliderImages.length - 1 ? 0 : prev + 1))}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-black/60 hover:bg-black/85 flex items-center justify-center text-white text-xl font-bold transition-all border border-white/10"
+                >
+                  ›
+                </button>
+
+                {/* Dots/Indicators */}
+                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 flex gap-1.5 bg-black/40 px-3 py-1.5 rounded-full border border-white/5 backdrop-blur-sm">
+                  {sliderImages.map((_: string, i: number) => (
+                    <button
+                      key={i}
+                      onClick={() => setCurrentImgIdx(i)}
+                      className={`w-2 h-2 rounded-full transition-all ${
+                        i === currentImgIdx ? 'bg-white scale-125' : 'bg-white/50'
+                      }`}
+                    />
+                  ))}
+                </div>
+              </>
+            )}
           </motion.div>
         )}
 

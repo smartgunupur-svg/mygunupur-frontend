@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { BookOpen, Plus, Edit, Trash2, Upload } from 'lucide-react';
+import { BookOpen, Plus, Edit, Trash2 } from 'lucide-react';
 import axios from 'axios';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
@@ -36,6 +36,7 @@ const emptyForm = {
   features: '',
   materials: '',
   image: '',
+  images: [] as string[],
   index: '0'
 };
 
@@ -83,16 +84,32 @@ const AdminBusinesses: React.FC = () => {
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files || e.target.files.length === 0) return;
     
-    const file = e.target.files[0];
+    const files = Array.from(e.target.files);
+    const currentImages = formData.images || [];
+    if (currentImages.length + files.length > 5) {
+      alert('You can only upload up to 5 images for a business.');
+      return;
+    }
+
     setUploadingImage(true);
     
     try {
-      const formData = new FormData();
-      formData.append('image', file);
+      const uploadedUrls: string[] = [];
+      for (const file of files) {
+        const uploadFormData = new FormData();
+        uploadFormData.append('image', file);
+        const response = await axios.post(`${API_URL}/upload`, uploadFormData);
+        uploadedUrls.push(response.data.url);
+      }
       
-      const response = await axios.post(`${API_URL}/upload`, formData);
-      
-      setFormData(prev => ({ ...prev, image: response.data.url }));
+      setFormData(prev => {
+        const nextImages = [...(prev.images || []), ...uploadedUrls].slice(0, 5);
+        return {
+          ...prev,
+          images: nextImages,
+          image: prev.image || nextImages[0] || ''
+        };
+      });
     } catch (error) {
       console.error('Error uploading image:', error);
       alert('Failed to upload image');
@@ -167,6 +184,7 @@ const AdminBusinesses: React.FC = () => {
       features: business.features?.join(', ') || '',
       materials: business.materials?.join(', ') || '',
       image: business.image || '',
+      images: business.images || (business.image ? [business.image] : []),
       index: String(business.index !== undefined ? business.index : 0)
     });
     setShowForm(true);
@@ -280,29 +298,45 @@ const AdminBusinesses: React.FC = () => {
               )}
               
               <div>
-                <label className="block text-sm font-bold text-slate-700 mb-2">Business Image</label>
-                {formData.image && (
-                  <div className="mb-3">
-                    <img
-                      src={formData.image}
-                      alt="Preview"
-                      className="w-full h-48 object-cover rounded-xl border border-slate-200"
-                    />
-                  </div>
-                )}
-                <label className="flex items-center gap-2 px-4 py-3 border border-dashed border-slate-300 rounded-xl cursor-pointer hover:bg-slate-50 transition-all">
-                  <Upload className="w-5 h-5 text-slate-500" />
-                  <span className="text-sm text-slate-600 font-medium">
-                    {uploadingImage ? 'Uploading...' : 'Click to upload image'}
-                  </span>
-                  <input
-                    type="file"
-                    accept="image/*"
-                    onChange={handleImageUpload}
-                    disabled={uploadingImage}
-                    className="hidden"
-                  />
-                </label>
+                <label className="block text-sm font-bold text-slate-700 mb-2">Business Images (Max 5)</label>
+                
+                {/* Image List */}
+                <div className="grid grid-cols-2 sm:grid-cols-5 gap-2 mb-3">
+                  {(formData.images || []).map((imgUrl, idx) => (
+                    <div key={idx} className="relative group border border-slate-200 rounded-xl overflow-hidden h-20 bg-slate-50">
+                      <img src={imgUrl} alt={`Business ${idx}`} className="w-full h-full object-cover" />
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const nextImages = (formData.images || []).filter((_, i) => i !== idx);
+                          setFormData(prev => ({
+                            ...prev,
+                            images: nextImages,
+                            image: nextImages[0] || ''
+                          }));
+                        }}
+                        className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 flex items-center justify-center text-white text-xs font-bold transition-all"
+                      >
+                        Remove
+                      </button>
+                    </div>
+                  ))}
+                  {(!formData.images || formData.images.length < 5) && (
+                    <label className="border-2 border-dashed border-slate-350 hover:border-amber-500 rounded-xl flex flex-col items-center justify-center cursor-pointer hover:bg-slate-50 transition-all h-20 text-slate-500">
+                      <span className="text-xl font-bold">+</span>
+                      <span className="text-[10px] font-semibold">Upload</span>
+                      <input
+                        type="file"
+                        accept="image/*"
+                        multiple
+                        onChange={handleImageUpload}
+                        disabled={uploadingImage}
+                        className="hidden"
+                      />
+                    </label>
+                  )}
+                </div>
+                {uploadingImage && <div className="text-xs text-slate-500 mb-2">Uploading image(s)...</div>}
               </div>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
