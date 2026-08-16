@@ -33,6 +33,7 @@ const HomeLoan: React.FC = () => {
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [banks, setBanks] = useState<any[]>([]);
   const [loadingBanks, setLoadingBanks] = useState(true);
+  const [settings, setSettings] = useState<any>(null);
   const [formData, setFormData] = useState({
     name: '',
     mobile: '',
@@ -55,7 +56,17 @@ const HomeLoan: React.FC = () => {
       }
     };
 
+    const fetchSettings = async () => {
+      try {
+        const response = await axios.get(`${API_URL}/settings`);
+        setSettings(response.data);
+      } catch (error) {
+        console.error('Error fetching settings:', error);
+      }
+    };
+
     fetchBanks();
+    fetchSettings();
   }, []);
 
   useEffect(() => {
@@ -101,6 +112,9 @@ const HomeLoan: React.FC = () => {
       setIsSubmitting(false);
     }
   };
+
+  const agentPhone = settings?.loanAgent?.phone || '9437578310';
+  const agentWhatsapp = settings?.loanAgent?.whatsapp || '9437578310';
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-emerald-50 pb-28">
@@ -153,14 +167,14 @@ const HomeLoan: React.FC = () => {
             </p>
             <div className="flex flex-wrap gap-3">
               <a
-                href="tel:9437578310"
+                href={`tel:${agentPhone}`}
                 className="flex items-center gap-2 px-6 py-3 bg-white text-blue-700 font-black rounded-2xl hover:shadow-xl transition-all"
               >
                 <Phone className="w-5 h-5" />
                 Call Now
               </a>
               <a
-                href="https://wa.me/919437578310"
+                href={`https://wa.me/91${agentWhatsapp.replace(/\D/g, '')}`}
                 className="flex items-center gap-2 px-6 py-3 bg-[#25D366] text-white font-black rounded-2xl hover:shadow-xl transition-all"
               >
                 <div dangerouslySetInnerHTML={{ __html: whatsappLogo }} />
@@ -169,6 +183,58 @@ const HomeLoan: React.FC = () => {
             </div>
           </div>
         </motion.div>
+
+        {/* Your Dedicated Loan Agent */}
+        {settings?.loanAgent && (settings.loanAgent.name || settings.loanAgent.photo) && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="bg-white rounded-3xl p-6 shadow-xl border border-slate-100 flex flex-col md:flex-row items-center gap-6"
+          >
+            {settings.loanAgent.photo ? (
+              <img
+                src={settings.loanAgent.photo}
+                alt={settings.loanAgent.name || 'Agent'}
+                className="w-24 h-24 rounded-2xl object-cover border border-slate-200 shadow-md"
+              />
+            ) : (
+              <div className="w-24 h-24 rounded-2xl bg-gradient-to-br from-blue-100 to-indigo-100 flex items-center justify-center border border-slate-200 shadow-md">
+                <span className="text-4xl">👤</span>
+              </div>
+            )}
+            <div className="flex-1 text-center md:text-left space-y-2">
+              <span className="inline-block px-3 py-1 bg-blue-50 text-blue-700 text-xs font-black uppercase tracking-widest rounded-full">
+                Your Dedicated Loan Expert
+              </span>
+              <h3 className="text-2xl font-black text-slate-800">
+                {settings.loanAgent.name || 'Financial Advisor'}
+              </h3>
+              <p className="text-sm text-slate-500 font-semibold max-w-xl">
+                Get free personalized consultation, quick document clearance, and the best home loan interest rates tailored for you.
+              </p>
+            </div>
+            <div className="flex flex-wrap gap-3 justify-center">
+              {agentPhone && (
+                <a
+                  href={`tel:${agentPhone}`}
+                  className="flex items-center gap-2 px-6 py-3 bg-white hover:bg-slate-50 text-blue-700 font-black rounded-2xl transition-all border border-slate-200 shadow-md hover:shadow-lg"
+                >
+                  <Phone className="w-5 h-5 text-blue-600" />
+                  Call Agent
+                </a>
+              )}
+              {agentWhatsapp && (
+                <a
+                  href={`https://wa.me/91${agentWhatsapp.replace(/\D/g, '')}`}
+                  className="flex items-center gap-2 px-6 py-3 bg-[#25D366] hover:bg-[#20ba56] text-white font-black rounded-2xl transition-all shadow-md hover:shadow-lg"
+                >
+                  <div dangerouslySetInnerHTML={{ __html: whatsappLogo }} />
+                  WhatsApp
+                </a>
+              )}
+            </div>
+          </motion.div>
+        )}
 
         {/* Key Features */}
         <motion.div
@@ -600,7 +666,7 @@ const HomeLoan: React.FC = () => {
       {/* Floating Action Buttons */}
       <div className="fixed bottom-28 right-5 flex flex-col gap-4 z-40">
         <motion.a
-          href="https://wa.me/919437578310"
+          href={`https://wa.me/91${agentWhatsapp.replace(/\D/g, '')}`}
           initial={{ opacity: 0, scale: 0 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.8, type: "spring" }}
@@ -610,7 +676,7 @@ const HomeLoan: React.FC = () => {
           dangerouslySetInnerHTML={{ __html: whatsappLogo }}
         />
         <motion.a
-          href="tel:9437578310"
+          href={`tel:${agentPhone}`}
           initial={{ opacity: 0, scale: 0 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.9, type: "spring" }}

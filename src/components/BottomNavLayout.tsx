@@ -24,7 +24,8 @@ import {
   UserCheck,
   Building,
   Utensils,
-  ChevronRight
+  ChevronRight,
+  Instagram
 } from 'lucide-react';
 import axios from 'axios';
 
@@ -188,7 +189,7 @@ const BottomNavLayout: React.FC = () => {
       {/* Footer - Only on Home */}
       {isHome && (
         <footer className="bg-white border-t border-slate-100 py-12 px-6">
-          <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
+          <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 items-start">
             
             {/* Column 1: App Branding & Info */}
             <div className="space-y-4 text-center md:text-left">
@@ -199,10 +200,21 @@ const BottomNavLayout: React.FC = () => {
               <p className="text-xs text-slate-500 font-semibold leading-relaxed max-w-sm">
                 Your one-stop citizen super app for all services, businesses, loans, clearances, and emergency hotlines in Gunupur, Rayagada, Odisha.
               </p>
+              <div className="flex justify-center md:justify-start gap-4 pt-2">
+                <a
+                  href="https://www.instagram.com/my_gunupur?utm_source=qr&igsh=d2o4c3JzeGxkaXV3"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 text-xs text-pink-600 hover:text-pink-700 font-bold transition-colors"
+                >
+                  <Instagram className="w-5 h-5" />
+                  @my_gunupur
+                </a>
+              </div>
             </div>
 
-            {/* Column 2: Quick & Legal Links */}
-            <div className="flex flex-col md:flex-row justify-center md:justify-around gap-6 text-center md:text-left">
+            {/* Column 2: Navigation Links */}
+            <div className="space-y-6 text-center md:text-left">
               <div>
                 <h4 className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-3">Quick Links</h4>
                 <div className="space-y-2">
@@ -230,7 +242,46 @@ const BottomNavLayout: React.FC = () => {
               </div>
             </div>
 
-            {/* Column 3: Donated By */}
+            {/* Column 3: Quick Access */}
+            <div className="space-y-4 text-center md:text-left">
+              <h4 className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-3">Quick Access</h4>
+              <div className="space-y-3 flex flex-col items-center md:items-start">
+                <a
+                  href="https://sujog.odisha.gov.in"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block text-xs text-slate-600 hover:text-blue-600 font-bold transition-colors"
+                >
+                  Sujog Portal for Gunupur
+                </a>
+                <a
+                  href="https://www.indianrail.gov.in/enquiry/PNR/PnrEnquiry.html"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block text-xs text-slate-600 hover:text-blue-600 font-bold transition-colors"
+                >
+                  IRCTC Website PNR Check
+                </a>
+                <a
+                  href="https://osrtc.odisha.gov.in"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block text-xs text-slate-600 hover:text-blue-600 font-bold transition-colors"
+                >
+                  OSRTC Tickets Booking
+                </a>
+                <a
+                  href="https://revenue.odisha.gov.in"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block text-xs text-slate-600 hover:text-blue-600 font-bold transition-colors"
+                >
+                  Revenue Odisha Portal
+                </a>
+              </div>
+            </div>
+
+            {/* Column 4: Donated By */}
             <div className="flex flex-col items-center md:items-end justify-center h-full">
               <div 
                 className="flex flex-col items-center md:items-end gap-3 text-center md:text-right cursor-pointer hover:scale-105 transition-transform"
@@ -251,7 +302,7 @@ const BottomNavLayout: React.FC = () => {
                   </div>
                 </div>
               </div>
-              </div>
+            </div>
 
           </div>
 

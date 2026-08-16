@@ -109,6 +109,34 @@ const AdminSettings: React.FC = () => {
     }
   };
 
+  const handleAgentImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setUploading(true);
+    const uploadFormData = new FormData();
+    uploadFormData.append('image', file);
+
+    try {
+      const response = await axios.post(`${API_URL}/upload`, uploadFormData, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+      });
+      setSettings((prev: any) => ({
+        ...prev,
+        loanAgent: {
+          ...(prev.loanAgent || {}),
+          photo: response.data.url
+        }
+      }));
+    } catch (error) {
+      console.error('Error uploading agent image:', error);
+      alert('Error uploading image');
+    } finally {
+      setUploading(false);
+    }
+  };
+
+
   const toggleFeature = (key: string) => {
     setSettings((prev: any) => ({
       ...prev,
@@ -224,6 +252,95 @@ const AdminSettings: React.FC = () => {
             </div>
           </div>
         </div>
+
+        {/* Loan Agent Section */}
+        <div className="bg-white rounded-3xl p-8 shadow-xl border border-slate-100 mb-6">
+          <h2 className="text-2xl font-black text-slate-800 mb-6 flex items-center gap-3">
+            <SettingsIcon className="w-8 h-8 text-blue-600" />
+            Loan Agent Settings
+          </h2>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label className="block text-sm font-bold text-slate-700 mb-2">Agent Name</label>
+              <input
+                type="text"
+                value={settings?.loanAgent?.name || ''}
+                onChange={(e) => setSettings((prev: any) => ({
+                  ...prev,
+                  loanAgent: {
+                    ...(prev.loanAgent || {}),
+                    name: e.target.value
+                  }
+                }))}
+                className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:border-blue-500"
+                placeholder="Enter agent name"
+              />
+
+              <label className="block text-sm font-bold text-slate-700 mt-4 mb-2">Agent Phone Number</label>
+              <input
+                type="text"
+                value={settings?.loanAgent?.phone || ''}
+                onChange={(e) => setSettings((prev: any) => ({
+                  ...prev,
+                  loanAgent: {
+                    ...(prev.loanAgent || {}),
+                    phone: e.target.value
+                  }
+                }))}
+                className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:border-blue-500"
+                placeholder="Enter agent phone number (e.g. 9437578310)"
+              />
+
+              <label className="block text-sm font-bold text-slate-700 mt-4 mb-2">Agent WhatsApp Number</label>
+              <input
+                type="text"
+                value={settings?.loanAgent?.whatsapp || ''}
+                onChange={(e) => setSettings((prev: any) => ({
+                  ...prev,
+                  loanAgent: {
+                    ...(prev.loanAgent || {}),
+                    whatsapp: e.target.value
+                  }
+                }))}
+                className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:border-blue-500"
+                placeholder="Enter agent WhatsApp number (e.g. 9437578310)"
+              />
+            </div>
+            
+            <div>
+              <label className="block text-sm font-bold text-slate-700 mb-2">Agent Photo</label>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleAgentImageUpload}
+                disabled={uploading}
+                className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:border-blue-500"
+              />
+              {uploading && <div className="text-sm text-slate-500 mt-2">Uploading...</div>}
+              <div className="text-sm text-slate-400 mt-2">Or paste direct Image URL:</div>
+              <input
+                type="text"
+                value={settings?.loanAgent?.photo || ''}
+                onChange={(e) => setSettings((prev: any) => ({
+                  ...prev,
+                  loanAgent: {
+                    ...(prev.loanAgent || {}),
+                    photo: e.target.value
+                  }
+                }))}
+                className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:border-blue-500 mt-2"
+                placeholder="Direct Image URL"
+              />
+              {settings?.loanAgent?.photo && (
+                <div className="mt-4">
+                  <img src={settings.loanAgent.photo} alt="Agent" className="w-24 h-24 object-cover rounded-xl border border-slate-200" />
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+
 
         {/* Feature Toggles */}
         <div className="bg-white rounded-3xl p-8 shadow-xl border border-slate-100">
