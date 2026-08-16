@@ -245,38 +245,42 @@ const BottomNavLayout: React.FC = () => {
             {/* Column 3: Quick Access */}
             <div className="space-y-4 text-center md:text-left">
               <h4 className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-3">Quick Access</h4>
-              <div className="space-y-3 flex flex-col items-center md:items-start">
+              <div className="space-y-2.5 flex flex-col items-center md:items-start w-full">
                 <a
                   href="https://sujog.odisha.gov.in"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="block text-xs text-slate-600 hover:text-blue-600 font-bold transition-colors"
+                  className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-emerald-50 border border-emerald-100 text-emerald-700 hover:bg-emerald-100/60 active:scale-95 text-xs font-bold rounded-xl transition-all duration-200"
                 >
-                  Sujog Portal for Gunupur
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                  Sujog Portal
                 </a>
                 <a
                   href="https://www.indianrail.gov.in/enquiry/PNR/PnrEnquiry.html"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="block text-xs text-slate-600 hover:text-blue-600 font-bold transition-colors"
+                  className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-blue-50 border border-blue-100 text-blue-700 hover:bg-blue-100/60 active:scale-95 text-xs font-bold rounded-xl transition-all duration-200"
                 >
+                  <span className="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse" />
                   IRCTC Website PNR Check
                 </a>
                 <a
                   href="https://osrtc.odisha.gov.in"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="block text-xs text-slate-600 hover:text-blue-600 font-bold transition-colors"
+                  className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-amber-50 border border-amber-100 text-amber-700 hover:bg-amber-100/60 active:scale-95 text-xs font-bold rounded-xl transition-all duration-200"
                 >
+                  <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse" />
                   OSRTC Tickets Booking
                 </a>
                 <a
-                  href="https://revenue.odisha.gov.in"
+                  href="https://share.google/sq64WtwGI6mUbo1jg"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="block text-xs text-slate-600 hover:text-blue-600 font-bold transition-colors"
+                  className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-indigo-50 border border-indigo-100 text-indigo-700 hover:bg-indigo-100/60 active:scale-95 text-xs font-bold rounded-xl transition-all duration-200"
                 >
-                  Revenue Odisha Portal
+                  <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-pulse" />
+                  Odisha Revenue Services
                 </a>
               </div>
             </div>
