@@ -25,7 +25,7 @@ const Hospitals: React.FC = () => {
       } catch (error) {
         console.error('Error fetching hospitals:', error);
         setHospitals([
-          { _id: 1, name: "District Headquarters Hospital", phone: "9437578310", address: "Hospital Road, Gunupur" },
+          { _id: 1, name: "District Headquarters Hospital", phone: "9437236270", address: "Hospital Road, Gunupur" },
           { _id: 2, name: "Sai Nursing Home", phone: "9876543210", address: "Near Bus Stand, Gunupur" }
         ]);
       } finally {

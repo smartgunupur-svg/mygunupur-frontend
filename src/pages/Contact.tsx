@@ -37,7 +37,7 @@ const Contact: React.FC = () => {
   };
 
   const contactDetails = settings?.contactDetails || {
-    phone: '9437578310',
+    phone: '9437236270',
     email: 'smartgunupur@gmail.com',
     address: 'Gunupur, Rayagada, Odisha'
   };

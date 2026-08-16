@@ -9,7 +9,7 @@ const fallbackGovtOffices = [
   {
     id: 1,
     name: 'Tahsildar Office, Gunupur',
-    phone: '9437578310',
+    phone: '9437236270',
     address: 'Near Bus Stand, Gunupur',
     department: 'Revenue',
     services: ['Land Records', 'Certificate Issuance', 'Mutations'],

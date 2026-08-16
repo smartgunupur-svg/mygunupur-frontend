@@ -9,7 +9,7 @@ const fallbackSportsPlaces = [
   {
     id: 1,
     name: 'GIET Stadium',
-    phone: '9437578310',
+    phone: '9437236270',
     address: 'GIET University, Gunupur',
     type: 'Stadium',
     sports: ['Cricket', 'Football', 'Athletics'],

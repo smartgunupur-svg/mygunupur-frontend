@@ -10,7 +10,7 @@ const fallbackColleges = [
   {
     id: 1,
     name: 'GIET University',
-    phone: '9437578310',
+    phone: '9437236270',
     address: 'GIET Road, Gunupur',
     university: 'GIET University',
     type: 'Private',

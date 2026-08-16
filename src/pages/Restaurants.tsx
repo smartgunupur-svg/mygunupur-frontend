@@ -11,7 +11,7 @@ const fallbackRestaurants = [
     name: 'Shree Jagannath Veg Restaurant',
     priceRange: '₹',
     rating: 4.7,
-    phone: '9437578310',
+    phone: '9437236270',
     address: 'Main Bazar Road, Gunupur',
     isVeg: true,
     features: ['100% Pure Veg', 'Thali Special', 'AC Room'],

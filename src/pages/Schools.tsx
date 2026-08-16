@@ -10,7 +10,7 @@ const fallbackSchools = [
   {
     id: 1,
     name: 'Govt Boys High School',
-    phone: '9437578310',
+    phone: '9437236270',
     address: 'Main Road, Gunupur',
     board: 'CHSE',
     type: 'Govt',

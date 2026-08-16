@@ -113,8 +113,8 @@ const HomeLoan: React.FC = () => {
     }
   };
 
-  const agentPhone = settings?.loanAgent?.phone || '9437578310';
-  const agentWhatsapp = settings?.loanAgent?.whatsapp || '9437578310';
+  const agentPhone = settings?.loanAgent?.phone || '9437236270';
+  const agentWhatsapp = settings?.loanAgent?.whatsapp || '9437236270';
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-emerald-50 pb-28">

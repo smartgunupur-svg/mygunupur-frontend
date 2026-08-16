@@ -25,7 +25,7 @@ const ConstructionMaterial: React.FC = () => {
       } catch (error) {
         console.error('Error fetching shops:', error);
         setShops([
-          { _id: 1, name: "Gunupur Building Materials", phone: "9437578310", address: "Main Road, Gunupur", materials: ["Cement", "Sand", "Bricks"] },
+          { _id: 1, name: "Gunupur Building Materials", phone: "9437236270", address: "Main Road, Gunupur", materials: ["Cement", "Sand", "Bricks"] },
           { _id: 2, name: "Sai Hardware Store", phone: "9876543210", address: "Near Bus Stand, Gunupur", materials: ["Pipes", "Fittings", "Paint"] }
         ]);
       } finally {

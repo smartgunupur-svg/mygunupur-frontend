@@ -289,7 +289,7 @@ const AdminSettings: React.FC = () => {
                   }
                 }))}
                 className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:border-blue-500"
-                placeholder="Enter agent phone number (e.g. 9437578310)"
+                placeholder="Enter agent phone number (e.g. 9437236270)"
               />
 
               <label className="block text-sm font-bold text-slate-700 mt-4 mb-2">Agent WhatsApp Number</label>
@@ -304,7 +304,7 @@ const AdminSettings: React.FC = () => {
                   }
                 }))}
                 className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:border-blue-500"
-                placeholder="Enter agent WhatsApp number (e.g. 9437578310)"
+                placeholder="Enter agent WhatsApp number (e.g. 9437236270)"
               />
             </div>
             
