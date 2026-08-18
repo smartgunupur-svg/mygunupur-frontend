@@ -282,6 +282,15 @@ const BottomNavLayout: React.FC = () => {
                   <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-pulse" />
                   Odisha Revenue Services
                 </a>
+                <a
+                  href="https://dwistodisha.nic.in/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-violet-50 border border-violet-100 text-violet-700 hover:bg-violet-100/60 active:scale-95 text-xs font-bold rounded-xl transition-all duration-200"
+                >
+                  <span className="w-1.5 h-1.5 rounded-full bg-violet-500 animate-pulse" />
+                  Welcome to Tahasil Portal
+                </a>
               </div>
             </div>
 
