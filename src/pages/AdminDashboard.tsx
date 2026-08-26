@@ -42,6 +42,7 @@ const AdminDashboard: React.FC = () => {
   const [schemes, setSchemes] = useState<any[]>([]);
   const [businesses, setBusinesses] = useState<any[]>([]);
   const [heroSlides, setHeroSlides] = useState<any[]>([]);
+  const [visitStats, setVisitStats] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -67,7 +68,8 @@ const AdminDashboard: React.FC = () => {
           jobsRes,
           schemesRes,
           businessesRes,
-          heroSlidesRes
+          heroSlidesRes,
+          visitsRes
         ] = await Promise.all([
           axios.get(`${API_URL}/loan-enquiries`, {
             headers: { Authorization: `Bearer ${token}` }
@@ -86,7 +88,10 @@ const AdminDashboard: React.FC = () => {
           axios.get(`${API_URL}/jobs`),
           axios.get(`${API_URL}/government-schemes`),
           axios.get(`${API_URL}/businesses`),
-          axios.get(`${API_URL}/hero-slides/admin`)
+          axios.get(`${API_URL}/hero-slides/admin`),
+          axios.get(`${API_URL}/visits/stats`, {
+            headers: { Authorization: `Bearer ${token}` }
+          })
         ]);
         setLoanEnquiries(loanRes.data);
         setBuildingEnquiries(buildingRes.data);
@@ -102,6 +107,7 @@ const AdminDashboard: React.FC = () => {
         setSchemes(schemesRes.data);
         setBusinesses(businessesRes.data);
         setHeroSlides(heroSlidesRes.data);
+        setVisitStats(visitsRes.data);
       } catch (error) {
         console.error('Error fetching data:', error);
       } finally {
@@ -185,6 +191,121 @@ const AdminDashboard: React.FC = () => {
           </motion.button>
         ))}
       </div>
+
+      {/* Visitor Analytics Section */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.1 }}
+        className="bg-white rounded-3xl p-6 sm:p-8 shadow-xl border border-slate-100 space-y-6"
+      >
+        <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-4">
+          <div>
+            <h3 className="text-2xl font-black text-slate-800 flex items-center gap-3">
+              <Users className="w-7 h-7 text-blue-600" />
+              Visitor Analytics
+            </h3>
+            <p className="text-slate-500 font-semibold text-sm mt-0.5">Real-time traffic overview of My Gunupur</p>
+          </div>
+          <div className="flex flex-wrap gap-4">
+            <div className="bg-blue-50 border border-blue-100 rounded-xl px-4 py-2 text-center flex-1 sm:flex-none">
+              <p className="text-[10px] text-blue-600 uppercase font-black tracking-wider">All-Time Views</p>
+              <p className="text-lg font-black text-blue-900">{visitStats?.totals?.pageViews || 0}</p>
+            </div>
+            <div className="bg-emerald-50 border border-emerald-100 rounded-xl px-4 py-2 text-center flex-1 sm:flex-none">
+              <p className="text-[10px] text-emerald-600 uppercase font-black tracking-wider">All-Time Uniques</p>
+              <p className="text-lg font-black text-emerald-900">{visitStats?.totals?.uniqueVisitors || 0}</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Sub-cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-100 rounded-2xl p-5 flex items-center justify-between shadow-sm">
+            <div>
+              <p className="text-xs text-slate-500 font-bold uppercase tracking-wider mb-1">Today's Page Views</p>
+              <p className="text-3xl font-black text-slate-800">{visitStats?.today?.pageViews || 0}</p>
+            </div>
+            <div className="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center shadow-md">
+              <FileText className="w-6 h-6 text-white" />
+            </div>
+          </div>
+          <div className="bg-gradient-to-br from-emerald-50 to-teal-50 border border-emerald-100 rounded-2xl p-5 flex items-center justify-between shadow-sm">
+            <div>
+              <p className="text-xs text-slate-500 font-bold uppercase tracking-wider mb-1">Today's Unique Visitors</p>
+              <p className="text-3xl font-black text-slate-800">{visitStats?.today?.uniqueVisitors || 0}</p>
+            </div>
+            <div className="w-12 h-12 bg-emerald-600 rounded-xl flex items-center justify-center shadow-md">
+              <Users className="w-6 h-6 text-white" />
+            </div>
+          </div>
+        </div>
+
+        {/* Weekly Chart */}
+        <div>
+          <h4 className="text-sm font-extrabold text-slate-600 uppercase tracking-wider mb-4">Traffic (Last 7 Days)</h4>
+          {visitStats?.last7Days && visitStats.last7Days.length > 0 ? (
+            <div className="h-64 flex items-end justify-between gap-2 pt-6 px-2 border-b border-l border-slate-100">
+              {visitStats.last7Days.map((day: any) => {
+                const maxVal = Math.max(...visitStats.last7Days.map((d: any) => d.pageViews), 1);
+                const pvHeight = (day.pageViews / maxVal) * 100;
+                const uvHeight = (day.uniqueVisitors / maxVal) * 100;
+
+                const dateObj = new Date(day.date);
+                const dayName = dateObj.toLocaleDateString('en-US', { weekday: 'short' });
+                const dayNum = dateObj.toLocaleDateString('en-US', { day: 'numeric' });
+
+                return (
+                  <div key={day.date} className="flex-1 flex flex-col items-center group relative h-full justify-end">
+                    {/* Tooltip on Hover */}
+                    <div className="absolute bottom-full mb-2 bg-slate-800 text-white text-[10px] font-semibold rounded-lg p-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-10 flex flex-col items-center shadow-lg border border-slate-700 min-w-[80px]">
+                      <p className="border-b border-slate-700 pb-0.5 mb-0.5 font-bold">{dayName}, {dayNum}</p>
+                      <p className="text-blue-300">Views: {day.pageViews}</p>
+                      <p className="text-emerald-300">Uniques: {day.uniqueVisitors}</p>
+                    </div>
+                    
+                    {/* Bar Container */}
+                    <div className="w-full flex justify-center items-end gap-1 h-full pb-2">
+                      {/* Page Views Bar */}
+                      <div 
+                        style={{ height: `${pvHeight}%` }} 
+                        className="w-3 sm:w-4 bg-gradient-to-t from-blue-500 to-blue-400 rounded-t-md transition-all duration-500 hover:brightness-105"
+                      />
+                      {/* Unique Visitors Bar */}
+                      <div 
+                        style={{ height: `${uvHeight}%` }} 
+                        className="w-3 sm:w-4 bg-gradient-to-t from-emerald-500 to-emerald-400 rounded-t-md transition-all duration-500 hover:brightness-105"
+                      />
+                    </div>
+                    
+                    {/* Date Label */}
+                    <p className="text-[10px] font-bold text-slate-500 mt-2">{dayName}</p>
+                    <p className="text-[8px] font-medium text-slate-400">{dayNum}</p>
+                  </div>
+                );
+              })}
+            </div>
+          ) : (
+            <div className="h-48 flex items-center justify-center border border-dashed border-slate-200 rounded-2xl text-slate-400 font-semibold">
+              No traffic data recorded yet
+            </div>
+          )}
+          
+          {/* Chart Legend */}
+          {visitStats?.last7Days && visitStats.last7Days.length > 0 && (
+            <div className="flex items-center gap-6 mt-6 justify-center text-xs font-bold">
+              <div className="flex items-center gap-2 text-blue-600">
+                <div className="w-3 h-3 bg-blue-500 rounded-sm" />
+                Page Views
+              </div>
+              <div className="flex items-center gap-2 text-emerald-600">
+                <div className="w-3 h-3 bg-emerald-500 rounded-sm" />
+                Unique Visitors
+              </div>
+            </div>
+          )}
+        </div>
+      </motion.div>
 
       {/* Main Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">

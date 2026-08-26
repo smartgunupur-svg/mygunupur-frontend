@@ -76,6 +76,18 @@ const BottomNavLayout: React.FC = () => {
     fetchSettings();
   }, []);
 
+  // Record visitor analytics
+  useEffect(() => {
+    const recordVisit = async () => {
+      try {
+        await axios.post(`${API_URL}/visits/record`);
+      } catch (error) {
+        console.error('Error tracking visit:', error);
+      }
+    };
+    recordVisit();
+  }, []);
+
   const currentPath = location.pathname;
   const isHome = currentPath === '/';
 
@@ -290,6 +302,33 @@ const BottomNavLayout: React.FC = () => {
                 >
                   <span className="w-1.5 h-1.5 rounded-full bg-violet-500 animate-pulse" />
                   Welcome to Tahasil Portal
+                </a>
+                <a
+                  href="https://share.google/BMSpTzaEEbUAeME9g"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-teal-50 border border-teal-100 text-teal-700 hover:bg-teal-100/60 active:scale-95 text-xs font-bold rounded-xl transition-all duration-200"
+                >
+                  <span className="w-1.5 h-1.5 rounded-full bg-teal-500 animate-pulse" />
+                  BHULEKH || ODISHA
+                </a>
+                <a
+                  href="https://www.igrodisha.gov.in/Admin/Login/Login.aspx?UserType=5kg%2blAsVXHDmCB4oiIo1Sw%3d%3d"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-rose-50 border border-rose-100 text-rose-700 hover:bg-rose-100/60 active:scale-95 text-xs font-bold rounded-xl transition-all duration-200"
+                >
+                  <span className="w-1.5 h-1.5 rounded-full bg-rose-500 animate-pulse" />
+                  IGR Odisha Portal
+                </a>
+                <a
+                  href="https://share.google/nBRLn7MffLGuo0asU"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-orange-50 border border-orange-100 text-orange-700 hover:bg-orange-100/60 active:scale-95 text-xs font-bold rounded-xl transition-all duration-200"
+                >
+                  <span className="w-1.5 h-1.5 rounded-full bg-orange-500 animate-pulse" />
+                  Tirumala Tirupati Devasthanams
                 </a>
               </div>
             </div>
