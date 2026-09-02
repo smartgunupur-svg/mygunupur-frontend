@@ -330,6 +330,15 @@ const BottomNavLayout: React.FC = () => {
                   <span className="w-1.5 h-1.5 rounded-full bg-orange-500 animate-pulse" />
                   Tirumala Tirupati Devasthanams
                 </a>
+                <a
+                  href="https://odishalandrevenue.nic.in/OnlineRTrent.aspx"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-sky-50 border border-sky-100 text-sky-700 hover:bg-sky-100/60 active:scale-95 text-xs font-bold rounded-xl transition-all duration-200"
+                >
+                  <span className="w-1.5 h-1.5 rounded-full bg-sky-500 animate-pulse" />
+                  Odisha Land Revenue Payment
+                </a>
               </div>
             </div>
 
