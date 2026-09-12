@@ -259,7 +259,7 @@ const BottomNavLayout: React.FC = () => {
               <h4 className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-3">Quick Access</h4>
               <div className="space-y-2.5 flex flex-col items-center md:items-start w-full">
                 <a
-                  href="https://sujog.odisha.gov.in"
+                  href="https://sujog.odisha.gov.in/citizen/user/login"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-emerald-50 border border-emerald-100 text-emerald-700 hover:bg-emerald-100/60 active:scale-95 text-xs font-bold rounded-xl transition-all duration-200"
@@ -338,6 +338,15 @@ const BottomNavLayout: React.FC = () => {
                 >
                   <span className="w-1.5 h-1.5 rounded-full bg-sky-500 animate-pulse" />
                   Odisha Land Revenue Payment
+                </a>
+                <a
+                  href="https://www.birthdeath.odisha.gov.in/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-lime-50 border border-lime-100 text-lime-700 hover:bg-lime-100/60 active:scale-95 text-xs font-bold rounded-xl transition-all duration-200"
+                >
+                  <span className="w-1.5 h-1.5 rounded-full bg-lime-500 animate-pulse" />
+                  Birth & Death Registration
                 </a>
               </div>
             </div>
