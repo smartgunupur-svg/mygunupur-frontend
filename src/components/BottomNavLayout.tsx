@@ -348,6 +348,15 @@ const BottomNavLayout: React.FC = () => {
                   <span className="w-1.5 h-1.5 rounded-full bg-lime-500 animate-pulse" />
                   Birth & Death Registration
                 </a>
+                <a
+                  href="https://sarathi.parivahan.gov.in/sarathiservice/stateSelection.do"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-emerald-50 border border-emerald-100 text-emerald-700 hover:bg-emerald-100/60 active:scale-95 text-xs font-bold rounded-xl transition-all duration-200"
+                >
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                  Sarathi Parivahan (Driving Licence)
+                </a>
               </div>
             </div>
 

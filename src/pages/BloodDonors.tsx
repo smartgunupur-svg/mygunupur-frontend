@@ -49,7 +49,7 @@ const BloodDonors: React.FC = () => {
     } catch (error) {
       console.error('Error fetching donors:', error);
       setDonors([
-        { _id: 1, name: "Rajesh Kumar", bloodGroup: "O+", phone: "9437236270", area: "Gunupur", status: "available", verified: true, availability: ['Monday', 'Wednesday', 'Friday'], age: 28, gender: 'Male' },
+        { _id: 1, name: "Rajesh Kumar", bloodGroup: "O+", phone: "9337094375", area: "Gunupur", status: "available", verified: true, availability: ['Monday', 'Wednesday', 'Friday'], age: 28, gender: 'Male' },
         { _id: 2, name: "Priya Das", bloodGroup: "A+", phone: "9876543210", area: "Rayagada", status: "available", verified: false, availability: ['Tuesday', 'Thursday', 'Saturday'], age: 25, gender: 'Female' }
       ]);
     } finally {
@@ -101,10 +101,10 @@ const BloodDonors: React.FC = () => {
         setKeyValid(true);
         setIsLifetimeKey(response.data.isLifetime || false);
       } else {
-        alert('Invalid or expired key! Please call 9437236270 to get a valid key.');
+        alert('Invalid or expired key! Please call 93370 94375 to get a valid key.');
       }
     } catch (error) {
-      alert('Invalid or expired key! Please call 9437236270 to get a valid key.');
+      alert('Invalid or expired key! Please call 93370 94375 to get a valid key.');
     }
   };
 
@@ -166,7 +166,7 @@ const BloodDonors: React.FC = () => {
             <div className="flex-1">
               <h3 className="font-black text-amber-800 mb-2">To contact a donor</h3>
               <p className="text-amber-700 text-sm mb-3">
-                Call <a href="tel:9437236270" className="font-black underline hover:text-amber-900">9437236270</a> to get a 4-digit access key.
+                Call <a href="tel:9337094375" className="font-black underline hover:text-amber-900">93370 94375</a> to get a 4-digit access key.
               </p>
             </div>
           </div>

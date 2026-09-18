@@ -117,7 +117,7 @@ const About: React.FC = () => {
               <Phone className="w-8 h-8 text-blue-600" />
             </div>
             <h4 className="font-bold text-slate-800 mb-2">Call Us</h4>
-            <a href="tel:9437236270" className="text-2xl font-black text-blue-600 block mb-1">9437236270</a>
+            <a href="tel:9337094375" className="text-2xl font-black text-blue-600 block mb-1">93370 94375</a>
           </div>
           <div className="bg-white rounded-3xl p-6 shadow-xl border border-slate-100 text-center">
             <div className="w-16 h-16 bg-green-100 rounded-3xl flex items-center justify-center mx-auto mb-4">

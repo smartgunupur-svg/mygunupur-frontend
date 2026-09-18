@@ -143,14 +143,14 @@ const BuildingEnquiry: React.FC = () => {
             </p>
             <div className="flex flex-wrap gap-3 mb-8">
               <a
-                href="tel:9437236270"
+                href="tel:9337094375"
                 className="inline-flex items-center gap-2 px-5 py-2.5 bg-white text-slate-900 font-semibold text-sm rounded-lg hover:bg-slate-100 transition-colors"
               >
                 <Phone className="w-4 h-4" />
                 Call the Desk
               </a>
               <a
-                href="https://wa.me/919437236270"
+                href="https://wa.me/919337094375"
                 className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#25D366] text-white font-semibold text-sm rounded-lg hover:brightness-105 transition-all"
               >
                 <div dangerouslySetInnerHTML={{ __html: whatsappLogo }} />
@@ -327,14 +327,14 @@ const BuildingEnquiry: React.FC = () => {
       {/* Floating Action Buttons */}
       <div className="fixed bottom-28 right-5 flex flex-col gap-3 z-40">
         <motion.a
-          href="https://wa.me/919437236270"
+          href="https://wa.me/919337094375"
           initial={{ opacity: 0, scale: 0 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.6, type: 'spring' }}
           whileHover={{ scale: 1.06 }} whileTap={{ scale: 0.94 }}
           className="w-[52px] h-[52px] rounded-full bg-[#25D366] shadow-lg flex items-center justify-center"
           dangerouslySetInnerHTML={{ __html: whatsappLogo }}
         />
         <motion.a
-          href="tel:9437236270"
+          href="tel:9337094375"
           initial={{ opacity: 0, scale: 0 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.7, type: 'spring' }}
           whileHover={{ scale: 1.06 }} whileTap={{ scale: 0.94 }}
           className="w-[52px] h-[52px] rounded-full shadow-lg flex items-center justify-center"
