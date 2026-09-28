@@ -357,6 +357,15 @@ const BottomNavLayout: React.FC = () => {
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
                   Sarathi Parivahan (Driving Licence)
                 </a>
+                <a
+                  href="https://uidai.gov.in/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-blue-50 border border-blue-100 text-blue-700 hover:bg-blue-100/60 active:scale-95 text-xs font-bold rounded-xl transition-all duration-200"
+                >
+                  <span className="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse" />
+                  UIDAI (Aadhaar Portal)
+                </a>
               </div>
             </div>
 
