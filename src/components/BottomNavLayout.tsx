@@ -366,6 +366,33 @@ const BottomNavLayout: React.FC = () => {
                   <span className="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse" />
                   UIDAI (Aadhaar Portal)
                 </a>
+                <a
+                  href="https://www.psaonline.utiitsl.com/psapanservices/forms/login.html/loginHome"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-indigo-50 border border-indigo-100 text-indigo-700 hover:bg-indigo-100/60 active:scale-95 text-xs font-bold rounded-xl transition-all duration-200"
+                >
+                  <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-pulse" />
+                  UTI PAN Card Services
+                </a>
+                <a
+                  href="https://www.resumeground.com/create-resume"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-purple-50 border border-purple-100 text-purple-700 hover:bg-purple-100/60 active:scale-95 text-xs font-bold rounded-xl transition-all duration-200"
+                >
+                  <span className="w-1.5 h-1.5 rounded-full bg-purple-500 animate-pulse" />
+                  Create Resume Online
+                </a>
+                <a
+                  href="https://eportal.incometax.gov.in/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-amber-50 border border-amber-100 text-amber-700 hover:bg-amber-100/60 active:scale-95 text-xs font-bold rounded-xl transition-all duration-200"
+                >
+                  <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse" />
+                  Income Tax e-Filing (ITR)
+                </a>
               </div>
             </div>
 
