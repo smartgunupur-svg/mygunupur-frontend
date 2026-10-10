@@ -18,7 +18,8 @@ import {
   Briefcase,
   MessageSquare,
   Building,
-  Phone
+  Phone,
+  Home
 } from 'lucide-react';
 
 interface ServiceItem {
@@ -50,7 +51,8 @@ const Services: React.FC = () => {
     { id: 12, title: 'Photo & Video Gallery', desc: 'Browse pictures of Gunupur', icon: Image, path: '/gallery', color: 'text-sky-600', bg: 'bg-sky-50 border-sky-100' },
     { id: 13, title: 'Weather Forecast', desc: 'Current temperature & 5-day info', icon: CloudSun, path: '/weather', color: 'text-yellow-700', bg: 'bg-amber-50 border-yellow-200' },
     { id: 14, title: 'Jobs & Walk-in Hirings', desc: 'Find local jobs & recruitment drives', icon: Briefcase, path: '/jobs', color: 'text-indigo-600', bg: 'bg-indigo-50 border-indigo-100' },
-    { id: 15, title: 'Feedback & Contact', desc: 'Submit complaints & suggestions', icon: MessageSquare, path: '/feedback', color: 'text-pink-600', bg: 'bg-pink-50 border-pink-100' }
+    { id: 15, title: 'Feedback & Contact', desc: 'Submit complaints & suggestions', icon: MessageSquare, path: '/feedback', color: 'text-pink-600', bg: 'bg-pink-50 border-pink-100' },
+    { id: 16, title: 'Rental Rooms & PGs', desc: 'Find student rooms, hostels & flats in Gunupur', icon: Home, path: '/rentals', color: 'text-blue-600', bg: 'bg-blue-50 border-blue-100' }
   ];
 
   const filteredServices = servicesList.filter(s =>

@@ -46,12 +46,14 @@ const quickServices = [
   { id: 11, title: 'Blood Donors', icon: Droplets, color: 'text-red-500', bg: 'bg-red-50', path: '/blood-donors' },
   { id: 12, title: 'Businesses', icon: BookOpen, color: 'text-amber-600', bg: 'bg-amber-50', path: '/directory' },
   { id: 13, title: 'Explore', icon: MapPin, color: 'text-emerald-600', bg: 'bg-emerald-50', path: '/explore' },
-  { id: 14, title: 'Jobs', icon: Briefcase, color: 'text-indigo-600', bg: 'bg-indigo-50', path: '/jobs' }
+  { id: 14, title: 'Jobs', icon: Briefcase, color: 'text-indigo-600', bg: 'bg-indigo-50', path: '/jobs' },
+  { id: 15, title: 'Rentals', icon: HomeIcon, color: 'text-blue-600', bg: 'bg-blue-50', path: '/rentals' }
 ];
 
 const featuredServices = [
   { id: 14, title: 'Government Schemes', icon: Building, color: 'from-cyan-600 to-blue-600', path: '/government-schemes', description: 'PMAY, Pension, Scholarships' },
   { id: 15, title: 'Business Directory', icon: BookOpen, color: 'from-amber-500 to-yellow-500', path: '/directory', description: 'Hotels, Restaurants & More' },
+  { id: 16, title: 'Rental Rooms & PGs', icon: HomeIcon, color: 'from-blue-600 to-indigo-600', path: '/rentals', description: 'Rooms, PGs & Hostels for Students' },
   { id: 17, title: 'Events', icon: Calendar, color: 'from-yellow-500 to-orange-500', path: '/events', description: 'Festivals & Events' },
   { id: 18, title: 'Schools', icon: GraduationCap, color: 'from-yellow-500 to-amber-600', path: '/schools', description: 'Find Schools' },
   { id: 19, title: 'Colleges', icon: Building, color: 'from-teal-500 to-cyan-600', path: '/colleges', description: 'Higher Education' },
@@ -62,10 +64,11 @@ const featuredServices = [
 const popularSearches = [
   { id: 1, text: 'Hospital', icon: HeartPulse },
   { id: 2, text: 'Hotel', icon: HomeIcon },
-  { id: 3, text: 'Police', icon: ShieldAlert },
-  { id: 4, text: 'College', icon: GraduationCap },
-  { id: 5, text: 'Blood Donor', icon: Droplets },
-  { id: 6, text: 'Restaurant', icon: Utensils }
+  { id: 3, text: 'Rentals', icon: HomeIcon },
+  { id: 4, text: 'Police', icon: ShieldAlert },
+  { id: 5, text: 'College', icon: GraduationCap },
+  { id: 6, text: 'Blood Donor', icon: Droplets },
+  { id: 7, text: 'Restaurant', icon: Utensils }
 ];
 
 const Home: React.FC = () => {

@@ -63,8 +63,19 @@ import AdminSchools from './pages/AdminSchools';
 import AdminColleges from './pages/AdminColleges';
 import AdminGovtOffices from './pages/AdminGovtOffices';
 import AdminParks from './pages/AdminParks';
-import AdminSportsPlaces from './pages/AdminSportsPlaces';
 import AdminHeroSlides from './pages/AdminHeroSlides';
+import AdminRentals from './pages/AdminRentals';
+
+// Rental Public & Owner Portal pages
+import Rentals from './pages/Rentals';
+import RentalDetail from './pages/RentalDetail';
+import OwnerLogin from './pages/OwnerLogin';
+import OwnerChangePassword from './pages/OwnerChangePassword';
+import OwnerLayout from './components/OwnerLayout';
+import OwnerDashboard from './pages/OwnerDashboard';
+import OwnerProperties from './pages/OwnerProperties';
+import OwnerPropertyForm from './pages/OwnerPropertyForm';
+import OwnerSettings from './pages/OwnerSettings';
 
 function App() {
   return (
@@ -103,6 +114,20 @@ function App() {
           <Route path="/sports-places" element={<SportsPlaces />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/terms-of-service" element={<TermsOfService />} />
+          <Route path="/rentals" element={<Rentals />} />
+          <Route path="/rentals/:id" element={<RentalDetail />} />
+        </Route>
+
+        {/* Property Owner Portal routes */}
+        <Route path="/owner" element={<Navigate to="/owner/dashboard" replace />} />
+        <Route path="/owner/login" element={<OwnerLogin />} />
+        <Route path="/owner/change-password" element={<OwnerChangePassword />} />
+        <Route element={<OwnerLayout />}>
+          <Route path="/owner/dashboard" element={<OwnerDashboard />} />
+          <Route path="/owner/properties" element={<OwnerProperties />} />
+          <Route path="/owner/properties/new" element={<OwnerPropertyForm />} />
+          <Route path="/owner/properties/:id/edit" element={<OwnerPropertyForm />} />
+          <Route path="/owner/settings" element={<OwnerSettings />} />
         </Route>
 
         {/* Admin panel routes */}
@@ -110,6 +135,7 @@ function App() {
         <Route path="/admin/login" element={<AdminLogin />} />
         <Route element={<AdminLayout />}>
           <Route path="/admin/dashboard" element={<AdminDashboard />} />
+          <Route path="/admin/rentals" element={<AdminRentals />} />
           <Route path="/admin/loan-enquiries" element={<AdminLoanEnquiries />} />
           <Route path="/admin/building-enquiries" element={<AdminBuildingEnquiries />} />
           <Route path="/admin/banks" element={<AdminBanks />} />

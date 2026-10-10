@@ -25,7 +25,8 @@ import {
   Building,
   Utensils,
   ChevronRight,
-  Instagram
+  Instagram,
+  Key
 } from 'lucide-react';
 import axios from 'axios';
 
@@ -98,6 +99,7 @@ const BottomNavLayout: React.FC = () => {
       { name: 'All Services', path: '/services', icon: LayoutGrid, color: 'text-indigo-500', visible: true },
       { name: 'Explore Gunupur', path: '/explore', icon: Compass, color: 'text-green-500', visible: settings?.features?.touristPlaces },
       { name: 'Business Directory', path: '/directory', icon: BookOpen, color: 'text-amber-500', visible: settings?.features?.businesses },
+      { name: 'Rental Rooms & PGs', path: '/rentals', icon: Home, color: 'text-blue-600', visible: true },
       { name: 'Emergency Contacts', path: '/emergency', icon: AlertTriangle, color: 'text-red-500', visible: settings?.features?.emergency },
       { name: 'Hospitals', path: '/hospitals', icon: HeartPulse, color: 'text-rose-500', visible: settings?.features?.hospitals },
       { name: 'Blood Donors', path: '/blood-donors', icon: Droplets, color: 'text-red-600', visible: settings?.features?.bloodDonors },
@@ -114,6 +116,7 @@ const BottomNavLayout: React.FC = () => {
       { name: 'Jobs & Hiring', path: '/jobs', icon: Briefcase, color: 'text-indigo-600', visible: settings?.features?.jobs },
       { name: 'Feedback & Contact', path: '/feedback', icon: MessageSquare, color: 'text-pink-500', visible: settings?.features?.contact },
       { name: 'About Us', path: '/about', icon: Info, color: 'text-slate-600', visible: settings?.features?.about },
+      { name: 'Property Owner Portal', path: '/owner/login', icon: Key, color: 'text-indigo-400', visible: true },
       { name: 'Admin Panel', path: '/admin/login', icon: UserCheck, color: 'text-slate-800', visible: true }
     ];
     return links.filter(link => link.visible);
@@ -175,6 +178,12 @@ const BottomNavLayout: React.FC = () => {
                 Directory
               </button>
             )}
+            <button
+              onClick={() => navigate('/rentals')}
+              className={`text-sm font-semibold transition-colors ${currentPath === '/rentals' ? 'text-blue-600' : 'text-slate-600 hover:text-blue-600'}`}
+            >
+              Rentals
+            </button>
             <button
               onClick={() => navigate('/contact')}
               className="px-4 py-2 bg-gradient-to-r from-blue-600 to-blue-700 text-white text-sm font-bold rounded-xl shadow-md hover:shadow-lg transition-all"

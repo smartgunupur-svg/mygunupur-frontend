@@ -25,7 +25,8 @@ import {
   GraduationCap,
   TreePine,
   Trophy,
-  MonitorPlay
+  MonitorPlay,
+  Key
 } from 'lucide-react';
 
 const AdminLayout: React.FC = () => {
@@ -42,6 +43,7 @@ const AdminLayout: React.FC = () => {
 
   const navItems = [
     { title: 'Dashboard', icon: LayoutDashboard, path: '/admin/dashboard', color: 'text-blue-600', bg: 'bg-blue-50' },
+    { title: 'Rental Properties', icon: Key, path: '/admin/rentals', color: 'text-blue-600', bg: 'bg-blue-50' },
     { title: 'Hero Slides', icon: MonitorPlay, path: '/admin/hero-slides', color: 'text-purple-600', bg: 'bg-purple-50' },
     { title: 'Loan Enquiries', icon: FileText, path: '/admin/loan-enquiries', color: 'text-blue-500', bg: 'bg-blue-50' },
     { title: 'Building Enquiries', icon: Building2, path: '/admin/building-enquiries', color: 'text-green-500', bg: 'bg-green-50' },
