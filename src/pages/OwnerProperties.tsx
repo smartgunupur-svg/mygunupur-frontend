@@ -10,7 +10,6 @@ import {
   Send,
   AlertCircle,
   Home,
-  CheckCircle2,
 } from 'lucide-react';
 import axios from 'axios';
 

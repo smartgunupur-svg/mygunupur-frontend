@@ -10,17 +10,13 @@ import {
   History,
   Plus,
   Search,
-  Filter,
-  Eye,
   Key,
   Trash2,
   Check,
   X,
   AlertTriangle,
   RefreshCw,
-  Copy,
   ExternalLink,
-  ShieldAlert,
   Sliders,
 } from 'lucide-react';
 import axios from 'axios';
@@ -79,9 +75,6 @@ const AdminRentals: React.FC = () => {
   const [reviewingProperty, setReviewingProperty] = useState<any | null>(null);
   const [rejectionReason, setRejectionReason] = useState('');
   const [reviewActionLoading, setReviewActionLoading] = useState(false);
-
-  // Owner Details Modal
-  const [selectedOwnerDetail, setSelectedOwnerDetail] = useState<any | null>(null);
 
   // Renewal Modal
   const [renewingOwner, setRenewingOwner] = useState<any | null>(null);

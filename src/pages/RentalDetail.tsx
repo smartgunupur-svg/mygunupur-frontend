@@ -1,23 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
 import {
   ArrowLeft,
   MapPin,
-  IndianRupee,
   Home,
-  CheckCircle2,
   Phone,
   MessageCircle,
-  Calendar,
-  Users,
   Compass,
   Share2,
   ExternalLink,
   ShieldCheck,
   Check,
-  AlertCircle,
-  Eye,
 } from 'lucide-react';
 import axios from 'axios';
 

@@ -522,6 +522,7 @@ const Home: React.FC = () => {
                   onClick={() => {
                     if (search.text === 'Hospital') navigate('/hospitals');
                     else if (search.text === 'Hotel') navigate('/directory');
+                    else if (search.text === 'Rentals') navigate('/rentals');
                     else if (search.text === 'Blood Donor') navigate('/blood-donors');
                     else if (search.text === 'Restaurant') navigate('/directory');
                     else if (search.text === 'College') navigate('/colleges');

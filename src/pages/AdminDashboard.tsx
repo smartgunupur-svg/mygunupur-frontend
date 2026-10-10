@@ -21,13 +21,15 @@ import {
   MonitorPlay,
   Bell,
   TrendingUp,
-  XCircle
+  XCircle,
+  Key
 } from 'lucide-react';
 import axios from 'axios';
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
 const AdminDashboard: React.FC = () => {
   const navigate = useNavigate();
+  const [rentalsCount, setRentalsCount] = useState<number | string>('-');
   const [loanEnquiries, setLoanEnquiries] = useState<any[]>([]);
   const [buildingEnquiries, setBuildingEnquiries] = useState<any[]>([]);
   const [banks, setBanks] = useState<any[]>([]);
@@ -108,6 +110,19 @@ const AdminDashboard: React.FC = () => {
         setBusinesses(businessesRes.data);
         setHeroSlides(heroSlidesRes.data);
         setVisitStats(visitsRes.data);
+
+        // Fetch Rental Overview stats
+        try {
+          const rentalRes = await axios.get(`${API_URL}/admin/rentals/overview`, {
+            headers: { Authorization: `Bearer ${token}` }
+          });
+          if (rentalRes.data && rentalRes.data.totalProperties !== undefined) {
+            setRentalsCount(rentalRes.data.totalProperties);
+          }
+        } catch {
+          // If rental table is empty or error, keep '-' or 0
+          setRentalsCount(0);
+        }
       } catch (error) {
         console.error('Error fetching data:', error);
       } finally {
@@ -119,6 +134,7 @@ const AdminDashboard: React.FC = () => {
   }, [navigate]);
 
   const stats = [
+    { title: 'Rental Properties', value: rentalsCount, icon: Key, color: 'from-blue-600 to-indigo-600', path: '/admin/rentals' },
     { title: 'Loan Enquiries', value: loanEnquiries.length, icon: FileText, color: 'from-blue-500 to-blue-600', path: '/admin/loan-enquiries' },
     { title: 'Building Enquiries', value: buildingEnquiries.length, icon: Building2, color: 'from-green-500 to-emerald-600', path: '/admin/building-enquiries' },
     { title: 'Hero Slides', value: heroSlides.length, icon: MonitorPlay, color: 'from-purple-500 to-indigo-600', path: '/admin/hero-slides' },
@@ -139,6 +155,7 @@ const AdminDashboard: React.FC = () => {
     .slice(0, 8);
 
   const quickActions = [
+    { title: 'Manage Rentals', icon: Key, color: 'from-indigo-50 to-blue-50', iconColor: 'text-indigo-600', border: 'border-indigo-100', path: '/admin/rentals' },
     { title: 'Add New Bank', icon: Banknote, color: 'from-blue-50 to-indigo-50', iconColor: 'text-blue-600', border: 'border-blue-100', path: '/admin/banks' },
     { title: 'Add Hero Slide', icon: MonitorPlay, color: 'from-purple-50 to-indigo-50', iconColor: 'text-purple-600', border: 'border-purple-100', path: '/admin/hero-slides' },
     { title: 'Add Business', icon: BookOpen, color: 'from-amber-50 to-orange-50', iconColor: 'text-amber-600', border: 'border-amber-100', path: '/admin/businesses' },

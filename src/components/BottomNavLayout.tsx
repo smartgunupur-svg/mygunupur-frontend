@@ -245,6 +245,12 @@ const BottomNavLayout: React.FC = () => {
                   <button onClick={() => navigate('/services')} className="block w-full md:w-auto text-xs text-slate-600 hover:text-blue-600 font-bold transition-colors">
                     All Services
                   </button>
+                  <button onClick={() => navigate('/rentals')} className="block w-full md:w-auto text-xs text-slate-600 hover:text-blue-600 font-bold transition-colors">
+                    Rental Rooms & PGs
+                  </button>
+                  <button onClick={() => navigate('/owner/login')} className="block w-full md:w-auto text-xs text-slate-600 hover:text-blue-600 font-bold transition-colors">
+                    Owner Portal Login
+                  </button>
                   <button onClick={() => navigate('/contact')} className="block w-full md:w-auto text-xs text-slate-600 hover:text-blue-600 font-bold transition-colors">
                     Contact Us
                   </button>

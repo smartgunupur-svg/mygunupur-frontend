@@ -5,7 +5,6 @@ import {
   Calendar,
   Lock,
   LogOut,
-  ShieldCheck,
   CheckCircle,
   AlertCircle,
   Info,

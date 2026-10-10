@@ -3,16 +3,11 @@ import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
   Search,
-  Filter,
   MapPin,
   Home,
-  CheckCircle,
   Sparkles,
   ChevronRight,
-  ShieldCheck,
-  Building,
   Key,
-  SlidersHorizontal,
 } from 'lucide-react';
 import axios from 'axios';
 

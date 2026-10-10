@@ -63,6 +63,7 @@ import AdminSchools from './pages/AdminSchools';
 import AdminColleges from './pages/AdminColleges';
 import AdminGovtOffices from './pages/AdminGovtOffices';
 import AdminParks from './pages/AdminParks';
+import AdminSportsPlaces from './pages/AdminSportsPlaces';
 import AdminHeroSlides from './pages/AdminHeroSlides';
 import AdminRentals from './pages/AdminRentals';
 
