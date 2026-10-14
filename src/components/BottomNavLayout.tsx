@@ -319,7 +319,7 @@ const BottomNavLayout: React.FC = () => {
                   Welcome to Tahasil Portal
                 </a>
                 <a
-                  href="https://share.google/BMSpTzaEEbUAeME9g"
+                  href="https://bhulekh.ori.nic.in/RoRView.aspx"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-teal-50 border border-teal-100 text-teal-700 hover:bg-teal-100/60 active:scale-95 text-xs font-bold rounded-xl transition-all duration-200"
